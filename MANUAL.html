@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TRAX Manual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* The wordmark's face: The Rave Is In Your Pants by NALGames, 2013,
+   freeware for non-commercial use. Cut down to the letters used. */
+@font-face {
+  font-family: "The Rave Is In Your Pants";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(data:font/ttf;base64,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) format("truetype");
+}
+
+:root {
+  --ground: #F3F5F7;
+  --surface: #FFFFFF;
+  --ink: #121A22;
+  --muted: #56636F;
+  --rule: #D8DEE4;
+  --accent: #8F6200;
+  --accent-fill: #FFD060;
+  --accent-soft: #FFF3D1;
+  --sky: #2A7196;
+  --screen: #101820;
+  --screen-ink: #E8EDF1;
+  --screen-dim: #909090;
+  --key: #FFFFFF;
+  --key-edge: #BFC7CF;
+  --tri: #23946F;
+  --cir: #D23E48;
+  --crs: #4B6FCB;
+  --sqr: #C0589A;
+  --display: "Chakra Petch", "Avenir Next Condensed", "Arial Narrow", sans-serif;
+  --body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #101820;
+    --surface: #17212B;
+    --ink: #E6ECF1;
+    --muted: #97A5B2;
+    --rule: #2A3642;
+    --accent: #FFD060;
+    --accent-fill: #FFD060;
+    --accent-soft: #2B2616;
+    --sky: #70C0E0;
+    --screen: #0B1117;
+    --key: #202C38;
+    --key-edge: #3A4957;
+    --tri: #4CC79D;
+    --cir: #F0646D;
+    --crs: #7C9CF0;
+    --sqr: #E785C2;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #101820;
+  --surface: #17212B;
+  --ink: #E6ECF1;
+  --muted: #97A5B2;
+  --rule: #2A3642;
+  --accent: #FFD060;
+  --accent-fill: #FFD060;
+  --accent-soft: #2B2616;
+  --sky: #70C0E0;
+  --screen: #0B1117;
+  --key: #202C38;
+  --key-edge: #3A4957;
+  --tri: #4CC79D;
+  --cir: #F0646D;
+  --crs: #7C9CF0;
+  --sqr: #E785C2;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16.5px;
+  line-height: 1.6;
+  padding-inline: 20px;
+  padding-block: 0 64px;
+}
+a { color: var(--sky); text-underline-offset: 2px; }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent-fill); outline-offset: 2px; border-radius: 3px; }
+code, .file { font-family: var(--mono); font-size: 0.86em; background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 0.05em 0.35em; white-space: nowrap; }
+
+.masthead {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding-block: 40px 28px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px 32px;
+}
+.wordmark {
+  font-family: "The Rave Is In Your Pants", var(--display);
+  font-weight: 400;
+  font-size: clamp(3.4rem, 10vw, 6rem);
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+.masthead p { margin: 8px 0 0; color: var(--muted); max-width: 46ch; }
+.edition {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: right;
+  line-height: 1.5;
+}
+.edition strong { color: var(--ink); font-weight: 500; }
+
+.layout {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  gap: 48px;
+  padding-top: 32px;
+}
+nav.toc {
+  position: sticky;
+  top: calc(env(safe-area-inset-top, 0px) + 20px);
+  align-self: start;
+  font-size: 0.92rem;
+}
+.toc h2 {
+  font-family: var(--display);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 10px;
+}
+.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.toc a { display: block; padding: 3px 0 3px 10px; border-left: 2px solid var(--rule); color: var(--ink); text-decoration: none; }
+.toc a:hover { border-left-color: var(--accent-fill); }
+
+main { min-width: 0; max-width: 72ch; }
+section { padding-block: 8px 28px; border-bottom: 1px solid var(--rule); margin-bottom: 28px; scroll-margin-top: 20px; }
+section:last-child { border-bottom: 0; }
+h2 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.75rem;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  margin: 0 0 12px;
+  text-wrap: balance;
+}
+h3 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.12rem;
+  letter-spacing: 0.02em;
+  margin: 26px 0 8px;
+}
+p { margin: 0 0 12px; }
+ul { margin: 0 0 12px; padding-left: 1.2em; }
+li { margin-bottom: 4px; }
+.lede { font-size: 1.08rem; color: var(--ink); }
+
+/* The controls: key column, then what it does. */
+.controls { width: 100%; border-collapse: collapse; margin: 6px 0 16px; font-size: 0.97rem; }
+.controls th {
+  text-align: left;
+  font-family: var(--display);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 0 0 6px;
+  border-bottom: 1px solid var(--rule);
+}
+.controls td { padding: 9px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.controls td:first-child { width: 11.5rem; padding-right: 14px; white-space: nowrap; }
+.controls tr:last-child td { border-bottom: 0; }
+.how { color: var(--muted); font-size: 0.86rem; display: block; margin-top: 3px; }
+
+.key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: -0.42em;
+  min-width: 1.75em;
+  height: 1.75em;
+  padding: 0 0.4em;
+  border-radius: 999px;
+  background: var(--key);
+  border: 1px solid var(--key-edge);
+  box-shadow: 0 1px 0 var(--key-edge);
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 0.82em;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  line-height: 1;
+}
+.key svg { width: 1.05em; height: 1.05em; display: block; }
+.key.face { width: 1.75em; padding: 0; }
+.key.shoulder { border-radius: 0.55em 0.55em 0.3em 0.3em; min-width: 2.1em; }
+.key.pill { font-size: 0.66em; letter-spacing: 0.1em; height: 2.1em; padding: 0 0.8em; }
+.plus { color: var(--muted); margin: 0 0.2em; font-size: 0.85em; }
+.held { font-size: 0.78rem; color: var(--muted); margin-left: 6px; font-style: italic; }
+
+.note {
+  background: var(--accent-soft);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 12px 0 16px;
+  font-size: 0.95rem;
+}
+.note strong { color: var(--ink); }
+
+/* The Player, sketched at the PSP's own 480 x 272. */
+.screen-wrap { margin: 16px 0 8px; overflow-x: auto; }
+.screen {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 480 / 272;
+  background: var(--screen);
+  border-radius: 10px;
+  border: 6px solid #05080B;
+  color: var(--screen-ink);
+  font-family: var(--body);
+  overflow: hidden;
+  container-type: inline-size;
+}
+.screen > div { position: absolute; }
+.s-album { top: 2.6%; left: 0; right: 0; text-align: center; font-size: 3cqw; color: var(--screen-dim); }
+.s-count { top: 2.6%; right: 2.5%; font-size: 2.8cqw; color: var(--screen-dim); font-family: var(--mono); }
+.s-batt { top: 3.6%; left: 2.1%; width: 4.2%; height: 3.3%; border: 1px solid var(--screen-dim); border-radius: 1px; }
+.s-batt::before { content: ""; position: absolute; inset: 18%; right: 35%; background: #C8C8C8; }
+.s-batt::after { content: ""; position: absolute; right: -14%; top: 30%; width: 10%; height: 40%; background: var(--screen-dim); }
+.s-cover {
+  left: 2.1%; top: 11%; width: 50%; bottom: 3.7%;
+  width: auto; aspect-ratio: 1;
+  border-radius: 2px;
+  background:
+    radial-gradient(circle at 38% 40%, #E7A6C9 0 16%, transparent 17%),
+    radial-gradient(circle at 60% 58%, #8EA6F2 0 20%, transparent 21%),
+    linear-gradient(135deg, #F6F1E7, #E9E3D6);
+}
+.s-title { left: 57%; right: 3%; top: 38%; font-size: 4.2cqw; font-weight: 700; line-height: 1.15; }
+.s-artist { left: 57%; right: 3%; top: 53%; font-size: 3.2cqw; color: #C8C8C8; }
+.s-bar { left: 57%; right: 3%; top: 81%; height: 2.4%; border-radius: 3px; background: #28303A; }
+.s-bar::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 38%; border-radius: 3px; background: #70C0E0; }
+.s-time { left: 57%; top: 86%; font-size: 2.8cqw; color: var(--screen-dim); font-family: var(--mono); }
+.s-mode { left: 84%; top: 86.6%; width: 2.8%; aspect-ratio: 1; border: 1.5px solid var(--screen-dim); border-radius: 50%; border-right-color: transparent; }
+.s-state { right: 3%; top: 86.4%; width: 0; height: 0; border-left: 1.6cqw solid #80FF80; border-top: 1cqw solid transparent; border-bottom: 1cqw solid transparent; }
+.legend { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 4px 20px; font-size: 0.9rem; color: var(--muted); margin: 10px 0 16px; padding: 0; list-style: none; }
+.legend b { color: var(--ink); font-weight: 700; }
+
+.modes { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin: 10px 0 16px; padding: 0; list-style: none; }
+.modes li { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; margin: 0; }
+.modes b { font-family: var(--display); font-weight: 600; letter-spacing: 0.02em; display: block; }
+.modes span { color: var(--muted); font-size: 0.9rem; }
+
+.tree-wrap { overflow-x: auto; margin: 8px 0 14px; }
+pre.tree {
+  font-family: var(--mono);
+  font-size: 0.84rem;
+  line-height: 1.55;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 0;
+  width: max-content;
+  min-width: 100%;
+}
+pre.tree .c { color: var(--muted); }
+
+dl.formats { display: grid; grid-template-columns: max-content 1fr; gap: 6px 18px; margin: 8px 0 14px; }
+dl.formats dt { font-family: var(--display); font-weight: 600; letter-spacing: 0.03em; }
+dl.formats dd { margin: 0; color: var(--ink); }
+
+/* Getting in touch, at the foot of the page. */
+.contact {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding-block: 28px 8px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 28px;
+  font-size: 0.98rem;
+}
+.contact a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule); }
+.contact a:hover { border-bottom-color: var(--accent-fill); }
+.handle { display: inline-flex; align-items: center; gap: 10px; color: var(--muted); }
+.handle .logos { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); }
+.handle svg { width: 1em; height: 1em; display: block; }
+
+@media (max-width: 820px) {
+  .layout { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  nav.toc { position: static; }
+  .toc ol { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .edition { text-align: left; }
+}
+@media (max-width: 520px) {
+  .controls td:first-child { width: auto; white-space: normal; }
+  .controls, .controls tbody, .controls tr, .controls td { display: block; }
+  .controls thead { display: none; }
+  .controls td { border-bottom: 0; padding: 0; }
+  .controls td:first-child { padding-top: 10px; }
+  .controls tr { border-bottom: 1px solid var(--rule); padding-bottom: 10px; }
+  dl.formats { grid-template-columns: 1fr; }
+  dl.formats dd { margin-bottom: 6px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+html { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="g-tri" viewBox="0 0 20 20"><path d="M10 3.2 17 15.6H3z" fill="none" stroke="var(--tri)" stroke-width="2.1" stroke-linejoin="round"/></symbol>
+  <symbol id="g-cir" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6.4" fill="none" stroke="var(--cir)" stroke-width="2.1"/></symbol>
+  <symbol id="g-crs" viewBox="0 0 20 20"><path d="M4.4 4.4 15.6 15.6M15.6 4.4 4.4 15.6" fill="none" stroke="var(--crs)" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="g-sqr" viewBox="0 0 20 20"><rect x="4.2" y="4.2" width="11.6" height="11.6" rx="0.8" fill="none" stroke="var(--sqr)" stroke-width="2.1"/></symbol>
+  <symbol id="g-up" viewBox="0 0 20 20"><path d="M10 4.5 15.5 13h-11z" fill="currentColor"/></symbol>
+  <symbol id="g-down" viewBox="0 0 20 20"><path d="M10 15.5 4.5 7h11z" fill="currentColor"/></symbol>
+  <symbol id="g-left" viewBox="0 0 20 20"><path d="M4.5 10 13 4.5v11z" fill="currentColor"/></symbol>
+  <symbol id="g-right" viewBox="0 0 20 20"><path d="M15.5 10 7 4.5v11z" fill="currentColor"/></symbol>
+  <symbol id="g-note" viewBox="0 0 20 20"><path d="M8 14.5V4.2l7-1.7v10.3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><ellipse cx="6" cy="14.6" rx="2.5" ry="1.9" fill="currentColor"/><ellipse cx="13" cy="12.9" rx="2.5" ry="1.9" fill="currentColor"/></symbol>
+</svg>
+
+<header class="masthead">
+  <div>
+    <h1 class="wordmark">TRAX</h1>
+    <p>A music player for the PSP. This manual covers every screen and button.</p>
+  </div>
+  <div class="edition">
+    <strong>Version 1.0.0 beta 1</strong><br>
+    For PSP-1000 and later<br>
+    Custom firmware recommended
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="toc" aria-label="Contents">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#setup">Setting up</a></li>
+      <li><a href="#list">The list</a></li>
+      <li><a href="#modes">Play modes</a></li>
+      <li><a href="#player">The Player</a></li>
+      <li><a href="#vis">Visualizations</a></li>
+      <li><a href="#eq">Equalizer</a></li>
+      <li><a href="#settings">Settings and About</a></li>
+      <li><a href="#cue">Cue albums</a></li>
+      <li><a href="#art">Cover art</a></li>
+      <li><a href="#skins">Cassette skins</a></li>
+      <li><a href="#formats">Supported files</a></li>
+      <li><a href="#limits">In this beta</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <section id="setup">
+      <h2>Setting up</h2>
+      <p class="lede">TRAX plays the music on your memory stick, in the folders you already keep it in — either <code>PSP/MUSIC</code> or <code>MUSIC</code> at the root of the card.</p>
+
+      <h3>Install</h3>
+      <p>Copy the <code>musictest</code> folder into <code>PSP/GAME</code> on the memory stick. TRAX then appears in the XMB under Game › Memory Stick.</p>
+      <div class="tree-wrap"><pre class="tree">PSP/
+  GAME/
+    musictest/
+      EBOOT.PBP          <span class="c">the app</span>
+      trax_kernel.prx    <span class="c">the helper: volume display, ♪ button, screen off</span>
+      SKINS/             <span class="c">cassette skins</span>
+  MUSIC/                 <span class="c">your music, in any folders you like</span></pre></div>
+      <p>Music at the root of the card, in <code>MUSIC</code>, works just as well. That is the folder ARK-4 makes, and plenty of people use it.</p>
+      <h3>Which folder TRAX reads</h3>
+      <p>The first time it runs, TRAX looks in both. If only one has anything in it, that is the one it reads, without asking. If both have something, or neither does, it asks which to use and remembers the answer. Settings has a <strong>Music folder</strong> row to change it later.</p>
+
+      <h3>The helper module</h3>
+      <p>Some things only the PSP's system can see: the volume keys, the ♪ button, and turning the screen off. <code>trax_kernel.prx</code> lets TRAX use them. It needs custom firmware such as ARK-4, PRO or Adrenaline.</p>
+      <div class="note"><strong>Without the helper,</strong> TRAX still plays everything. You won't get the on-screen volume, the ♪ button or Screen off while playing. Holding <span class="key pill">SELECT</span> opens the equalizer instead of the visualization list.</div>
+
+      <h3>Quitting</h3>
+      <p>Press <span class="key pill">HOME</span> as with any PSP app, or choose Quit on the Settings page.</p>
+    </section>
+
+    <section id="list">
+      <h2>The list</h2>
+      <p>TRAX opens on the list of your music folder. The header shows the folder you're in, in bold, and how many items it holds. Folders come first, then tracks, each sorted by name.</p>
+      <p>Every row is one line. A long name is cut short with "…", keeping the file extension. Highlight it and it scrolls to show the whole name. Files TRAX can't play are listed, dimmed, rather than hidden.</p>
+
+      <table class="controls">
+        <thead><tr><th scope="col">Press</th><th scope="col">To</th></tr></thead>
+        <tbody>
+          <tr><td><span class="key face"><svg><use href="#g-up"/></svg></span> <span class="key face"><svg><use href="#g-down"/></svg></span></td><td>Move the highlight. Hold to keep moving.<span class="how">The analog stick works too.</span></td></tr>
+          <tr><td><span class="key face" aria-label="Cross"><svg><use href="#g-crs"/></svg></span></td><td>Open a folder or cue album, or play the highlighted track.<span class="how">Playing a track queues the whole folder, so you can skip through it in the Player.</span></td></tr>
+          <tr><td><span class="key face" aria-label="Cross"><svg><use href="#g-crs"/></svg></span><span class="held">held</span></td><td>In the shuffle modes, start on the highlighted track. A tap lets the shuffle choose the first track.</td></tr>
+          <tr><td><span class="key face" aria-label="Circle"><svg><use href="#g-cir"/></svg></span></td><td>Go up one folder, or back out of a cue album.</td></tr>
+          <tr><td><span class="key shoulder">L</span> <span class="key shoulder">R</span></td><td>Choose how the next thing you start will play. See <a href="#modes">Play modes</a>.</td></tr>
+          <tr><td><span class="key face" aria-label="Square"><svg><use href="#g-sqr"/></svg></span></td><td>Return to the Player, when something is playing.</td></tr>
+          <tr><td><span class="key face" aria-label="Music note"><svg><use href="#g-note"/></svg></span></td><td>Go to what's playing, with the equalizer open.</td></tr>
+          <tr><td><span class="key pill">START</span></td><td>Open Settings and About.</td></tr>
+        </tbody>
+      </table>
+      <p>The bar along the bottom shows the play modes, with the chosen one in white, and the name of what's playing on the right.</p>
+    </section>
+
+    <section id="modes">
+      <h2>Play modes</h2>
+      <p>Choose the mode in the list, with <span class="key shoulder">L</span> and <span class="key shoulder">R</span>, <em>before</em> you start something. That way a folder can be set to shuffle and then started. The mode's name shows for a moment when you change it.</p>
+      <ul class="modes">
+        <li><b>Play once</b><span>Plays from the chosen track to the end of the folder, then stops.</span></li>
+        <li><b>Repeat</b><span>Plays the folder over and over.</span></li>
+        <li><b>Repeat one</b><span>Plays the same track again each time it ends.</span></li>
+        <li><b>Shuffle</b><span>Plays every track once, in a random order.</span></li>
+        <li><b>Shuffle and repeat</b><span>Shuffles again each time round, and never starts a round with the track that just finished.</span></li>
+      </ul>
+      <p>Whatever is playing keeps the mode it was started with. Changing the mode in the list affects only what you start next. The Player shows the queue's mode as a small icon beside the time. Play once has no icon.</p>
+      <p>Shuffling changes the order tracks play in, not the list. The folder still reads in its own order.</p>
+    </section>
+
+    <section id="player">
+      <h2>The Player</h2>
+      <p>Starting a track opens the Player. It's built from the file's own tags:</p>
+      <div class="screen-wrap">
+        <div class="screen" role="img" aria-label="Sketch of the Player screen: the battery top left, the album name centered along the top, the track count top right, the cover on the left, the title and artist on the right, and the progress bar and time along the bottom right.">
+          <div class="s-batt"></div>
+          <div class="s-album">(the best of) New Order</div>
+          <div class="s-count">5/10</div>
+          <div class="s-cover"></div>
+          <div class="s-title">Touched by the Hand of God</div>
+          <div class="s-artist">New Order</div>
+          <div class="s-bar"></div>
+          <div class="s-time">3:31 / 10:00</div>
+          <div class="s-mode"></div>
+          <div class="s-state"></div>
+        </div>
+      </div>
+      <ul class="legend">
+        <li><b>Top left:</b> battery. Green while charging, red at 15% or less.</li>
+        <li><b>Top:</b> the album. The track's place in the queue is on the right.</li>
+        <li><b>Left:</b> the cover.</li>
+        <li><b>Right:</b> title and artist, then the progress bar, the time, the play-mode icon and whether it's playing or paused.</li>
+      </ul>
+
+      <table class="controls">
+        <thead><tr><th scope="col">Press</th><th scope="col">To</th></tr></thead>
+        <tbody>
+          <tr><td><span class="key face" aria-label="Cross"><svg><use href="#g-crs"/></svg></span></td><td>Pause or resume.</td></tr>
+          <tr><td><span class="key face"><svg><use href="#g-left"/></svg></span> <span class="key face"><svg><use href="#g-right"/></svg></span><span class="held">held</span></td><td>Scrub backward or forward. The longer you hold, the faster it goes: normal speed, then twice as fast after 2 seconds and three times after 5.<span class="how">The analog stick works too.</span></td></tr>
+          <tr><td><span class="key shoulder">L</span> <span class="key shoulder">R</span></td><td>Previous or next track in the queue.</td></tr>
+          <tr><td><span class="key face" aria-label="Triangle"><svg><use href="#g-tri"/></svg></span></td><td>Show or hide the track's details: format, codec, sample rate, bit depth and channels.</td></tr>
+          <tr><td><span class="key pill">SELECT</span></td><td>Swap between the Player and your chosen visualization.</td></tr>
+          <tr><td><span class="key pill">SELECT</span><span class="held">held</span></td><td>Choose a visualization.</td></tr>
+          <tr><td><span class="key face" aria-label="Music note"><svg><use href="#g-note"/></svg></span></td><td>Open or close the equalizer.</td></tr>
+          <tr><td><span class="key face" aria-label="Circle"><svg><use href="#g-cir"/></svg></span></td><td>Back to the list. The music keeps playing.</td></tr>
+          <tr><td><span class="key face" aria-label="Square"><svg><use href="#g-sqr"/></svg></span></td><td>Stop, and go back to the list.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Volume</h3>
+      <p>The PSP's own volume keys work as usual. With the helper loaded, TRAX shows the level on screen while you change it.</p>
+    </section>
+
+    <section id="vis">
+      <h2>Visualizations</h2>
+      <p>Tap <span class="key pill">SELECT</span> in the Player to swap to a visualization, and again to swap back. Hold <span class="key pill">SELECT</span> to choose which one: <span class="key face"><svg><use href="#g-up"/></svg></span> <span class="key face"><svg><use href="#g-down"/></svg></span> to pick, <span class="key face" aria-label="Cross"><svg><use href="#g-crs"/></svg></span> to choose it, <span class="key face" aria-label="Circle"><svg><use href="#g-cir"/></svg></span> to close the list. TRAX remembers your choice.</p>
+      <dl class="formats">
+        <dt>Tape deck</dt><dd>A cassette whose reels wind as the track plays. <span class="key face"><svg><use href="#g-up"/></svg></span> <span class="key face"><svg><use href="#g-down"/></svg></span> change the skin.</dd>
+        <dt>Orb</dt><dd>A glowing network orb, each band of it swelling with its own part of the music.</dd>
+        <dt>Level meter</dt><dd>Stereo LED meters from −48 to 0 dB, with peak markers.</dd>
+        <dt>Smoke</dt><dd>Ribbons of light drifting sideways, gusting now and then.</dd>
+        <dt>Starfield</dt><dd>A calm flight through the stars.</dd>
+        <dt>Sphere matrix</dt><dd>Sixteen columns of spheres, one per frequency band, lighting up with the music.</dd>
+      </dl>
+      <p>The track's title fades in over a visualization when you arrive and at each new track. All the Player's other buttons still work.</p>
+    </section>
+
+    <section id="eq">
+      <h2>Equalizer</h2>
+      <p>Five bands, from 60 Hz to 12 kHz, each ±12 dB. Open it with <span class="key face" aria-label="Music note"><svg><use href="#g-note"/></svg></span>, or by holding <span class="key pill">SELECT</span> if the helper isn't loaded. Changes are heard at once and saved.</p>
+      <table class="controls">
+        <thead><tr><th scope="col">Press</th><th scope="col">To</th></tr></thead>
+        <tbody>
+          <tr><td><span class="key face"><svg><use href="#g-left"/></svg></span> <span class="key face"><svg><use href="#g-right"/></svg></span></td><td>Pick a band.</td></tr>
+          <tr><td><span class="key face"><svg><use href="#g-up"/></svg></span> <span class="key face"><svg><use href="#g-down"/></svg></span></td><td>Raise or lower it. Hold to keep going.</td></tr>
+          <tr><td><span class="key face" aria-label="Triangle"><svg><use href="#g-tri"/></svg></span></td><td>Step through the presets: Flat, Bass, Treble, Vocal and Loud.</td></tr>
+          <tr><td><span class="key face" aria-label="Circle"><svg><use href="#g-cir"/></svg></span> or <span class="key face" aria-label="Cross"><svg><use href="#g-crs"/></svg></span></td><td>Close the equalizer.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="settings">
+      <h2>Settings and About</h2>
+      <p>Press <span class="key pill">START</span> anywhere to open this page. Press it again or <span class="key face" aria-label="Circle"><svg><use href="#g-cir"/></svg></span> to close it. <span class="key shoulder">L</span> and <span class="key shoulder">R</span> switch between the two tabs.</p>
+      <h3>Settings</h3>
+      <p><span class="key face"><svg><use href="#g-up"/></svg></span> <span class="key face"><svg><use href="#g-down"/></svg></span> pick a setting. <span class="key face"><svg><use href="#g-left"/></svg></span> <span class="key face"><svg><use href="#g-right"/></svg></span> or <span class="key face" aria-label="Cross"><svg><use href="#g-crs"/></svg></span> change it.</p>
+      <dl class="formats">
+        <dt>Music folder</dt><dd><code>PSP/MUSIC</code> or <code>MUSIC</code> at the root of the card. Changing it reads the other folder straight away; anything playing carries on.</dd>
+        <dt>Sleep timer</dt><dd>Off, 15, 30, 60 or 90 minutes. The music fades out over the last half minute, then pauses. It's for one evening, so it's always Off when TRAX starts.</dd>
+        <dt>Screen off while playing</dt><dd>Off, or after 30 seconds, 1, 2 or 5 minutes without a button press. The screen uses most of the battery. Any button wakes it without doing anything else, and it comes back on by itself when the music stops. Needs the helper.</dd>
+        <dt>Resume on launch</dt><dd>When on, TRAX reopens the last track when you start it, paused where you left it, in the same play mode.</dd>
+        <dt>Quit</dt><dd>Press <span class="key face" aria-label="Cross"><svg><use href="#g-crs"/></svg></span> to leave TRAX.</dd>
+      </dl>
+      <h3>About</h3>
+      <p>Shows the version and build date, the battery level, the free space on the memory stick, whether the helper is running, which fonts are loaded, and credits for the libraries TRAX uses.</p>
+    </section>
+
+    <section id="cue">
+      <h2>Cue albums</h2>
+      <p>Some albums are one long audio file with a <code>.cue</code> sheet beside it that marks where each track starts. TRAX shows that pair as a single album, named from the sheet and with its cover as a thumbnail. The audio file and the picture don't get rows of their own.</p>
+      <ul>
+        <li><span class="key face" aria-label="Cross"><svg><use href="#g-crs"/></svg></span> on the album opens it like a folder, listing its tracks by number. The header shows the album's name after the folder.</li>
+        <li><span class="key face" aria-label="Cross"><svg><use href="#g-crs"/></svg></span> on a track plays the album from that track. <span class="key shoulder">L</span> and <span class="key shoulder">R</span> in the Player move through the album.</li>
+        <li><span class="key face" aria-label="Circle"><svg><use href="#g-cir"/></svg></span> goes back to the folder, with the album highlighted.</li>
+      </ul>
+      <p>The time and progress bar show your place in the track, not in the whole file.</p>
+    </section>
+
+    <section id="art">
+      <h2>Cover art</h2>
+      <p>TRAX uses the picture embedded in the track, as JPEG or PNG. If there isn't one, it uses a picture from the track's folder, looking in this order:</p>
+      <ul>
+        <li>a picture named <code>folder</code>,</li>
+        <li>then one named <code>album</code>,</li>
+        <li>then one named after the folder itself,</li>
+        <li>and failing those, the first picture in the folder by name.</li>
+      </ul>
+      <p><code>.jpg</code>, <code>.jpeg</code> and <code>.png</code> all work, at any size. A large cover can take a few seconds to decode; a glowing white orb turns where it will appear, and the cover fades in over it. A track with no cover at all gets the orb in pink, purple and blue.</p>
+    </section>
+
+    <section id="skins">
+      <h2>Cassette skins</h2>
+      <p>The Tape deck's cassette is a picture from the <code>SKINS</code> folder beside the app. Add your own by giving each skin a folder:</p>
+      <div class="tree-wrap"><pre class="tree">SKINS/
+  hub.png                    <span class="c">the reel hub every skin uses</span>
+  Maxell XLII 90/
+    Maxell XLII 90.png       <span class="c">the picture: named after the folder, or skin.png</span>
+    skin.json                <span class="c">optional: where to print the title, and colors</span>
+    hub.png                  <span class="c">optional: this skin's own hub</span></pre></div>
+      <p>Where the picture is transparent, the turning reels and tape show through. A skin without <code>skin.json</code> shows no text. In the Tape deck, <span class="key face"><svg><use href="#g-up"/></svg></span> <span class="key face"><svg><use href="#g-down"/></svg></span> step through the skins, and TRAX remembers the one you pick.</p>
+    </section>
+
+    <section id="formats">
+      <h2>Supported files</h2>
+      <dl class="formats">
+        <dt>MP3</dt><dd>All common bit rates.</dd>
+        <dt>FLAC</dt><dd>Including 24-bit at 96 kHz and 192 kHz.</dd>
+        <dt>WAV</dt><dd>8, 16, 24 and 32-bit PCM, 32-bit float, A-law and µ-law, and multichannel.</dd>
+        <dt>AAC</dt><dd>In <code>.m4a</code>, decoded by the PSP's own Media Engine.</dd>
+        <dt>ALAC</dt><dd>Apple Lossless, in <code>.m4a</code>.</dd>
+        <dt>Cue sheets</dt><dd>A <code>.cue</code> beside a single-file album. See <a href="#cue">Cue albums</a>.</dd>
+      </dl>
+      <p>Names in accented Latin, Japanese and Korean display correctly. The fonts for Japanese and Korean load only when a name needs them.</p>
+    </section>
+
+    <section id="limits">
+      <h2>In this beta</h2>
+      <ul>
+        <li>The list's bottom bar labels <span class="key face" aria-label="Circle"><svg><use href="#g-cir"/></svg></span> as Refresh and <span class="key face" aria-label="Triangle"><svg><use href="#g-tri"/></svg></span> as Search. Neither is built yet. <span class="key face" aria-label="Circle"><svg><use href="#g-cir"/></svg></span> goes up a folder.</li>
+        <li>The volume display, the ♪ button and Screen off need the helper and custom firmware.</li>
+        <li>A very large progressive JPEG cover can take around ten seconds to appear while hi-res music plays. The orb shows in the meantime.</li>
+      </ul>
+    </section>
+  </main>
+</div>
+
+<footer class="contact">
+  <a href="mailto:traxpsp@gmail.com">traxpsp@gmail.com</a>
+  <span class="handle">
+    @traxpsp
+    <span class="logos">
+      <svg viewBox="0 0 24 24" role="img" aria-label="Twitter"><path fill="currentColor" d="M23 4.9c-.8.4-1.7.6-2.6.8 1-.6 1.7-1.5 2-2.6-.9.5-1.9.9-2.9 1.2a4.5 4.5 0 0 0-7.7 4.1A12.8 12.8 0 0 1 2.5 3.7a4.5 4.5 0 0 0 1.4 6 4.4 4.4 0 0 1-2-.6v.1c0 2.2 1.5 4 3.6 4.4-.7.2-1.4.2-2 .1a4.5 4.5 0 0 0 4.2 3.1A9 9 0 0 1 1 18.6a12.7 12.7 0 0 0 6.9 2c8.3 0 12.8-6.9 12.8-12.8v-.6c.9-.6 1.6-1.4 2.3-2.3z"/></svg>
+      <svg viewBox="0 0 24 24" role="img" aria-label="Bluesky"><path fill="currentColor" d="M12 10.9C10.9 8.7 8 4.8 5.3 3 2.7 1.4 1.7 1.7 1.1 2 .3 2.4 0 3.7 0 4.5v6.2c0 1.3 1 2.3 2.3 2.4h.6c1.7.3 3.3.7 4.8 2 .6.5 1.1 1.1 1.5 1.8-.9.6-2 .9-3.1.9-1.3 0-2.4.6-2.4 1.8s1.3 1.9 2.7 1.9c2.3 0 4.2-1.4 5.6-3.4 1.4 2 3.3 3.4 5.6 3.4 1.4 0 2.7-.7 2.7-1.9s-1.1-1.8-2.4-1.8c-1.1 0-2.2-.3-3.1-.9.4-.7.9-1.3 1.5-1.8 1.5-1.3 3.1-1.7 4.8-2h.6c1.3-.1 2.3-1.1 2.3-2.4V4.5c0-.8-.3-2.1-1.1-2.5-.6-.3-1.6-.6-4.2 1-2.7 1.8-5.6 5.7-6.7 7.9z"/></svg>
+      <svg viewBox="0 0 24 24" role="img" aria-label="Instagram"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.2" cy="6.8" r="1.3" fill="currentColor"/></svg>
+      <svg viewBox="0 0 24 24" role="img" aria-label="Reddit"><circle cx="12" cy="13.5" r="8" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="20.3" cy="10.3" r="2.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="3.7" cy="10.3" r="2.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 5.5 13.2 1.9l3.3.9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="17" cy="2.8" r="1.6" fill="currentColor"/><circle cx="9.3" cy="12.6" r="1.3" fill="currentColor"/><circle cx="14.7" cy="12.6" r="1.3" fill="currentColor"/><path d="M8.8 16.6c.9.8 2 1.2 3.2 1.2s2.3-.4 3.2-1.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </span>
+  </span>
+</footer>
+
+</body>
+</html>

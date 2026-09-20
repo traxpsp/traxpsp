@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TRAX Skin Format</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #F3F5F7;
+  --surface: #FFFFFF;
+  --ink: #121A22;
+  --muted: #56636F;
+  --rule: #D8DEE4;
+  --accent: #8F6200;
+  --accent-fill: #FFD060;
+  --accent-soft: #FFF3D1;
+  --sky: #2A7196;
+  --screen: #101820;
+  --screen-ink: #E8EDF1;
+  --screen-dim: #909090;
+  --key: #FFFFFF;
+  --key-edge: #BFC7CF;
+  --tri: #23946F;
+  --cir: #D23E48;
+  --crs: #4B6FCB;
+  --sqr: #C0589A;
+  --display: "Chakra Petch", "Avenir Next Condensed", "Arial Narrow", sans-serif;
+  --body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #101820;
+    --surface: #17212B;
+    --ink: #E6ECF1;
+    --muted: #97A5B2;
+    --rule: #2A3642;
+    --accent: #FFD060;
+    --accent-fill: #FFD060;
+    --accent-soft: #2B2616;
+    --sky: #70C0E0;
+    --screen: #0B1117;
+    --key: #202C38;
+    --key-edge: #3A4957;
+    --tri: #4CC79D;
+    --cir: #F0646D;
+    --crs: #7C9CF0;
+    --sqr: #E785C2;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #101820;
+  --surface: #17212B;
+  --ink: #E6ECF1;
+  --muted: #97A5B2;
+  --rule: #2A3642;
+  --accent: #FFD060;
+  --accent-fill: #FFD060;
+  --accent-soft: #2B2616;
+  --sky: #70C0E0;
+  --screen: #0B1117;
+  --key: #202C38;
+  --key-edge: #3A4957;
+  --tri: #4CC79D;
+  --cir: #F0646D;
+  --crs: #7C9CF0;
+  --sqr: #E785C2;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16.5px;
+  line-height: 1.6;
+  padding-inline: 20px;
+  padding-block: 0 64px;
+}
+a { color: var(--sky); text-underline-offset: 2px; }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent-fill); outline-offset: 2px; border-radius: 3px; }
+code, .file { font-family: var(--mono); font-size: 0.86em; background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 0.05em 0.35em; white-space: nowrap; }
+
+.masthead {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding-block: 40px 28px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px 32px;
+}
+.wordmark {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(3rem, 9vw, 5.2rem);
+  line-height: 0.9;
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+.wordmark span { color: var(--accent); }
+.masthead p { margin: 8px 0 0; color: var(--muted); max-width: 46ch; }
+.edition {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: right;
+  line-height: 1.5;
+}
+.edition strong { color: var(--ink); font-weight: 500; }
+
+.layout {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  gap: 48px;
+  padding-top: 32px;
+}
+nav.toc {
+  position: sticky;
+  top: calc(env(safe-area-inset-top, 0px) + 20px);
+  align-self: start;
+  font-size: 0.92rem;
+}
+.toc h2 {
+  font-family: var(--display);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 10px;
+}
+.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.toc a { display: block; padding: 3px 0 3px 10px; border-left: 2px solid var(--rule); color: var(--ink); text-decoration: none; }
+.toc a:hover { border-left-color: var(--accent-fill); }
+
+main { min-width: 0; max-width: 72ch; }
+section { padding-block: 8px 28px; border-bottom: 1px solid var(--rule); margin-bottom: 28px; scroll-margin-top: 20px; }
+section:last-child { border-bottom: 0; }
+h2 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.75rem;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  margin: 0 0 12px;
+  text-wrap: balance;
+}
+h3 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.12rem;
+  letter-spacing: 0.02em;
+  margin: 26px 0 8px;
+}
+p { margin: 0 0 12px; }
+ul { margin: 0 0 12px; padding-left: 1.2em; }
+li { margin-bottom: 4px; }
+.lede { font-size: 1.08rem; color: var(--ink); }
+
+/* The controls: key column, then what it does. */
+.controls { width: 100%; border-collapse: collapse; margin: 6px 0 16px; font-size: 0.97rem; }
+.controls th {
+  text-align: left;
+  font-family: var(--display);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 0 0 6px;
+  border-bottom: 1px solid var(--rule);
+}
+.controls td { padding: 9px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.controls td:first-child { width: 11.5rem; padding-right: 14px; white-space: nowrap; }
+.controls tr:last-child td { border-bottom: 0; }
+.how { color: var(--muted); font-size: 0.86rem; display: block; margin-top: 3px; }
+
+.key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: -0.42em;
+  min-width: 1.75em;
+  height: 1.75em;
+  padding: 0 0.4em;
+  border-radius: 999px;
+  background: var(--key);
+  border: 1px solid var(--key-edge);
+  box-shadow: 0 1px 0 var(--key-edge);
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 0.82em;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  line-height: 1;
+}
+.key svg { width: 1.05em; height: 1.05em; display: block; }
+.key.face { width: 1.75em; padding: 0; }
+.key.shoulder { border-radius: 0.55em 0.55em 0.3em 0.3em; min-width: 2.1em; }
+.key.pill { font-size: 0.66em; letter-spacing: 0.1em; height: 2.1em; padding: 0 0.8em; }
+.plus { color: var(--muted); margin: 0 0.2em; font-size: 0.85em; }
+.held { font-size: 0.78rem; color: var(--muted); margin-left: 6px; font-style: italic; }
+
+.note {
+  background: var(--accent-soft);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 12px 0 16px;
+  font-size: 0.95rem;
+}
+.note strong { color: var(--ink); }
+
+/* The Player, sketched at the PSP's own 480 x 272. */
+.screen-wrap { margin: 16px 0 8px; overflow-x: auto; }
+.screen {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 480 / 272;
+  background: var(--screen);
+  border-radius: 10px;
+  border: 6px solid #05080B;
+  color: var(--screen-ink);
+  font-family: var(--body);
+  overflow: hidden;
+  container-type: inline-size;
+}
+.screen > div { position: absolute; }
+.s-album { top: 2.6%; left: 0; right: 0; text-align: center; font-size: 3cqw; color: var(--screen-dim); }
+.s-count { top: 2.6%; right: 2.5%; font-size: 2.8cqw; color: var(--screen-dim); font-family: var(--mono); }
+.s-batt { top: 3.6%; left: 2.1%; width: 4.2%; height: 3.3%; border: 1px solid var(--screen-dim); border-radius: 1px; }
+.s-batt::before { content: ""; position: absolute; inset: 18%; right: 35%; background: #C8C8C8; }
+.s-batt::after { content: ""; position: absolute; right: -14%; top: 30%; width: 10%; height: 40%; background: var(--screen-dim); }
+.s-cover {
+  left: 2.1%; top: 11%; width: 50%; bottom: 3.7%;
+  width: auto; aspect-ratio: 1;
+  border-radius: 2px;
+  background:
+    radial-gradient(circle at 38% 40%, #E7A6C9 0 16%, transparent 17%),
+    radial-gradient(circle at 60% 58%, #8EA6F2 0 20%, transparent 21%),
+    linear-gradient(135deg, #F6F1E7, #E9E3D6);
+}
+.s-title { left: 57%; right: 3%; top: 38%; font-size: 4.2cqw; font-weight: 700; line-height: 1.15; }
+.s-artist { left: 57%; right: 3%; top: 53%; font-size: 3.2cqw; color: #C8C8C8; }
+.s-bar { left: 57%; right: 3%; top: 81%; height: 2.4%; border-radius: 3px; background: #28303A; }
+.s-bar::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 38%; border-radius: 3px; background: #70C0E0; }
+.s-time { left: 57%; top: 86%; font-size: 2.8cqw; color: var(--screen-dim); font-family: var(--mono); }
+.s-mode { left: 76.5%; top: 86.6%; width: 2.8%; aspect-ratio: 1; border: 1.5px solid var(--screen-dim); border-radius: 50%; border-right-color: transparent; }
+.s-state { right: 3%; top: 86.4%; width: 0; height: 0; border-left: 1.6cqw solid #80FF80; border-top: 1cqw solid transparent; border-bottom: 1cqw solid transparent; }
+.legend { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 4px 20px; font-size: 0.9rem; color: var(--muted); margin: 10px 0 16px; padding: 0; list-style: none; }
+.legend b { color: var(--ink); font-weight: 700; }
+
+.modes { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin: 10px 0 16px; padding: 0; list-style: none; }
+.modes li { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; margin: 0; }
+.modes b { font-family: var(--display); font-weight: 600; letter-spacing: 0.02em; display: block; }
+.modes span { color: var(--muted); font-size: 0.9rem; }
+
+.tree-wrap { overflow-x: auto; margin: 8px 0 14px; }
+pre.tree {
+  font-family: var(--mono);
+  font-size: 0.84rem;
+  line-height: 1.55;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 0;
+  width: max-content;
+  min-width: 100%;
+}
+pre.tree .c { color: var(--muted); }
+
+dl.formats { display: grid; grid-template-columns: max-content 1fr; gap: 6px 18px; margin: 8px 0 14px; }
+dl.formats dt { font-family: var(--display); font-weight: 600; letter-spacing: 0.03em; }
+dl.formats dd { margin: 0; color: var(--ink); }
+
+@media (max-width: 820px) {
+  .layout { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  nav.toc { position: static; }
+  .toc ol { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .edition { text-align: left; }
+}
+@media (max-width: 520px) {
+  .controls td:first-child { width: auto; white-space: normal; }
+  .controls, .controls tbody, .controls tr, .controls td { display: block; }
+  .controls thead { display: none; }
+  .controls td { border-bottom: 0; padding: 0; }
+  .controls td:first-child { padding-top: 10px; }
+  .controls tr { border-bottom: 1px solid var(--rule); padding-bottom: 10px; }
+  dl.formats { grid-template-columns: 1fr; }
+  dl.formats dd { margin-bottom: 6px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+html { scroll-behavior: smooth; }
+
+/* Reference tables: key, type, default, meaning. */
+.ref { width: 100%; border-collapse: collapse; margin: 6px 0 16px; font-size: 0.95rem; }
+.ref th {
+  text-align: left;
+  font-family: var(--display);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 0 12px 6px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.ref td { padding: 9px 12px 9px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.ref tr:last-child td { border-bottom: 0; }
+.ref td:first-child code { font-weight: 500; }
+.ref .t { color: var(--muted); font-size: 0.86rem; white-space: nowrap; }
+.table-wrap { overflow-x: auto; }
+
+pre.json {
+  font-family: var(--mono);
+  font-size: 0.84rem;
+  line-height: 1.6;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 0;
+  width: max-content;
+  min-width: 100%;
+}
+pre.json .k { color: var(--sky); }
+pre.json .s { color: var(--accent); }
+pre.json .n { color: var(--tri); }
+pre.json .c { color: var(--muted); font-style: italic; }
+
+/* The cassette's screen, with an area drawn on it. */
+.deck {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 480 / 272;
+  background: #1B0B3A;
+  border-radius: 10px;
+  border: 6px solid #05080B;
+  overflow: hidden;
+  container-type: inline-size;
+  margin: 12px 0 8px;
+}
+.deck > div { position: absolute; }
+.deck .shell { left: 8%; right: 8%; top: 14%; bottom: 10%; border-radius: 3.5cqw; background: #D9D4C7; }
+.deck .label { left: 11%; right: 11%; top: 20%; height: 34%; border-radius: 1.2cqw; background: #F4F1E8; }
+.deck .hub {
+  width: 19.6%; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle, #101010 0 22%, #2E2E2E 23% 60%, #101010 61%);
+  top: 58%; transform: translate(-50%, -50%);
+}
+.deck .hub.l { left: calc(154.5 / 480 * 100%); }
+.deck .hub.r { left: calc(326 / 480 * 100%); }
+.deck .area {
+  left: calc(62 / 480 * 100%);
+  top: calc(70 / 272 * 100%);
+  width: calc(263 / 480 * 100%);
+  height: calc(22 / 272 * 100%);
+  border: 1.5px dashed #D23E48;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.3cqw; color: #1E1E1E; font-family: var(--body);
+}
+.deck .tag {
+  left: calc(62 / 480 * 100%);
+  top: calc(56 / 272 * 100%);
+  font-family: var(--mono); font-size: 2cqw; color: #D23E48; background: #F4F1E8; padding: 0 0.6cqw;
+}
+figcaption { font-size: 0.88rem; color: var(--muted); margin-bottom: 16px; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="g-tri" viewBox="0 0 20 20"><path d="M10 3.2 17 15.6H3z" fill="none" stroke="var(--tri)" stroke-width="2.1" stroke-linejoin="round"/></symbol>
+  <symbol id="g-cir" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6.4" fill="none" stroke="var(--cir)" stroke-width="2.1"/></symbol>
+  <symbol id="g-crs" viewBox="0 0 20 20"><path d="M4.4 4.4 15.6 15.6M15.6 4.4 4.4 15.6" fill="none" stroke="var(--crs)" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="g-sqr" viewBox="0 0 20 20"><rect x="4.2" y="4.2" width="11.6" height="11.6" rx="0.8" fill="none" stroke="var(--sqr)" stroke-width="2.1"/></symbol>
+  <symbol id="g-up" viewBox="0 0 20 20"><path d="M10 4.5 15.5 13h-11z" fill="currentColor"/></symbol>
+  <symbol id="g-down" viewBox="0 0 20 20"><path d="M10 15.5 4.5 7h11z" fill="currentColor"/></symbol>
+  <symbol id="g-left" viewBox="0 0 20 20"><path d="M4.5 10 13 4.5v11z" fill="currentColor"/></symbol>
+  <symbol id="g-right" viewBox="0 0 20 20"><path d="M15.5 10 7 4.5v11z" fill="currentColor"/></symbol>
+  <symbol id="g-note" viewBox="0 0 20 20"><path d="M8 14.5V4.2l7-1.7v10.3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><ellipse cx="6" cy="14.6" rx="2.5" ry="1.9" fill="currentColor"/><ellipse cx="13" cy="12.9" rx="2.5" ry="1.9" fill="currentColor"/></symbol>
+</svg>
+
+<header class="masthead">
+  <div>
+    <h1 class="wordmark">skin<span>.</span>json</h1>
+    <p>How to give a TRAX cassette skin its printed label and a moving background.</p>
+  </div>
+  <div class="edition">
+    <strong>TRAX 1.0.0 beta 1</strong><br>
+    Tape deck visualization<br>
+    Companion to the TRAX Manual
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="toc" aria-label="Contents">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#folder">The skin folder</a></li>
+      <li><a href="#example">A complete example</a></li>
+      <li><a href="#top">Top level</a></li>
+      <li><a href="#background">background</a></li>
+      <li><a href="#areas">areas</a></li>
+      <li><a href="#lines">lines and fields</a></li>
+      <li><a href="#fit">How text is fitted</a></li>
+      <li><a href="#color">Colors</a></li>
+      <li><a href="#limits">Limits</a></li>
+      <li><a href="#testing">Testing a skin</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <section id="folder">
+      <h2>The skin folder</h2>
+      <p class="lede">Each skin is a folder inside <code>SKINS</code>, beside the TRAX app. <code>skin.json</code> is optional: without it the skin works but prints no text, since nothing in a picture says where a title should go.</p>
+      <div class="tree-wrap"><pre class="tree">PSP/GAME/musictest/SKINS/
+  hub.png                    <span class="c">the reel hub every skin uses</span>
+  Maxell XLII 90/
+    Maxell XLII 90.png       <span class="c">the picture</span>
+    skin.json                <span class="c">optional: the label and background</span>
+    hub.png                  <span class="c">optional: this skin's own hub</span></pre></div>
+      <p>The picture is the PNG named after the folder. Failing that, TRAX uses <code>skin.png</code>, and failing that, the only other picture in the folder. Draw it at <strong>480 × 272</strong>, the PSP's screen size, so it's shown pixel for pixel. Any other size is stretched to fit.</p>
+      <p>The picture is drawn over the turning reels. Wherever it's transparent, the reels, the tape and the <a href="#background">background</a> show through.</p>
+      <p>All positions in <code>skin.json</code> are screen pixels, measured from the top-left corner of that 480 × 272 picture.</p>
+    </section>
+
+    <section id="example">
+      <h2>A complete example</h2>
+      <p>This is the file that ships with the Maxell XLII 90 skin, with the defaults written out:</p>
+      <div class="tree-wrap"><pre class="json">{
+  <span class="k">"name"</span>: <span class="s">"Maxell XLII 90"</span>,
+
+  <span class="k">"background"</span>: {
+    <span class="k">"colors"</span>: [<span class="s">"#1B0B3A"</span>, <span class="s">"#0B3A5C"</span>, <span class="s">"#0B5C3A"</span>],
+    <span class="k">"seconds"</span>: <span class="n">6</span>,
+    <span class="k">"blend"</span>: <span class="s">"fade"</span>,
+    <span class="k">"while"</span>: <span class="s">"playing"</span>
+  },
+
+  <span class="k">"defaults"</span>: { <span class="k">"size"</span>: <span class="n">14</span>, <span class="k">"align"</span>: <span class="s">"left"</span>, <span class="k">"color"</span>: <span class="s">"#1E1E1E"</span> },
+
+  <span class="k">"areas"</span>: [
+    {
+      <span class="k">"rect"</span>: [<span class="n">62</span>, <span class="n">70</span>, <span class="n">263</span>, <span class="n">22</span>],
+      <span class="k">"size"</span>: <span class="n">11</span>,
+      <span class="k">"align"</span>: <span class="s">"center"</span>,
+      <span class="k">"lines"</span>: [ [<span class="s">"album"</span>, <span class="s">": "</span>, <span class="s">"artist"</span>] ]
+    }
+  ]
+}</pre></div>
+      <figure style="margin:0">
+        <div class="deck" role="img" aria-label="A sketch of the cassette screen. A dashed box marks the text area at x 62, y 70, 263 wide and 22 high, across the top of the label, with the album and artist centered in it. The two reel hubs sit below.">
+          <div class="shell"></div>
+          <div class="label"></div>
+          <div class="hub l"></div>
+          <div class="hub r"></div>
+          <div class="tag">rect [62, 70, 263, 22]</div>
+          <div class="area">Technique: New Order</div>
+        </div>
+        <figcaption>The area above, drawn on the screen. The album and artist are centered in it, with the colon between them.</figcaption>
+      </figure>
+    </section>
+
+    <section id="top">
+      <h2>Top level</h2>
+      <p>The file is a JSON object. Every key is optional, and keys are case-sensitive. TRAX ignores keys it doesn't know.</p>
+      <div class="table-wrap"><table class="ref">
+        <thead><tr><th scope="col">Key</th><th scope="col">Type</th><th scope="col">Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>name</code></td><td class="t">string</td><td>The skin's name. Reserved for now: the name TRAX shows when you switch skins comes from the folder.</td></tr>
+          <tr><td><code>background</code></td><td class="t">color or object</td><td>What shows behind the cassette. See <a href="#background">background</a>.</td></tr>
+          <tr><td><code>defaults</code></td><td class="t">object</td><td><code>size</code>, <code>align</code> and <code>color</code> for every area that doesn't set its own. Any <code>rect</code> or <code>lines</code> here is ignored.</td></tr>
+          <tr><td><code>areas</code></td><td class="t">array</td><td>Where text is printed, and what. See <a href="#areas">areas</a>.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section id="background">
+      <h2>background</h2>
+      <p>The background fills the screen behind the reels. It shows wherever the skin's picture is transparent. Without one it's black.</p>
+      <p>Give it either a single color:</p>
+      <div class="tree-wrap"><pre class="json"><span class="k">"background"</span>: <span class="s">"#0B3A5C"</span></pre></div>
+      <p>or an object, to move between several colors:</p>
+      <div class="table-wrap"><table class="ref">
+        <thead><tr><th scope="col">Key</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>colors</code></td><td class="t">array of colors</td><td class="t">none</td><td>The colors to move through, in order, then round again. Up to 6.</td></tr>
+          <tr><td><code>seconds</code></td><td class="t">number</td><td class="t"><code>6</code></td><td>How long each color takes to become the next, from 1 to 3600.</td></tr>
+          <tr><td><code>blend</code></td><td class="t"><code>"fade"</code> or <code>"step"</code></td><td class="t"><code>"fade"</code></td><td><code>fade</code> blends smoothly from one color to the next. <code>step</code> changes all at once.</td></tr>
+          <tr><td><code>while</code></td><td class="t"><code>"playing"</code> or <code>"always"</code></td><td class="t"><code>"playing"</code></td><td>With <code>playing</code>, the first color shows whenever the music is paused or stopped. With <code>always</code>, the color it had reached stays.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="note"><strong>The cycle follows the track, not a clock.</strong> It's timed by the playing position, so it starts again with each track, and scrubbing moves it forward or back with the music.</div>
+    </section>
+
+    <section id="areas">
+      <h2>areas</h2>
+      <p>Each area is a rectangle on the screen where lines of text are printed. A skin can have up to 8. An area uses the <code>defaults</code> for anything it doesn't set.</p>
+      <div class="table-wrap"><table class="ref">
+        <thead><tr><th scope="col">Key</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>rect</code></td><td class="t">[x, y, width, height]</td><td class="t">required</td><td>The area, in screen pixels. An area running off the screen is cut back to its edge. One with no width or height is skipped.</td></tr>
+          <tr><td><code>lines</code></td><td class="t">array</td><td class="t">none</td><td>The lines of text, top to bottom. Up to 4. See <a href="#lines">lines and fields</a>.</td></tr>
+          <tr><td><code>size</code></td><td class="t">number</td><td class="t"><code>14</code></td><td>The height of the text, in pixels.</td></tr>
+          <tr><td><code>align</code></td><td class="t"><code>"left"</code>, <code>"center"</code> or <code>"right"</code></td><td class="t"><code>"left"</code></td><td>Where each line sits across the area. Anything else means left.</td></tr>
+          <tr><td><code>color</code></td><td class="t">color</td><td class="t">chosen</td><td>The text color. Leave it out and TRAX picks dark or light text to suit the picture. See <a href="#color">Colors</a>.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section id="lines">
+      <h2>lines and fields</h2>
+      <p>Each line is a list of pieces joined together. A piece that is exactly one of these words is replaced with information about what's playing:</p>
+      <div class="table-wrap"><table class="ref">
+        <thead><tr><th scope="col">Field</th><th scope="col">Prints</th></tr></thead>
+        <tbody>
+          <tr><td><code>title</code></td><td>The track's title.</td></tr>
+          <tr><td><code>artist</code></td><td>The track's artist.</td></tr>
+          <tr><td><code>album</code></td><td>The track's album.</td></tr>
+          <tr><td><code>track</code></td><td>Where you are in the queue, such as <code>3/12</code>. In a shuffle mode this is the place in the play order.</td></tr>
+          <tr><td><code>playlist</code></td><td>What you're playing through: the album when the track has one, otherwise the name of the track's folder.</td></tr>
+        </tbody>
+      </table></div>
+      <p>Any other piece is printed as written, so <code>"Side A · "</code> stays as it is. Field names are lowercase and must match exactly: <code>"Title"</code> prints the word "Title".</p>
+      <p>A line with a single piece can be written as a plain string instead of a list:</p>
+      <div class="tree-wrap"><pre class="json"><span class="k">"lines"</span>: [ <span class="s">"title"</span>, [<span class="s">"artist"</span>, <span class="s">" — "</span>, <span class="s">"album"</span>] ]</pre></div>
+
+      <h3>Missing information</h3>
+      <p>A field the track has nothing for is left out, and so is any text that was only there to separate it. Text between two fields is kept only when both of them have something. Text before or after all the fields is kept only when the field beside it has something.</p>
+      <ul>
+        <li><code>["album", ": ", "artist"]</code> with no artist prints just the album, without the colon.</li>
+        <li><code>["Side A · ", "title"]</code> with no title prints nothing.</li>
+        <li>A line that ends up empty is skipped.</li>
+      </ul>
+    </section>
+
+    <section id="fit">
+      <h2>How text is fitted</h2>
+      <ul>
+        <li><strong>Placement:</strong> the lines are stacked as a block in the middle of the area, top to bottom, each <code>size</code> + 2 pixels below the last.</li>
+        <li><strong>Too wide:</strong> a line that doesn't fit is first made smaller, up to three times, each step 12% smaller, to about two-thirds of <code>size</code>. If it still doesn't fit, it's cut short with "...".</li>
+        <li><strong>Font:</strong> the text uses the PSP's own system font, as the rest of TRAX does. Accented, Japanese and Korean names all print.</li>
+      </ul>
+    </section>
+
+    <section id="color">
+      <h2>Colors</h2>
+      <p>Every color is written <code>"#RRGGBB"</code>: a hash and exactly six hexadecimal digits, in upper or lower case. Short forms like <code>"#FFF"</code>, names like <code>"white"</code> and transparency aren't supported. A color TRAX can't read is ignored, as if it weren't there.</p>
+      <p>When an area has no <code>color</code>, TRAX looks at the opaque parts of the picture inside the area. If they're light, the text is dark gray (<code>#202020</code>); if they're dark, it's near-white (<code>#F0F0F0</code>). The same text is readable on a white label and on a dark shell without you setting anything.</p>
+    </section>
+
+    <section id="limits">
+      <h2>Limits</h2>
+      <p>TRAX stops reading at each limit and ignores the rest, rather than rejecting the file.</p>
+      <div class="table-wrap"><table class="ref">
+        <thead><tr><th scope="col">What</th><th scope="col">Most</th></tr></thead>
+        <tbody>
+          <tr><td>Size of <code>skin.json</code></td><td>32 KB</td></tr>
+          <tr><td>Areas</td><td>8</td></tr>
+          <tr><td>Lines in an area</td><td>4</td></tr>
+          <tr><td>Pieces in a line</td><td>6</td></tr>
+          <tr><td>Text in one piece</td><td>47 bytes (fewer characters for accented or Japanese text)</td></tr>
+          <tr><td>Background colors</td><td>6</td></tr>
+        </tbody>
+      </table></div>
+      <p>If the file isn't valid JSON, the skin still loads, but with no text and a black background.</p>
+    </section>
+
+    <section id="testing">
+      <h2>Testing a skin</h2>
+      <ul>
+        <li>TRAX reads <code>skin.json</code> each time a skin is chosen. After copying a changed file to the memory stick, press <span class="key face" aria-label="Up"><svg><use href="#g-up"/></svg></span> or <span class="key face" aria-label="Down"><svg><use href="#g-down"/></svg></span> in the Tape deck to move to another skin and back.</li>
+        <li>Try a track with no album or artist tags, to check the label still reads well when fields drop out.</li>
+        <li>Try a long title, to check it shrinks and is cut short neatly within its area.</li>
+        <li>Check the JSON with any validator first. A stray comma after the last item turns off all of the skin's text.</li>
+      </ul>
+    </section>
+  </main>
+</div>
+</body>
+</html>

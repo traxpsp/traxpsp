@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TRAX Release Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* The wordmark's face: The Rave Is In Your Pants by NALGames, 2013,
+   freeware for non-commercial use. Cut down to the letters used. */
+@font-face {
+  font-family: "The Rave Is In Your Pants";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(data:font/ttf;base64,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) format("truetype");
+}
+
+:root {
+  --ground: #F3F5F7;
+  --surface: #FFFFFF;
+  --ink: #121A22;
+  --muted: #56636F;
+  --rule: #D8DEE4;
+  --accent: #8F6200;
+  --accent-fill: #FFD060;
+  --accent-soft: #FFF3D1;
+  --sky: #2A7196;
+  --screen: #101820;
+  --screen-ink: #E8EDF1;
+  --screen-dim: #909090;
+  --key: #FFFFFF;
+  --key-edge: #BFC7CF;
+  --tri: #23946F;
+  --cir: #D23E48;
+  --crs: #4B6FCB;
+  --sqr: #C0589A;
+  --display: "Chakra Petch", "Avenir Next Condensed", "Arial Narrow", sans-serif;
+  --body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #101820;
+    --surface: #17212B;
+    --ink: #E6ECF1;
+    --muted: #97A5B2;
+    --rule: #2A3642;
+    --accent: #FFD060;
+    --accent-fill: #FFD060;
+    --accent-soft: #2B2616;
+    --sky: #70C0E0;
+    --screen: #0B1117;
+    --key: #202C38;
+    --key-edge: #3A4957;
+    --tri: #4CC79D;
+    --cir: #F0646D;
+    --crs: #7C9CF0;
+    --sqr: #E785C2;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #101820;
+  --surface: #17212B;
+  --ink: #E6ECF1;
+  --muted: #97A5B2;
+  --rule: #2A3642;
+  --accent: #FFD060;
+  --accent-fill: #FFD060;
+  --accent-soft: #2B2616;
+  --sky: #70C0E0;
+  --screen: #0B1117;
+  --key: #202C38;
+  --key-edge: #3A4957;
+  --tri: #4CC79D;
+  --cir: #F0646D;
+  --crs: #7C9CF0;
+  --sqr: #E785C2;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16.5px;
+  line-height: 1.6;
+  padding-inline: 20px;
+  padding-block: 0 64px;
+}
+a { color: var(--sky); text-underline-offset: 2px; }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent-fill); outline-offset: 2px; border-radius: 3px; }
+code, .file { font-family: var(--mono); font-size: 0.86em; background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 0.05em 0.35em; white-space: nowrap; }
+
+.masthead {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding-block: 40px 28px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px 32px;
+}
+.wordmark {
+  font-family: "The Rave Is In Your Pants", var(--display);
+  font-weight: 400;
+  font-size: clamp(3.4rem, 10vw, 6rem);
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+.masthead p { margin: 8px 0 0; color: var(--muted); max-width: 46ch; }
+.edition {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: right;
+  line-height: 1.5;
+}
+.edition strong { color: var(--ink); font-weight: 500; }
+
+.layout {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  gap: 48px;
+  padding-top: 32px;
+}
+nav.toc {
+  position: sticky;
+  top: calc(env(safe-area-inset-top, 0px) + 20px);
+  align-self: start;
+  font-size: 0.92rem;
+}
+.toc h2 {
+  font-family: var(--display);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 10px;
+}
+.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.toc a { display: block; padding: 3px 0 3px 10px; border-left: 2px solid var(--rule); color: var(--ink); text-decoration: none; }
+.toc a:hover { border-left-color: var(--accent-fill); }
+
+main { min-width: 0; max-width: 72ch; }
+section { padding-block: 8px 28px; border-bottom: 1px solid var(--rule); margin-bottom: 28px; scroll-margin-top: 20px; }
+section:last-child { border-bottom: 0; }
+h2 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.75rem;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  margin: 0 0 12px;
+  text-wrap: balance;
+}
+h3 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.12rem;
+  letter-spacing: 0.02em;
+  margin: 26px 0 8px;
+}
+p { margin: 0 0 12px; }
+ul { margin: 0 0 12px; padding-left: 1.2em; }
+li { margin-bottom: 4px; }
+.lede { font-size: 1.08rem; color: var(--ink); }
+
+/* The controls: key column, then what it does. */
+.controls { width: 100%; border-collapse: collapse; margin: 6px 0 16px; font-size: 0.97rem; }
+.controls th {
+  text-align: left;
+  font-family: var(--display);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 0 0 6px;
+  border-bottom: 1px solid var(--rule);
+}
+.controls td { padding: 9px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.controls td:first-child { width: 11.5rem; padding-right: 14px; white-space: nowrap; }
+.controls tr:last-child td { border-bottom: 0; }
+.how { color: var(--muted); font-size: 0.86rem; display: block; margin-top: 3px; }
+
+.key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: -0.42em;
+  min-width: 1.75em;
+  height: 1.75em;
+  padding: 0 0.4em;
+  border-radius: 999px;
+  background: var(--key);
+  border: 1px solid var(--key-edge);
+  box-shadow: 0 1px 0 var(--key-edge);
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 0.82em;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  line-height: 1;
+}
+.key svg { width: 1.05em; height: 1.05em; display: block; }
+.key.face { width: 1.75em; padding: 0; }
+.key.shoulder { border-radius: 0.55em 0.55em 0.3em 0.3em; min-width: 2.1em; }
+.key.pill { font-size: 0.66em; letter-spacing: 0.1em; height: 2.1em; padding: 0 0.8em; }
+.plus { color: var(--muted); margin: 0 0.2em; font-size: 0.85em; }
+.held { font-size: 0.78rem; color: var(--muted); margin-left: 6px; font-style: italic; }
+
+.note {
+  background: var(--accent-soft);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 12px 0 16px;
+  font-size: 0.95rem;
+}
+.note strong { color: var(--ink); }
+
+/* The Player, sketched at the PSP's own 480 x 272. */
+.screen-wrap { margin: 16px 0 8px; overflow-x: auto; }
+.screen {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 480 / 272;
+  background: var(--screen);
+  border-radius: 10px;
+  border: 6px solid #05080B;
+  color: var(--screen-ink);
+  font-family: var(--body);
+  overflow: hidden;
+  container-type: inline-size;
+}
+.screen > div { position: absolute; }
+.s-album { top: 2.6%; left: 0; right: 0; text-align: center; font-size: 3cqw; color: var(--screen-dim); }
+.s-count { top: 2.6%; right: 2.5%; font-size: 2.8cqw; color: var(--screen-dim); font-family: var(--mono); }
+.s-batt { top: 3.6%; left: 2.1%; width: 4.2%; height: 3.3%; border: 1px solid var(--screen-dim); border-radius: 1px; }
+.s-batt::before { content: ""; position: absolute; inset: 18%; right: 35%; background: #C8C8C8; }
+.s-batt::after { content: ""; position: absolute; right: -14%; top: 30%; width: 10%; height: 40%; background: var(--screen-dim); }
+.s-cover {
+  left: 2.1%; top: 11%; width: 50%; bottom: 3.7%;
+  width: auto; aspect-ratio: 1;
+  border-radius: 2px;
+  background:
+    radial-gradient(circle at 38% 40%, #E7A6C9 0 16%, transparent 17%),
+    radial-gradient(circle at 60% 58%, #8EA6F2 0 20%, transparent 21%),
+    linear-gradient(135deg, #F6F1E7, #E9E3D6);
+}
+.s-title { left: 57%; right: 3%; top: 38%; font-size: 4.2cqw; font-weight: 700; line-height: 1.15; }
+.s-artist { left: 57%; right: 3%; top: 53%; font-size: 3.2cqw; color: #C8C8C8; }
+.s-bar { left: 57%; right: 3%; top: 81%; height: 2.4%; border-radius: 3px; background: #28303A; }
+.s-bar::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 38%; border-radius: 3px; background: #70C0E0; }
+.s-time { left: 57%; top: 86%; font-size: 2.8cqw; color: var(--screen-dim); font-family: var(--mono); }
+.s-mode { left: 76.5%; top: 86.6%; width: 2.8%; aspect-ratio: 1; border: 1.5px solid var(--screen-dim); border-radius: 50%; border-right-color: transparent; }
+.s-state { right: 3%; top: 86.4%; width: 0; height: 0; border-left: 1.6cqw solid #80FF80; border-top: 1cqw solid transparent; border-bottom: 1cqw solid transparent; }
+.legend { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 4px 20px; font-size: 0.9rem; color: var(--muted); margin: 10px 0 16px; padding: 0; list-style: none; }
+.legend b { color: var(--ink); font-weight: 700; }
+
+.modes { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin: 10px 0 16px; padding: 0; list-style: none; }
+.modes li { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; margin: 0; }
+.modes b { font-family: var(--display); font-weight: 600; letter-spacing: 0.02em; display: block; }
+.modes span { color: var(--muted); font-size: 0.9rem; }
+
+.tree-wrap { overflow-x: auto; margin: 8px 0 14px; }
+pre.tree {
+  font-family: var(--mono);
+  font-size: 0.84rem;
+  line-height: 1.55;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 0;
+  width: max-content;
+  min-width: 100%;
+}
+pre.tree .c { color: var(--muted); }
+
+dl.formats { display: grid; grid-template-columns: max-content 1fr; gap: 6px 18px; margin: 8px 0 14px; }
+dl.formats dt { font-family: var(--display); font-weight: 600; letter-spacing: 0.03em; }
+dl.formats dd { margin: 0; color: var(--ink); }
+
+@media (max-width: 820px) {
+  .layout { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  nav.toc { position: static; }
+  .toc ol { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .edition { text-align: left; }
+}
+@media (max-width: 520px) {
+  .controls td:first-child { width: auto; white-space: normal; }
+  .controls, .controls tbody, .controls tr, .controls td { display: block; }
+  .controls thead { display: none; }
+  .controls td { border-bottom: 0; padding: 0; }
+  .controls td:first-child { padding-top: 10px; }
+  .controls tr { border-bottom: 1px solid var(--rule); padding-bottom: 10px; }
+  dl.formats { grid-template-columns: 1fr; }
+  dl.formats dd { margin-bottom: 6px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+html { scroll-behavior: smooth; }
+
+.notes-lede { font-size: 1.08rem; color: var(--muted); max-width: 60ch; }
+main ul { padding-left: 1.15em; }
+main ul ul { margin-top: 4px; }
+main li { margin-bottom: 6px; }
+main li strong { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div>
+    <h1 class="wordmark">TRAX</h1>
+    <p class="notes-lede">A music player for the PSP. What it does, and the work behind this beta.</p>
+  </div>
+  <div class="edition">
+    <strong>1.0.0 beta 1</strong><br>
+    Release notes<br>
+    For PSP-1000 and later
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="toc" aria-label="Contents">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#engineering-improvements">Engineering improvements</a></li>
+      <li><a href="#known-limitations-in-beta-1">Known limitations in beta 1</a></li>
+    </ol>
+  </nav>
+
+  <main>
+  <p>A music player for the PSP.</p>
+<section id="features">
+  <h2>Features</h2>
+  <h3>Formats</h3>
+<ul>
+  <li><strong>MP3.</strong></li>
+  <li><strong>FLAC</strong>, including 24-bit at 96 kHz and 192 kHz.</li>
+  <li><strong>WAV:</strong> 8, 16, 24 and 32-bit PCM, 32-bit float, A-law, µ-law, and multichannel (extensible) files.</li>
+  <li><strong>ALAC</strong> in <code>.m4a</code>, with Apple&#x27;s reference decoder.</li>
+  <li><strong>AAC</strong> in <code>.m4a</code>, decoded by the PSP&#x27;s own Media Engine, so the main processor stays free.</li>
+  <li><strong>Cue sheets.</strong> A single-file album with a <code>.cue</code> appears as one album, split into its tracks.</li>
+  <li><strong>Seeking</strong> in every format.</li>
+  <li><strong>Scrubbing</strong> that speeds up the longer it&#x27;s held: normal speed, then 2× after 2 seconds and 3× after 5.</li>
+  </ul>
+  <h3>Browsing</h3>
+<ul>
+  <li><strong>Folders</strong> under <code>ms0:/PSP/MUSIC</code> or <code>ms0:/MUSIC</code>, whichever holds your music. At the first launch TRAX looks in both: it takes the one with something in it, and asks only when both are alike. Settings keeps the answer.</li>
+  <li><strong>Folders come first</strong>, then tracks, each sorted by name.</li>
+  <li><strong>Cue albums</strong> show as one entry, with their cover as a thumbnail, and open like a folder to their numbered tracks. Playing a track queues the whole album from there.</li>
+  <li><strong>Track lengths</strong>, measured in the background while you browse.</li>
+  <li><strong>One line per row.</strong> Long names are cut with &quot;…&quot; (keeping the file extension), and the selected row scrolls to show its full name.</li>
+  <li><strong>A scrollbar</strong> in long folders, and a bold folder path above the list.</li>
+  <li><strong>Accented, Japanese and Korean names.</strong> The Japanese and Korean fonts load only when a name needs them. A file whose long name the PSP can&#x27;t reopen is opened by its short (8.3) name instead.</li>
+  </ul>
+  <h3>Playing</h3>
+<ul>
+  <li><strong>Five play modes,</strong> chosen with the shoulder buttons in the list: Play once, Repeat, Repeat one, Shuffle, and Shuffle and repeat.</li>
+  <li><strong>In the shuffle modes,</strong> tapping ✕ starts on a random track, and holding it starts on the highlighted one.</li>
+  <li><strong>Queues keep their own mode,</strong> so changing the mode in the list doesn&#x27;t affect what&#x27;s already playing.</li>
+  <li><strong>A five-band equalizer</strong> (60 Hz to 12 kHz, ±12 dB) with five presets (Flat, Bass, Treble, Vocal, Loud), opened with the ♪ button. Your settings are saved.</li>
+  <li><strong>An on-screen volume display</strong> when the volume keys are pressed. The PSP draws nothing over TRAX itself.</li>
+  </ul>
+  <h3>Player view</h3>
+<ul>
+  <li><strong>Cover art</strong> from JPEG and PNG, embedded in the file or found in the folder. It looks for <code>folder</code>, then <code>album</code>, then a picture named after the folder, then the first picture.</li>
+  <li><strong>Large covers</strong> of any size, including 16 MB, 2,800-pixel PNGs.</li>
+  <li><strong>While a slow cover decodes,</strong> a glowing white orb turns where it will appear, and the cover cross-fades in over it.</li>
+  <li><strong>A track with no cover</strong> gets the orb in pink, purple and blue light.</li>
+  <li><strong>A track information sidebar</strong> (△): format, codec, sample rate, bit depth and channels.</li>
+  <li><strong>An icon beside the time</strong> shows how the queue is playing.</li>
+  <li><strong>A battery level</strong> in the top left, filled to the charge: green while charging, red at 15% or below.</li>
+  </ul>
+  <h3>Visualizations</h3>
+  <p>Tap Select to swap between the Player and your chosen visualization. Hold Select to choose one.</p>
+<ul>
+  <li><strong>Tape deck:</strong> a cassette whose reels wind at physically correct speeds. It takes skins from <code>SKINS</code>, each a folder with a picture and an optional <code>skin.json</code> for label text and background colors.</li>
+  <li><strong>Orb:</strong> the network orb reacting to the music, each latitude swelling with its own frequency band.</li>
+  <li><strong>Level meter:</strong> stereo LED meters from −48 to 0 dB, with peak-hold markers.</li>
+  <li><strong>Smoke:</strong> twisting ribbons of light that drift sideways and gust now and then.</li>
+  <li><strong>Starfield:</strong> a calm flight through the stars.</li>
+  <li><strong>Sphere matrix:</strong> 16 columns of shaded spheres, each column a frequency band, lighting up and springing larger with the music.</li>
+  <li><strong>The track title</strong> fades in over a visualization when it starts and on each track change.</li>
+  </ul>
+  <h3>Settings and About (Start)</h3>
+<ul>
+  <li><strong>Sleep timer:</strong> 15 to 90 minutes, fading out over the last half minute, then pausing.</li>
+  <li><strong>Screen off while playing:</strong> after 30 seconds to 5 minutes without a press. Any button wakes the screen, and it also relights when the music stops. The screen is where most of the battery goes.</li>
+  <li><strong>Resume on launch:</strong> reopens the last track, paused where you left it.</li>
+  <li><strong>About:</strong> version, build date, battery, memory stick free space, helper module status, loaded fonts, and credits for the libraries TRAX uses.</li>
+  </ul>
+  <h3>Look and feel</h3>
+<ul>
+  <li><strong>Smooth 12-pixel icons</strong> for the PSP&#x27;s buttons and the play modes, anti-aliased rather than pixel-plotted.</li>
+  <li><strong>Text drawn at the fonts&#x27; native size,</strong> pixel for pixel like the PSP&#x27;s own menus.</li>
+  <li><strong>TRAX name and icon</strong> in the XMB.</li>
+  </ul>
+</section>
+<section id="engineering-improvements">
+  <h2>Engineering improvements</h2>
+  <h3>Memory</h3>
+<ul>
+  <li><strong>The main thread&#x27;s stack no longer overflows.</strong> The play queue (about 190 KB) and cue-sheet structures (about 32 KB) had been on its 256 KB stack. On a real PSP that ended in a black screen; the emulator never enforced it.</li>
+  <li><strong>Covers are scaled down as they decode,</strong> instead of being decoded full size first.</li>
+  <ul>
+    <li>A 1,500-pixel PNG used to need 8.6 MB and now needs only the thumbnail.</li>
+    <li>A 16.7 MB, 2,843-pixel cover now decodes in 1.8 MB, where it couldn&#x27;t be opened at all before.</li>
+    <li>Covers stream from the file rather than being loaded into memory first, so there&#x27;s no size limit.</li>
+    </ul>
+  <li><strong>Skipping stops a cover&#x27;s decode.</strong> A progressive JPEG holds up to 12 MB for the ten seconds it decodes. When you skip, that memory is released before the next file opens.</li>
+  <li><strong>The Japanese and Korean fonts load only when needed,</strong> leaving about 3 MB more free for most music libraries.</li>
+  <li><strong>ALAC buffers are sized correctly.</strong> One track asked for 2.3 MB instead of 30 KB, which failed once memory was fragmented.</li>
+  <li><strong>Skins are built before the old one is released,</strong> so a failed load no longer leaves nothing on screen.</li>
+  <li><strong>No leaks.</strong> Damaged covers had leaked everything decoded so far: 38 MB over 5,000 test images. A 5-hour-52-minute soak test (468 tracks, every visualization) ended with the heap exactly as it started, and heap use held at 3.6–4.1 MB throughout.</li>
+  <li><strong>Size fields from files are capped,</strong> so a damaged header can&#x27;t ask for an absurd buffer or wrap round to a tiny one on the PSP&#x27;s 32-bit system.</li>
+  </ul>
+  <h3>Crash and safety fixes</h3>
+  <p>Most of these were found by fuzzing: millions of deliberately damaged files run through the file readers on the Mac with AddressSanitizer and UndefinedBehaviorSanitizer.</p>
+<ul>
+  <li><strong>Mono AAC</strong> overran a buffer by 4 KB.</li>
+  <li><strong>Damaged MP4 box sizes near 4 GB</strong> slipped past the bounds checks, and the reader then read far past the end of the file&#x27;s index. The same pattern was fixed in the MP4 sample tables and in the ALAC configuration.</li>
+  <li><strong>Apple&#x27;s ALAC decoder</strong> trusted its input in six ways: sample counts, channel counts, and reads past the end of a packet. All six are fixed and marked in the source.</li>
+  <li><strong>An MP3 tag with an empty text field</strong> crashed the app.</li>
+  <li><strong>FLAC comment lengths</strong> could wrap round. <strong>Float WAVs containing NaN</strong> produced undefined samples.</li>
+  <li><strong>A 1 KB fake JPEG</strong> claiming 65,000 pixels a side asked for gigabytes of memory.</li>
+  <li><strong>Oversized PNG dimensions</strong> in covers, skins and icons could wrap round to a small allocation.</li>
+  <li><strong>Bad directory data from the memory stick</strong> caused an exception; it&#x27;s now checked before use.</li>
+  <li><strong>File paths</strong> are only used when they fit their buffers whole. The build now has no compiler warnings.</li>
+  </ul>
+  <h3>Bug fixes</h3>
+<ul>
+  <li><strong>Accented letters drew as the wrong character,</strong> for example &quot;Río&quot; came out with a capital I. The cause was a font caching option.</li>
+  <li><strong>Some files with non-ASCII names</strong> couldn&#x27;t be opened; they now open by their short name.</li>
+  <li><strong>The cassette flickered on real hardware.</strong> Four causes were fixed: a stale graphics texture cache, a frame being shown while still being drawn (fixed with triple buffering), sprites on fractional pixels, and textures too wide for the graphics chip&#x27;s cache.</li>
+  <li><strong>PNG covers didn&#x27;t work.</strong></li>
+  <li><strong>AAC was refused entirely,</strong> and once it played, its first second was garbled.</li>
+  <li><strong>ALAC tracks</strong> sometimes failed with &quot;Couldn&#x27;t play&quot; after several tracks.</li>
+  <li><strong>FLAC seeking</strong> failed through the new block reader.</li>
+  <li><strong>The equalizer</strong> closed the whole player instead of just itself, and didn&#x27;t save changes made with Up/Down.</li>
+  <li><strong>16-bit FLAC and WAV</strong> are now bit-exact. Every sample had been scaled down by a hair.</li>
+  <li><strong>Long names</strong> spilled into the row below, and list text was slightly blurred from being drawn at 0.9 size.</li>
+  <li><strong>A repeated track&#x27;s cover</strong> blinked on every loop.</li>
+  <li><strong>The top of the cover</strong> now and then showed half drawn for a frame. The display was picking up the next frame while it was still being drawn; buffers now change only at a vertical sync.</li>
+  </ul>
+  <h3>Speed</h3>
+<ul>
+  <li><strong>Opening an MP3</strong> no longer reads the whole file. Finding a tag at the very end was taking 2.3 seconds of the 2.55 seconds needed to open a 9 MB track.</li>
+  <li><strong>Streaming reads the card in 128 KB aligned blocks</strong> instead of 1 KB pieces.</li>
+  <ul>
+    <li>A 24-bit/192 kHz FLAC had been 630 card reads a second.</li>
+    <li>On one card, misaligned reads took 123 ms per block against 8 ms aligned.</li>
+    <li>Hi-res FLAC now plays cleanly even at a 222 MHz processor speed.</li>
+    </ul>
+  <li><strong>Covers decode on their own low-priority thread,</strong> and step aside whenever the audio buffer dips.</li>
+  <li><strong>A cover is read from the card in the gap between tracks,</strong> not during playback. That took underruns from 50 to 0.</li>
+  <li><strong>Cue album covers are cached</strong> after the first decode. The Technotronic cover took 15 seconds on every play before.</li>
+  <li><strong>Track lengths</strong> are read from the file handles the folder scan already opens.</li>
+  <li><strong>Drawing:</strong></li>
+  <ul>
+    <li>Circles use 4.1× fewer vertices.</li>
+    <li>The skin is drawn in strips that fit the graphics chip&#x27;s 8 KB texture cache.</li>
+    <li>Icons are rendered once at startup.</li>
+    <li>Each visualization element is one batched draw call.</li>
+    <li>Sines come from a lookup table.</li>
+    </ul>
+  <li><strong>AAC output</strong> is read through the cached view of memory; reading through the uncached one cost more than decoding.</li>
+  <li><strong>The music analysis</strong> runs only while a visualization is showing, below the decoder&#x27;s priority.</li>
+  </ul>
+  <h3>Testing and tools</h3>
+<ul>
+  <li><strong>A fuzzer</strong> for every file reader under AddressSanitizer and UndefinedBehaviorSanitizer (<code>tools/fuzz</code>), with leak checks.</li>
+  <li><strong>Decodes are bit-exact against ffmpeg,</strong> checked for FLAC, WAV and ALAC.</li>
+  <li><strong>A soak-test build (TRAX SOAK)</strong> that presses buttons by itself for hours and logs memory and thread stacks.</li>
+  <li><strong>A visualization preview renderer</strong> (<code>tools/vispreview</code>) that renders any visualization to video with a track&#x27;s sound.</li>
+  </ul>
+</section>
+<section id="known-limitations-in-beta-1">
+  <h2>Known limitations in beta 1</h2>
+<ul>
+  <li><strong>Refresh (○) and Search (△)</strong> are labelled in the list&#x27;s bar but not implemented yet.</li>
+  <li><strong>The volume display, the ♪ button and screen-off</strong> need <code>trax_kernel.prx</code> beside the EBOOT and custom firmware such as ARK. Without them, TRAX works, and holding Select opens the equalizer instead.</li>
+  <li><strong>Mono AAC</strong> has been fixed and fuzzed but not yet heard on a PSP.</li>
+  <li><strong>A large progressive JPEG cover</strong> is still the tightest moment for memory: about 2.3 MB free at its peak, with the Japanese font loaded.</li>
+  <li><strong>Sony&#x27;s fonts</strong> (<code>ltn8.pgf</code>, <code>jpn0.pgf</code>) must not be included in a distributed build. A PSP loads them from its own system storage.</li>
+  </ul>
+</section>
+  </main>
+</div>
+</body>
+</html>
