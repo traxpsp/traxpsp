@@ -380,10 +380,10 @@ html { scroll-behavior: smooth; }
       <p class="lede">TRAX plays the music on your memory stick, in the folders you already keep it in — either <code>PSP/MUSIC</code> or <code>MUSIC</code> at the root of the card.</p>
 
       <h3>Install</h3>
-      <p>Copy the <code>musictest</code> folder into <code>PSP/GAME</code> on the memory stick. TRAX then appears in the XMB under Game › Memory Stick.</p>
+      <p>Copy the <code>TRAX</code> folder into <code>PSP/GAME</code> on the memory stick. TRAX then appears in the XMB under Game › Memory Stick.</p>
       <div class="tree-wrap"><pre class="tree">PSP/
   GAME/
-    musictest/
+    TRAX/
       EBOOT.PBP          <span class="c">the app</span>
       trax_kernel.prx    <span class="c">the helper: volume display, ♪ button, screen off</span>
       SKINS/             <span class="c">cassette skins</span>
@@ -394,7 +394,10 @@ html { scroll-behavior: smooth; }
 
       <h3>The helper module</h3>
       <p>Some things only the PSP's system can see: the volume keys, the ♪ button, and turning the screen off. <code>trax_kernel.prx</code> lets TRAX use them. It needs custom firmware such as ARK-4, PRO or Adrenaline.</p>
-      <div class="note"><strong>Without the helper,</strong> TRAX still plays everything. You won't get the on-screen volume, the ♪ button or Screen off while playing. Holding <span class="key pill">SELECT</span> opens the equalizer instead of the visualization list.</div>
+      <div class="note"><strong>Without the helper,</strong> TRAX still plays everything. You won't get the on-screen volume, the ♪ button or Screen off while playing. The equalizer is still there two ways: hold <span class="key face" aria-label="Triangle"><svg><use href="#g-tri"/></svg></span> for two thirds of a second, or hold <span class="key pill">SELECT</span> for the visualization list, where it is the last entry.</div>
+
+      <h3>On an unmodified PSP</h3>
+      <p>A signed build of TRAX runs on firmware that has never been modified. It plays every format, draws every visualization and reads lyrics from the card. What it cannot do is anything needing the kernel — the volume display, the ♪ button and Screen off — or, usually, join a Wi-Fi network, since the PSP's WPA2 support comes from custom firmware.</p>
 
       <h3>Quitting</h3>
       <p>Press <span class="key pill">HOME</span> as with any PSP app, or choose Quit on the Settings page.</p>
@@ -468,11 +471,16 @@ html { scroll-behavior: smooth; }
           <tr><td><span class="key face" aria-label="Triangle"><svg><use href="#g-tri"/></svg></span></td><td>Show or hide the track's details: format, codec, sample rate, bit depth and channels.</td></tr>
           <tr><td><span class="key pill">SELECT</span></td><td>Swap between the Player and your chosen visualization.</td></tr>
           <tr><td><span class="key pill">SELECT</span><span class="held">held</span></td><td>Choose a visualization.</td></tr>
-          <tr><td><span class="key face" aria-label="Music note"><svg><use href="#g-note"/></svg></span></td><td>Open or close the equalizer.</td></tr>
+          <tr><td><span class="key face" aria-label="Music note"><svg><use href="#g-note"/></svg></span></td><td>Open or close the equalizer. Needs the helper module; without it, hold <span class="key face" aria-label="Triangle"><svg><use href="#g-tri"/></svg></span> instead.</td></tr>
+          <tr><td><span class="key face" aria-label="Triangle"><svg><use href="#g-tri"/></svg></span><span class="held">held</span></td><td>Open the equalizer, on a PSP whose helper module did not load &mdash; the ♪ button cannot be read there. Two thirds of a second; a tap still shows the track&#x27;s details.</td></tr>
           <tr><td><span class="key face" aria-label="Circle"><svg><use href="#g-cir"/></svg></span></td><td>Back to the list. The music keeps playing.</td></tr>
           <tr><td><span class="key face" aria-label="Square"><svg><use href="#g-sqr"/></svg></span></td><td>Stop, and go back to the list.</td></tr>
         </tbody>
       </table>
+
+      <h3>The headphone remote</h3>
+      <p>With Sony's Remote Commander plugged in, its centre button pauses and resumes, and Forward and Back move through the queue as the shoulder buttons do. Its volume keys are the PSP's own.</p>
+      <p>The remote works from anywhere in TRAX — the list, a visualization, the settings page — and, more usefully, <strong>with the screen off</strong>: its buttons don't wake the screen, so an album can play through without the screen ever coming on. It works on an unmodified PSP too, where it is the only way to skip a track without looking.</p>
 
       <h3>Volume</h3>
       <p>The PSP's own volume keys work as usual. With the helper loaded, TRAX shows the level on screen while you change it.</p>
@@ -488,8 +496,16 @@ html { scroll-behavior: smooth; }
         <dt>Smoke</dt><dd>Ribbons of light drifting sideways, gusting now and then.</dd>
         <dt>Starfield</dt><dd>A calm flight through the stars.</dd>
         <dt>Sphere matrix</dt><dd>Sixteen columns of spheres, one per frequency band, lighting up with the music.</dd>
+        <dt>VU meters</dt><dd>A pair of analog movements, one per channel, with needles that swing as a real meter does and a peak lamp.</dd>
+        <dt>Lyrics</dt><dd>The words, in time with the music. See below.</dd>
       </dl>
       <p>The track's title fades in over a visualization when you arrive and at each new track. All the Player's other buttons still work.</p>
+      <p>The equalizer is the last entry in the same list, which is how to reach it on a PSP without the helper module.</p>
+
+      <h3>Lyrics</h3>
+      <p>The words live in a <code>LYRICS</code> folder at the root of the card, with your music's own folders mirrored inside it: a track at <code>PSP/MUSIC/The Cars/Greatest Hits/album.flac</code> keeps its words at <code>LYRICS/The Cars/Greatest Hits/album.lrc</code>. One folder, so the words are not mixed in among the music, and both builds of TRAX share whatever either has fetched. An <code>.lrc</code> sitting beside the track still works, and is no longer listed in the browser. A file with timings lights each line as it is sung; one without drifts through the track and says so. <span class="key face"><svg><use href="#g-up"/></svg></span> <span class="key face"><svg><use href="#g-down"/></svg></span> read back over what has been sung, and let go after five seconds.</p>
+      <p><span class="key face" aria-label="Triangle"><svg><use href="#g-tri"/></svg></span> fetches the words from <a href="https://lrclib.net">lrclib.net</a> over Wi-Fi and saves them into that folder, creating it as it goes. TRAX asks for an exact match first and, failing that, searches by name and takes the version closest in length — preferring one somebody has timed. A track of a cue album keeps its own file, <code>album.03.lrc</code>, since the album's tracks share one audio file.</p>
+      <div class="note"><strong>Fetching needs a network the PSP can join,</strong> which in practice means custom firmware: WPA2 support comes from ARK-4's plugin, and unmodified firmware manages only WEP, WPA, or a router left in mixed WPA/WPA2 mode. Everything else about Lyrics works either way — including <code>.lrc</code> files you copy into <code>LYRICS</code> yourself — TRAX makes that folder the first time it runs, so it is there waiting.</div>
     </section>
 
     <section id="eq">
@@ -561,6 +577,7 @@ html { scroll-behavior: smooth; }
       <h2>Supported files</h2>
       <dl class="formats">
         <dt>MP3</dt><dd>All common bit rates.</dd>
+        <dt>Opus</dt><dd>In <code>.opus</code>. Decoded at 48 kHz, with its tags and cover art.</dd>
         <dt>FLAC</dt><dd>Including 24-bit at 96 kHz and 192 kHz.</dd>
         <dt>WAV</dt><dd>8, 16, 24 and 32-bit PCM, 32-bit float, A-law and µ-law, and multichannel.</dd>
         <dt>AAC</dt><dd>In <code>.m4a</code>, decoded by the PSP's own Media Engine.</dd>

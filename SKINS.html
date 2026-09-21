@@ -351,8 +351,8 @@ pre.json .c { color: var(--muted); font-style: italic; }
   margin: 12px 0 8px;
 }
 .deck > div { position: absolute; }
-.deck .shell { left: 8%; right: 8%; top: 14%; bottom: 10%; border-radius: 3.5cqw; background: #D9D4C7; }
-.deck .label { left: 11%; right: 11%; top: 20%; height: 34%; border-radius: 1.2cqw; background: #F4F1E8; }
+.deck .shell { left: 8%; right: 8%; top: 6%; bottom: 8%; border-radius: 3.5cqw; background: #D9D4C7; }
+.deck .label { left: 11%; right: 11%; top: 9%; height: 32%; border-radius: 1.2cqw; background: #F4F1E8; }
 .deck .hub {
   width: 19.6%; aspect-ratio: 1; border-radius: 50%;
   background: radial-gradient(circle, #101010 0 22%, #2E2E2E 23% 60%, #101010 61%);
@@ -361,17 +361,17 @@ pre.json .c { color: var(--muted); font-style: italic; }
 .deck .hub.l { left: calc(154.5 / 480 * 100%); }
 .deck .hub.r { left: calc(326 / 480 * 100%); }
 .deck .area {
-  left: calc(62 / 480 * 100%);
-  top: calc(70 / 272 * 100%);
+  left: calc(91 / 480 * 100%);
+  top: calc(31 / 272 * 100%);
   width: calc(263 / 480 * 100%);
   height: calc(22 / 272 * 100%);
   border: 1.5px dashed #D23E48;
   display: flex; align-items: center; justify-content: center;
-  font-size: 2.3cqw; color: #1E1E1E; font-family: var(--body);
+  font-size: 2.3cqw; color: #000000; font-family: var(--body);
 }
 .deck .tag {
-  left: calc(62 / 480 * 100%);
-  top: calc(56 / 272 * 100%);
+  left: calc(91 / 480 * 100%);
+  top: calc(17 / 272 * 100%);
   font-family: var(--mono); font-size: 2cqw; color: #D23E48; background: #F4F1E8; padding: 0 0.6cqw;
 }
 figcaption { font-size: 0.88rem; color: var(--muted); margin-bottom: 16px; }
@@ -424,7 +424,7 @@ figcaption { font-size: 0.88rem; color: var(--muted); margin-bottom: 16px; }
     <section id="folder">
       <h2>The skin folder</h2>
       <p class="lede">Each skin is a folder inside <code>SKINS</code>, beside the TRAX app. <code>skin.json</code> is optional: without it the skin works but prints no text, since nothing in a picture says where a title should go.</p>
-      <div class="tree-wrap"><pre class="tree">PSP/GAME/musictest/SKINS/
+      <div class="tree-wrap"><pre class="tree">PSP/GAME/TRAX/SKINS/
   hub.png                    <span class="c">the reel hub every skin uses</span>
   Maxell XLII 90/
     Maxell XLII 90.png       <span class="c">the picture</span>
@@ -448,11 +448,11 @@ figcaption { font-size: 0.88rem; color: var(--muted); margin-bottom: 16px; }
     <span class="k">"while"</span>: <span class="s">"playing"</span>
   },
 
-  <span class="k">"defaults"</span>: { <span class="k">"size"</span>: <span class="n">14</span>, <span class="k">"align"</span>: <span class="s">"left"</span>, <span class="k">"color"</span>: <span class="s">"#1E1E1E"</span> },
+  <span class="k">"defaults"</span>: { <span class="k">"size"</span>: <span class="n">14</span>, <span class="k">"align"</span>: <span class="s">"left"</span>, <span class="k">"color"</span>: <span class="s">"#000000"</span> },
 
   <span class="k">"areas"</span>: [
     {
-      <span class="k">"rect"</span>: [<span class="n">62</span>, <span class="n">70</span>, <span class="n">263</span>, <span class="n">22</span>],
+      <span class="k">"rect"</span>: [<span class="n">91</span>, <span class="n">31</span>, <span class="n">263</span>, <span class="n">22</span>],
       <span class="k">"size"</span>: <span class="n">11</span>,
       <span class="k">"align"</span>: <span class="s">"center"</span>,
       <span class="k">"lines"</span>: [ [<span class="s">"album"</span>, <span class="s">": "</span>, <span class="s">"artist"</span>] ]
@@ -465,10 +465,10 @@ figcaption { font-size: 0.88rem; color: var(--muted); margin-bottom: 16px; }
           <div class="label"></div>
           <div class="hub l"></div>
           <div class="hub r"></div>
-          <div class="tag">rect [62, 70, 263, 22]</div>
+          <div class="tag">rect [91, 31, 263, 22]</div>
           <div class="area">Technique: New Order</div>
         </div>
-        <figcaption>The area above, drawn on the screen. The album and artist are centered in it, with the colon between them.</figcaption>
+        <figcaption>The area above, drawn on the screen: across the top of the cassette, where this skin prints its title. The album and artist are centered in it, with the colon between them.</figcaption>
       </figure>
     </section>
 

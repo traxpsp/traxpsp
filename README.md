@@ -32,9 +32,10 @@ In the Player:
 | Cross | Pause / resume |
 | Left / Right | Scrub (the stick works too) |
 | L / R | Previous / next in the queue |
-| Triangle | Track information, as a sidebar |
+| Triangle | Track information, as a sidebar; in the Lyrics view, fetches the words |
+| Triangle, held | Equalizer -- only where `trax_kernel.prx` did not load, since there is no ♪ button to read |
 | Select | Swap to the chosen visualization, and back |
-| Select, held | The list of visualizations (the equalizer, if `trax_kernel.prx` did not load) |
+| Select, held | The list of visualizations, with the equalizer at the end of it where the helper did not load |
 | ♪ (music note) | Equalizer, in one press; from the list, goes to what is playing |
 | Circle | Back to the list |
 | Square | Stop |
@@ -105,12 +106,16 @@ may as well not exist.
 
 ## Supported files
 
-`.mp3`, `.wav` and `.flac`, matched case-insensitively:
+`.mp3`, `.wav`, `.flac`, `.m4a` and `.opus`, matched case-insensitively:
 
 - **WAV** — PCM 8/16/24/32-bit, IEEE float 32/64, A-law, mu-law, and
   `WAVE_FORMAT_EXTENSIBLE`.
 - **FLAC** — native, 8 to 32 bits per sample, via `libFLAC`.
 - **MP3** — via `libmpg123`, in software.
+- **Opus** (`.opus`) — via `libopusfile`, which does the Ogg framing, the decoding and
+  the seeking. It decodes at 48 kHz, which the mixer's resampler takes to 44.1; its tags
+  are read from the first pages by hand, since opening a stream through opusfile measures
+  the track and that means seeking to the end of the file.
 - **ALAC** (`.m4a`) — Apple's reference decoder, vendored under `src/alac/`, fed by a
   minimal MP4 demuxer in `src/mp4.c`. Tags come from the iTunes-style `ilst` box.
 
@@ -153,17 +158,6 @@ Image.frombytes("RGBA", (480, 272), open("screen.raw","rb").read())
 
 That is pixel-exact and independent of any emulator window, which makes it far better than
 screenshotting the host desktop.
-
-## Build options
-
-| Option | Default | Purpose |
-|---|---|---|
-| `PSP_MEMSTICK` | `~/.config/ppsspp` | Where `install-ms` deploys |
-| `PSP_GAME_DIR` | `musictest` | Folder name under `PSP/GAME` |
-| `PSP_MUSIC_DIR` | `ms0:/PSP/MUSIC` | The PSP's own music folder |
-| `PSP_MUSIC_TOP_DIR` | `ms0:/MUSIC` | The one at the root of the card |
-| `PSP_AUTOPLAY` | `OFF` | Start a track at launch and write `diag.txt`, for testing without input |
-| `PSP_AUTOPLAY_INDEX` | `0` | Which playable track autoplay starts |
 
 ### Accented characters: do not use INTRAFONT_CACHE_ASCII
 
@@ -235,7 +229,8 @@ animation. Bottom to top:
    everything with its alpha intact. Wherever it is transparent, the layers beneath show.
 
 Up and Down cycle through the templates and the choice is kept in `skin.cfg`, so a copy of
-the app carries its own wherever it goes. `install-ms` copies `skins/` there.
+the app carries its own wherever it goes. Installing TRAX puts the `skins/`
+folder there.
 `HubSmall.png` lives in the same folder but is never offered as a template.
 
 ### A skin is a folder
@@ -325,6 +320,21 @@ to move, Cross to choose, Circle to close. The choice is kept in `vis.cfg`.
 | Smoke | Twisting ribbons of light, gusting now and then, in the middle two-thirds |
 | Starfield | Flying through stars, the near ones trailing |
 | Sphere matrix | 16 x 8 spheres, each column a band, lighting up from the bottom |
+| VU meters | The pair from a tape deck, needles on a spring, with a peak lamp |
+| Lyrics | The words, in time with the music |
+
+The words come from an `.lrc`, kept in a `LYRICS` folder at the root of the
+card with the music's own folders mirrored inside it -- a track at
+`PSP/MUSIC/The Cars/Greatest Hits/album.flac` keeps its words at
+`LYRICS/The Cars/Greatest Hits/album.lrc`, and one track of a cue album at
+`album.03.lrc`, since the album's tracks share one audio file. One folder
+keeps the words out of the music, where a browser would list them with nothing
+to be done with them, and lets both builds read what either has fetched --
+which matters because the signed build cannot reach a network at all. A file
+beside the track is still read, and is no longer listed. Triangle fetches from
+lrclib.net over Wi-Fi (`src/net.c`), making the folders under `LYRICS` as it
+goes; `LYRICS` itself is made at start-up, since the signed build can never
+fetch and would otherwise never make one for somebody with words of their own.
 
 The mixer copies what is heard, after the equalizer, into `analysis.c`, which
 once a frame on the interface's thread folds a 1024-point FFT into 24 bands,

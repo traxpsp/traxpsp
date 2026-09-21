@@ -325,7 +325,7 @@ main li strong { color: var(--ink); }
     <p class="notes-lede">A music player for the PSP. What it does, and the work behind this beta.</p>
   </div>
   <div class="edition">
-    <strong>1.0.0 beta 1</strong><br>
+    <strong>1.0.0 beta 2</strong><br>
     Release notes<br>
     For PSP-1000 and later
   </div>
@@ -335,19 +335,48 @@ main li strong { color: var(--ink); }
   <nav class="toc" aria-label="Contents">
     <h2>Contents</h2>
     <ol>
+      <li><a href="#new-in-beta-2">New in beta 2</a></li>
       <li><a href="#features">Features</a></li>
       <li><a href="#engineering-improvements">Engineering improvements</a></li>
-      <li><a href="#known-limitations-in-beta-1">Known limitations in beta 1</a></li>
+      <li><a href="#known-limitations">Known limitations</a></li>
     </ol>
   </nav>
 
   <main>
   <p>A music player for the PSP.</p>
+<section id="new-in-beta-2">
+  <h2>New in beta 2</h2>
+  <h3>Added</h3>
+<ul>
+  <li><strong>Opus</strong> in <code>.opus</code>, tags and cover art included &mdash; a fifth format.</li>
+  <li><strong>Lyrics,</strong> fetched by the PSP itself from lrclib.net over its own Wi-Fi. A visualization of their own: each line lights as it is sung, and Up and Down read back over what has been. They are kept in a <code>LYRICS</code> folder at the root of the card, with your music&#x27;s own folders mirrored inside it.</li>
+  <li><strong>VU meters:</strong> a pair of analog movements marked in VU and spaced by voltage as a real face is, with needles on a spring and a peak lamp.</li>
+  <li><strong>A build for a PSP that was never modified.</strong> Signed, so official firmware will run it, and shipped beside the usual one as <strong>TRAX OFW</strong>. What it gives up is under Known limitations.</li>
+  <li><strong>The headphone remote.</strong> Play, pause, forward and back from Sony&#x27;s Remote Commander &mdash; on either firmware, and with the screen off, which is where a remote earns its keep.</li>
+</ul>
+  <h3>Changed</h3>
+<ul>
+  <li><strong>Holding Select opens the list of visualizations</strong> whatever the firmware, and the equalizer is the last entry in it &mdash; so it can be reached where there is no ♪ button to read. A tap of Select now closes the equalizer; before, it did nothing there.</li>
+  <li><strong>What the buttons do follows whether <code>trax_kernel.prx</code> loaded,</strong> not which build it is. With the helper, beta 1 exactly: ♪ opens the equalizer. Without it, holding △ for two thirds of a second does.</li>
+  <li><strong>A release carries both builds,</strong> <code>TRAX</code> and <code>TRAX OFW</code> side by side, with the documents beside them rather than inside the app&#x27;s own folder.</li>
+  <li><strong>An <code>.lrc</code> is no longer listed</strong> in the browser, wherever it sits. There was never anything to be done with one there.</li>
+</ul>
+  <h3>Fixed</h3>
+<ul>
+  <li><strong>Opus crashed on the first track.</strong> The decoding thread&#x27;s stack was 16 KB, which suited every other format; Opus decodes through arrays on the stack and overran it. It is 64 KB now.</li>
+  <li><strong>Opus froze the interface for two or three seconds</strong> as a track began, measuring the file a second time to read its tags &mdash; which on a memory stick means seeking to the end and working back. The tags are read from the front of the file instead, which brought Opus cover art with it.</li>
+  <li><strong>Choosing the equalizer from the list of visualizations did nothing.</strong> The ✕ that chose it was seen again by the equalizer a moment later in the same frame, where ✕ means close, so it opened and shut before anything was drawn.</li>
+  <li><strong>Holding Select on firmware with no helper opened the equalizer directly,</strong> leaving the list of visualizations &mdash; and so the Lyrics view &mdash; unreachable.</li>
+  <li><strong>A popular song came back with &ldquo;no lyrics&rdquo; when lrclib had twenty versions of it.</strong> Every result in a search carries its words in full, so the reply ran past the half megabyte TRAX can hold, and what was left did not parse. A reply too big is now cut back to its last whole result rather than thrown away, and the log says that is what happened instead of blaming the server.</li>
+  <li><strong>A track credited to more than one act found nothing.</strong> lrclib files &ldquo;Dancing with Myself&rdquo; under &ldquo;Billy Idol&rdquo; where the tag says &ldquo;Billy Idol and Generation X&rdquo;, and asking for the longer name returns not one result. Failing everything else, TRAX now asks by title alone and sorts the artist out itself &mdash; one name containing the other, and the length within ten seconds, since the server is no longer the one making sure it is the right act.</li>
+</ul>
+</section>
 <section id="features">
   <h2>Features</h2>
   <h3>Formats</h3>
 <ul>
   <li><strong>MP3.</strong></li>
+  <li><strong>Opus</strong> in <code>.opus</code>, tags and cover art included.</li>
   <li><strong>FLAC</strong>, including 24-bit at 96 kHz and 192 kHz.</li>
   <li><strong>WAV:</strong> 8, 16, 24 and 32-bit PCM, 32-bit float, A-law, µ-law, and multichannel (extensible) files.</li>
   <li><strong>ALAC</strong> in <code>.m4a</code>, with Apple&#x27;s reference decoder.</li>
@@ -372,6 +401,7 @@ main li strong { color: var(--ink); }
   <li><strong>In the shuffle modes,</strong> tapping ✕ starts on a random track, and holding it starts on the highlighted one.</li>
   <li><strong>Queues keep their own mode,</strong> so changing the mode in the list doesn&#x27;t affect what&#x27;s already playing.</li>
   <li><strong>A five-band equalizer</strong> (60 Hz to 12 kHz, ±12 dB) with five presets (Flat, Bass, Treble, Vocal, Loud), opened with the ♪ button. Your settings are saved.</li>
+  <li><strong>The headphone remote.</strong> Sony's Remote Commander pauses, resumes and skips, from anywhere in TRAX and with the screen off — its buttons do not wake it. It needs no custom firmware.</li>
   <li><strong>An on-screen volume display</strong> when the volume keys are pressed. The PSP draws nothing over TRAX itself.</li>
   </ul>
   <h3>Player view</h3>
@@ -393,6 +423,8 @@ main li strong { color: var(--ink); }
   <li><strong>Smoke:</strong> twisting ribbons of light that drift sideways and gust now and then.</li>
   <li><strong>Starfield:</strong> a calm flight through the stars.</li>
   <li><strong>Sphere matrix:</strong> 16 columns of shaded spheres, each column a frequency band, lighting up and springing larger with the music.</li>
+  <li><strong>VU meters:</strong> a pair of analog movements, marked in VU and spaced by voltage as a real face is, with needles that take 300 ms to the mark and step a little past it.</li>
+  <li><strong>Lyrics:</strong> each line lighting as it is sung, with Up and Down to read back. Triangle fetches them from lrclib.net over Wi-Fi — an exact match first, then a search for the closest version somebody has timed. They are kept in a <code>LYRICS</code> folder at the root of the card, mirroring the music's own folders, so the words are not mixed in among the music and both builds share what either has fetched. An <code>.lrc</code> beside the track still works, and is no longer listed in the browser.</li>
   <li><strong>The track title</strong> fades in over a visualization when it starts and on each track change.</li>
   </ul>
   <h3>Settings and About (Start)</h3>
@@ -453,6 +485,8 @@ main li strong { color: var(--ink); }
   <li><strong>16-bit FLAC and WAV</strong> are now bit-exact. Every sample had been scaled down by a hair.</li>
   <li><strong>Long names</strong> spilled into the row below, and list text was slightly blurred from being drawn at 0.9 size.</li>
   <li><strong>A repeated track&#x27;s cover</strong> blinked on every loop.</li>
+  <li><strong>Opus crashed,</strong> then froze the interface for seconds at each track: a 16 KB decoder stack it decodes past, and a second pass over the file to read tags.</li>
+  <li><strong>The equalizer could not be chosen</strong> from the list of visualizations: the press that chose it was read again as the press that closes it.</li>
   <li><strong>The top of the cover</strong> now and then showed half drawn for a frame. The display was picking up the next frame while it was still being drawn; buffers now change only at a vertical sync.</li>
   </ul>
   <h3>Speed</h3>
@@ -479,6 +513,16 @@ main li strong { color: var(--ink); }
   <li><strong>AAC output</strong> is read through the cached view of memory; reading through the uncached one cost more than decoding.</li>
   <li><strong>The music analysis</strong> runs only while a visualization is showing, below the decoder&#x27;s priority.</li>
   </ul>
+  <h3>Networking</h3>
+  <p>Fetching the words for a track is the first thing TRAX does over the air, and none of it was a given on a 333 MHz machine.</p>
+<ul>
+  <li><strong>TLS 1.2 on the PSP itself.</strong> lrclib.net is HTTPS only. It offers ECDHE-ECDSA with ChaCha20-Poly1305, which is the one modern suite this processor is happy with: ChaCha is arithmetic it can do, and an ECDSA certificate is far cheaper to check than an RSA one. The trust roots are compiled in rather than taking whatever answers &mdash; a player that skipped that would take words, or anything else, from whoever else was on the Wi-Fi.</li>
+  <li><strong>Three megabytes are kept back from the heap,</strong> because the heap had been taking the whole partition and the system&#x27;s network modules then had nowhere to load: 220 KB free, and the module refused. The log&#x27;s opening line now says how much is outside the heap, so this cannot go quietly wrong again.</li>
+  <li><strong>The PSP&#x27;s clock is read directly.</strong> newlib&#x27;s <code>time()</code> never reaches the hardware clock &mdash; it answers as though it were 1970, so every valid certificate &ldquo;starts in the future&rdquo; and was refused, on a PSP whose own clock was right.</li>
+  <li><strong>Chunked replies are reassembled</strong> before anything tries to read them. Cloudflare sends this API&#x27;s answers as a series of lengths with data between them, and handing that to a JSON parser looked exactly like &ldquo;no lyrics for this track&rdquo;.</li>
+  <li><strong>A busy server is retried</strong> three times, two seconds apart, and named as such: lrclib answers 503 often enough to be worth telling apart from a fault.</li>
+  <li><strong>An album&#x27;s tracks each keep their own file.</strong> They share one audio file, so they had all written to one <code>.lrc</code>, each fetch overwriting the last, and the times then belonged to a different track.</li>
+</ul>
   <h3>Testing and tools</h3>
 <ul>
   <li><strong>A fuzzer</strong> for every file reader under AddressSanitizer and UndefinedBehaviorSanitizer (<code>tools/fuzz</code>), with leak checks.</li>
@@ -487,11 +531,19 @@ main li strong { color: var(--ink); }
   <li><strong>A visualization preview renderer</strong> (<code>tools/vispreview</code>) that renders any visualization to video with a track&#x27;s sound.</li>
   </ul>
 </section>
-<section id="known-limitations-in-beta-1">
-  <h2>Known limitations in beta 1</h2>
+<section id="known-limitations">
+  <h2>Known limitations</h2>
 <ul>
   <li><strong>Refresh (○) and Search (△)</strong> are labelled in the list&#x27;s bar but not implemented yet.</li>
-  <li><strong>The volume display, the ♪ button and screen-off</strong> need <code>trax_kernel.prx</code> beside the EBOOT and custom firmware such as ARK. Without them, TRAX works, and holding Select opens the equalizer instead.</li>
+  <li><strong>On a PSP that was never modified</strong> &mdash; the <strong>TRAX OFW</strong> build &mdash; four things are missing, and none of them can be worked around in software:
+    <ul>
+      <li><strong>No Wi-Fi,</strong> so no fetching lyrics. The PSP&#x27;s WPA2 support comes from ARK-4&#x27;s plugin; official firmware manages only WEP, WPA, or a router left in mixed WPA/WPA2 mode. Everything else about Lyrics works, including <code>.lrc</code> files you copy into <code>LYRICS</code> yourself.</li>
+      <li><strong>No screen off while playing,</strong> which is where most of the battery goes.</li>
+      <li><strong>No volume display.</strong></li>
+      <li><strong>No ♪ button.</strong> Volume, ♪, screen and hold can only be read in kernel mode, and signed homebrew is user mode only. Holding △ for two thirds of a second opens the equalizer instead.</li>
+    </ul>
+  </li>
+  <li><strong>With custom firmware,</strong> those three need <code>trax_kernel.prx</code> beside the EBOOT. Without it TRAX still runs, and behaves as it does on official firmware.</li>
   <li><strong>Mono AAC</strong> has been fixed and fuzzed but not yet heard on a PSP.</li>
   <li><strong>A large progressive JPEG cover</strong> is still the tightest moment for memory: about 2.3 MB free at its peak, with the Japanese font loaded.</li>
   <li><strong>Sony&#x27;s fonts</strong> (<code>ltn8.pgf</code>, <code>jpn0.pgf</code>) must not be included in a distributed build. A PSP loads them from its own system storage.</li>
