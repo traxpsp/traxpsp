@@ -55,6 +55,10 @@ Settings has a Quit row too.
 
 **Settings**, Up and Down to pick, Left and Right (or Cross) to change:
 
+- **Lyrics text size** -- Default, Medium or Large. The line being sung sets
+  the scale and the ones around it follow in proportion, spacing with them, so
+  the block keeps its shape and larger simply means fewer lines on a 272-pixel
+  screen.
 - **Sleep timer** -- 15, 30, 60 or 90 minutes; the music fades over the last
   half minute and pauses. For the evening, so not kept.
 - **Screen off while playing** -- after 30 seconds to 5 minutes with nothing
@@ -118,6 +122,12 @@ may as well not exist.
   the track and that means seeking to the end of the file.
 - **ALAC** (`.m4a`) — Apple's reference decoder, vendored under `src/alac/`, fed by a
   minimal MP4 demuxer in `src/mp4.c`. Tags come from the iTunes-style `ilst` box.
+- **ATRAC3 / ATRAC3plus** (`.at3`) — the PSP's own format, decoded on the Media Engine
+  through `sceAtrac`. An `.at3` is a RIFF WAVE, so it reaches the same branch a WAV does;
+  anything `wav_parse` cannot make PCM of is offered to the library, which knows what it
+  can decode better than a table of format tags would. Unlike the AAC path the library
+  reads the file itself, so `src/atrac.c` feeds it from the card as it drains rather than
+  holding a track in memory.
 
 Everything else in the folder is *listed but dimmed* and marked `unsupported`,
 rather than hidden. Hiding it makes a missing file look like a bug in the
@@ -335,6 +345,7 @@ beside the track is still read, and is no longer listed. Triangle fetches from
 lrclib.net over Wi-Fi (`src/net.c`), making the folders under `LYRICS` as it
 goes; `LYRICS` itself is made at start-up, since the signed build can never
 fetch and would otherwise never make one for somebody with words of their own.
+How large the words are drawn is a setting, `lyrics=` in `settings.cfg`.
 
 The mixer copies what is heard, after the equalizer, into `analysis.c`, which
 once a frame on the interface's thread folds a 1024-point FFT into 24 bands,

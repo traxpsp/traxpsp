@@ -325,7 +325,7 @@ main li strong { color: var(--ink); }
     <p class="notes-lede">A music player for the PSP. What it does, and the work behind this beta.</p>
   </div>
   <div class="edition">
-    <strong>1.0.0 beta 2</strong><br>
+    <strong>1.0.0 beta 3</strong><br>
     Release notes<br>
     For PSP-1000 and later
   </div>
@@ -335,6 +335,7 @@ main li strong { color: var(--ink); }
   <nav class="toc" aria-label="Contents">
     <h2>Contents</h2>
     <ol>
+      <li><a href="#new-in-beta-3">New in beta 3</a></li>
       <li><a href="#new-in-beta-2">New in beta 2</a></li>
       <li><a href="#features">Features</a></li>
       <li><a href="#engineering-improvements">Engineering improvements</a></li>
@@ -344,6 +345,20 @@ main li strong { color: var(--ink); }
 
   <main>
   <p>A music player for the PSP.</p>
+<section id="new-in-beta-3">
+  <h2>New in beta 3</h2>
+  <h3>Removed</h3>
+<ul>
+  <li><strong>Refresh (○) is gone from the list&#x27;s bar.</strong> It had been labelled there since the first build and never wired up, because the rescan it promised turned out to be answering a question the PSP does not ask. Circle still goes up a level, which is what a list does everywhere and needs no label.</li>
+</ul>
+  <h3>Added</h3>
+<ul>
+  <li><strong>ATRAC3 and ATRAC3plus</strong> in <code>.at3</code>, decoded on the Media Engine &mdash; the PSP&#x27;s own format, and the one everything SonicStage ever put on a memory stick is in. An <code>.at3</code> is a RIFF WAVE, so it arrives at the same branch a WAV does and the format tag decides; rather than match that tag against ATRAC3&#x27;s two spellings, one of which hides inside an extensible header&#x27;s GUID, TRAX offers anything it cannot make PCM of to the library and lets it answer. The library reads the file itself, so a track is fed from the card as it drains rather than held in memory.
+  <p>Tracks bought from Sony&#x27;s Connect store are OpenMG-protected. Those cannot be played, by this or anything else, and nothing in TRAX can change that.</p>
+  <p>Heard on a PSP-1000: three ATRAC3plus tracks open, stream and play, their lengths agreeing with what the files say to the millisecond, and a track change hands one decoder over to the next without either growing.</p></li>
+  <li><strong>Lyrics text size,</strong> in Settings: Default, Medium or Large. The line being sung sets the scale and the lines around it follow in proportion, spacing with them, so the block keeps its shape at any of them &mdash; larger just means fewer lines on a screen 272 pixels tall. Asked for, and worth having: nobody reads a PSP at arm&#x27;s length as easily as whoever picked the first size did.</li>
+</ul>
+</section>
 <section id="new-in-beta-2">
   <h2>New in beta 2</h2>
   <h3>Added</h3>
@@ -380,6 +395,7 @@ main li strong { color: var(--ink); }
   <li><strong>FLAC</strong>, including 24-bit at 96 kHz and 192 kHz.</li>
   <li><strong>WAV:</strong> 8, 16, 24 and 32-bit PCM, 32-bit float, A-law, µ-law, and multichannel (extensible) files.</li>
   <li><strong>ALAC</strong> in <code>.m4a</code>, with Apple&#x27;s reference decoder.</li>
+  <li><strong>ATRAC3 / ATRAC3plus</strong> in <code>.at3</code>, decoded by the PSP&#x27;s Media Engine. Not OpenMG: a track bought from Sony&#x27;s Connect store will not play.</li>
   <li><strong>AAC</strong> in <code>.m4a</code>, decoded by the PSP&#x27;s own Media Engine, so the main processor stays free.</li>
   <li><strong>Cue sheets.</strong> A single-file album with a <code>.cue</code> appears as one album, split into its tracks.</li>
   <li><strong>Seeking</strong> in every format.</li>
@@ -429,6 +445,7 @@ main li strong { color: var(--ink); }
   </ul>
   <h3>Settings and About (Start)</h3>
 <ul>
+  <li><strong>Lyrics text size:</strong> Default, Medium or Large for the words in the Lyrics visualization.</li>
   <li><strong>Sleep timer:</strong> 15 to 90 minutes, fading out over the last half minute, then pausing.</li>
   <li><strong>Screen off while playing:</strong> after 30 seconds to 5 minutes without a press. Any button wakes the screen, and it also relights when the music stops. The screen is where most of the battery goes.</li>
   <li><strong>Resume on launch:</strong> reopens the last track, paused where you left it.</li>
@@ -513,6 +530,12 @@ main li strong { color: var(--ink); }
   <li><strong>AAC output</strong> is read through the cached view of memory; reading through the uncached one cost more than decoding.</li>
   <li><strong>The music analysis</strong> runs only while a visualization is showing, below the decoder&#x27;s priority.</li>
   </ul>
+  <h3>ATRAC</h3>
+<ul>
+  <li><strong>The second buffer.</strong> sceAtrac refuses every seek with <code>NEED_SECOND_BUFFER</code> until it has been handed a slice from near the end of the track, held apart from the streaming one so it can reach the end without the ring having got there. It says where and how much &mdash; 376 bytes for a 57-second track &mdash; and a track short enough not to need one says so instead. Playing worked without it; only scrubbing gave the game away.</li>
+  <li><strong>Nothing to discard at the start.</strong> AAC arrives with 2,112 samples of encoder run-up that have to be dropped. ATRAC has none: the first frame off the Media Engine is already music. The emulator suggested otherwise &mdash; it returns near-silence there &mdash; and following it would have taken 27 ms off the front of every track, quietly.</li>
+  <li><strong>The format tag is not worth matching.</strong> An <code>.at3</code> is a RIFF WAVE, so it lands where a WAV does, but ATRAC3plus hides behind an extensible header whose SubFormat GUID reads as tag <code>0xAABF</code> under the usual &ldquo;first two bytes&rdquo; rule, and declares 0 bits per sample. Anything <code>wav_parse</code> cannot make PCM of is offered to the library instead, which knows what it can decode.</li>
+</ul>
   <h3>Networking</h3>
   <p>Fetching the words for a track is the first thing TRAX does over the air, and none of it was a given on a 333 MHz machine.</p>
 <ul>
@@ -534,7 +557,7 @@ main li strong { color: var(--ink); }
 <section id="known-limitations">
   <h2>Known limitations</h2>
 <ul>
-  <li><strong>Refresh (○) and Search (△)</strong> are labelled in the list&#x27;s bar but not implemented yet.</li>
+  <li><strong>Search (△)</strong> is labelled in the list&#x27;s bar but not implemented yet.</li>
   <li><strong>On a PSP that was never modified</strong> &mdash; the <strong>TRAX OFW</strong> build &mdash; four things are missing, and none of them can be worked around in software:
     <ul>
       <li><strong>No Wi-Fi,</strong> so no fetching lyrics. The PSP&#x27;s WPA2 support comes from ARK-4&#x27;s plugin; official firmware manages only WEP, WPA, or a router left in mixed WPA/WPA2 mode. Everything else about Lyrics works, including <code>.lrc</code> files you copy into <code>LYRICS</code> yourself.</li>
@@ -545,6 +568,8 @@ main li strong { color: var(--ink); }
   </li>
   <li><strong>With custom firmware,</strong> those three need <code>trax_kernel.prx</code> beside the EBOOT. Without it TRAX still runs, and behaves as it does on official firmware.</li>
   <li><strong>Mono AAC</strong> has been fixed and fuzzed but not yet heard on a PSP.</li>
+  <li><strong>Plain ATRAC3</strong> has not been heard on a PSP either. Every sample to hand was ATRAC3plus, and the two go through one code path, but that is an argument rather than a test.</li>
+  <li><strong>Scrubbing an ATRAC track</strong> has been proven on the emulator and not yet on hardware. It is the part the second buffer exists for, so it is the part worth trying first.</li>
   <li><strong>A large progressive JPEG cover</strong> is still the tightest moment for memory: about 2.3 MB free at its peak, with the Japanese font loaded.</li>
   <li><strong>Sony&#x27;s fonts</strong> (<code>ltn8.pgf</code>, <code>jpn0.pgf</code>) must not be included in a distributed build. A PSP loads them from its own system storage.</li>
   </ul>

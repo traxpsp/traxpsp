@@ -503,7 +503,7 @@ html { scroll-behavior: smooth; }
       <p>The equalizer is the last entry in the same list, which is how to reach it on a PSP without the helper module.</p>
 
       <h3>Lyrics</h3>
-      <p>The words live in a <code>LYRICS</code> folder at the root of the card, with your music's own folders mirrored inside it: a track at <code>PSP/MUSIC/The Cars/Greatest Hits/album.flac</code> keeps its words at <code>LYRICS/The Cars/Greatest Hits/album.lrc</code>. One folder, so the words are not mixed in among the music, and both builds of TRAX share whatever either has fetched. An <code>.lrc</code> sitting beside the track still works, and is no longer listed in the browser. A file with timings lights each line as it is sung; one without drifts through the track and says so. <span class="key face"><svg><use href="#g-up"/></svg></span> <span class="key face"><svg><use href="#g-down"/></svg></span> read back over what has been sung, and let go after five seconds.</p>
+      <p>The words live in a <code>LYRICS</code> folder at the root of the card, with your music's own folders mirrored inside it: a track at <code>PSP/MUSIC/The Cars/Greatest Hits/album.flac</code> keeps its words at <code>LYRICS/The Cars/Greatest Hits/album.lrc</code>. One folder, so the words are not mixed in among the music, and both builds of TRAX share whatever either has fetched. An <code>.lrc</code> sitting beside the track still works, and is no longer listed in the browser. A file with timings lights each line as it is sung; one without drifts through the track and says so. <span class="key face"><svg><use href="#g-up"/></svg></span> <span class="key face"><svg><use href="#g-down"/></svg></span> read back over what has been sung, and let go after five seconds. If the words are small for you, Settings has a <strong>Lyrics text size</strong> row: Default, Medium or Large.</p>
       <p><span class="key face" aria-label="Triangle"><svg><use href="#g-tri"/></svg></span> fetches the words from <a href="https://lrclib.net">lrclib.net</a> over Wi-Fi and saves them into that folder, creating it as it goes. TRAX asks for an exact match first and, failing that, searches by name and takes the version closest in length — preferring one somebody has timed. A track of a cue album keeps its own file, <code>album.03.lrc</code>, since the album's tracks share one audio file.</p>
       <div class="note"><strong>Fetching needs a network the PSP can join,</strong> which in practice means custom firmware: WPA2 support comes from ARK-4's plugin, and unmodified firmware manages only WEP, WPA, or a router left in mixed WPA/WPA2 mode. Everything else about Lyrics works either way — including <code>.lrc</code> files you copy into <code>LYRICS</code> yourself — TRAX makes that folder the first time it runs, so it is there waiting.</div>
     </section>
@@ -529,6 +529,7 @@ html { scroll-behavior: smooth; }
       <p><span class="key face"><svg><use href="#g-up"/></svg></span> <span class="key face"><svg><use href="#g-down"/></svg></span> pick a setting. <span class="key face"><svg><use href="#g-left"/></svg></span> <span class="key face"><svg><use href="#g-right"/></svg></span> or <span class="key face" aria-label="Cross"><svg><use href="#g-crs"/></svg></span> change it.</p>
       <dl class="formats">
         <dt>Music folder</dt><dd><code>PSP/MUSIC</code> or <code>MUSIC</code> at the root of the card. Changing it reads the other folder straight away; anything playing carries on.</dd>
+        <dt>Lyrics text size</dt><dd>Default, Medium or Large: how big the words are drawn in the Lyrics visualization. Larger is easier to read from further away and fits fewer lines on the screen at once.</dd>
         <dt>Sleep timer</dt><dd>Off, 15, 30, 60 or 90 minutes. The music fades out over the last half minute, then pauses. It's for one evening, so it's always Off when TRAX starts.</dd>
         <dt>Screen off while playing</dt><dd>Off, or after 30 seconds, 1, 2 or 5 minutes without a button press. The screen uses most of the battery. Any button wakes it without doing anything else, and it comes back on by itself when the music stops. Needs the helper.</dd>
         <dt>Resume on launch</dt><dd>When on, TRAX reopens the last track when you start it, paused where you left it, in the same play mode.</dd>
@@ -582,6 +583,7 @@ html { scroll-behavior: smooth; }
         <dt>WAV</dt><dd>8, 16, 24 and 32-bit PCM, 32-bit float, A-law and µ-law, and multichannel.</dd>
         <dt>AAC</dt><dd>In <code>.m4a</code>, decoded by the PSP's own Media Engine.</dd>
         <dt>ALAC</dt><dd>Apple Lossless, in <code>.m4a</code>.</dd>
+        <dt>ATRAC</dt><dd>ATRAC3 and ATRAC3plus, in <code>.at3</code> &mdash; the PSP&#x27;s own format, decoded by its Media Engine. Tracks bought from Sony&#x27;s old Connect store are OpenMG-protected and will not play, on this or anything else.</dd>
         <dt>Cue sheets</dt><dd>A <code>.cue</code> beside a single-file album. See <a href="#cue">Cue albums</a>.</dd>
       </dl>
       <p>Names in accented Latin, Japanese and Korean display correctly. The fonts for Japanese and Korean load only when a name needs them.</p>
@@ -590,7 +592,7 @@ html { scroll-behavior: smooth; }
     <section id="limits">
       <h2>In this beta</h2>
       <ul>
-        <li>The list's bottom bar labels <span class="key face" aria-label="Circle"><svg><use href="#g-cir"/></svg></span> as Refresh and <span class="key face" aria-label="Triangle"><svg><use href="#g-tri"/></svg></span> as Search. Neither is built yet. <span class="key face" aria-label="Circle"><svg><use href="#g-cir"/></svg></span> goes up a folder.</li>
+        <li>The list's bottom bar labels <span class="key face" aria-label="Triangle"><svg><use href="#g-tri"/></svg></span> as Search, which is not built yet. <span class="key face" aria-label="Circle"><svg><use href="#g-cir"/></svg></span> goes up a folder, and carries no label because a list does that everywhere.</li>
         <li>The volume display, the ♪ button and Screen off need the helper and custom firmware.</li>
         <li>A very large progressive JPEG cover can take around ten seconds to appear while hi-res music plays. The orb shows in the meantime.</li>
       </ul>
