@@ -322,12 +322,13 @@ main li strong { color: var(--ink); }
 <header class="masthead">
   <div>
     <h1 class="wordmark">TRAX</h1>
-    <p class="notes-lede">A music player for the PSP. What it does, and the work behind this beta.</p>
+    <p class="notes-lede">A music player for the PSP and the PS&nbsp;Vita. What it does, and the work behind this beta.</p>
   </div>
   <div class="edition">
-    <strong>1.0.0 beta 3</strong><br>
+    <strong>1.0.0 beta 4</strong><br>
     Release notes<br>
-    For PSP-1000 and later
+    For PSP-1000 and later,<br>
+    and for the PS&nbsp;Vita
   </div>
 </header>
 
@@ -335,6 +336,7 @@ main li strong { color: var(--ink); }
   <nav class="toc" aria-label="Contents">
     <h2>Contents</h2>
     <ol>
+      <li><a href="#new-in-beta-4">New in beta 4</a></li>
       <li><a href="#new-in-beta-3">New in beta 3</a></li>
       <li><a href="#new-in-beta-2">New in beta 2</a></li>
       <li><a href="#features">Features</a></li>
@@ -344,7 +346,35 @@ main li strong { color: var(--ink); }
   </nav>
 
   <main>
-  <p>A music player for the PSP.</p>
+  <p>A music player for the PSP, and now for the PS&nbsp;Vita as well.</p>
+<section id="new-in-beta-4">
+  <h2>New in beta 4</h2>
+  <h3>Added</h3>
+<ul>
+  <li><strong>TRAX runs on a PS&nbsp;Vita.</strong> A native <code>.vpk</code>, not the PSP build under Adrenaline: it draws at 960&times;544, reads the Vita&#x27;s own storage, and is the same player throughout &mdash; the same browser, the same cassette, the same skins, the same settings.
+  <p>It came from one tree rather than a fork. The app moved into <code>src/core/</code>, which both machines compile, and each keeps only a shell of its own: a PSP&#x27;s <code>main.c</code> is now twenty-five lines. Where the two genuinely disagree there is a seam with a header explaining what the question is &mdash; how to open a folder, what a texture is, where the app may write &mdash; and each machine answers it its own way. The PSP&#x27;s build came out byte-identical across the split.</p>
+  <p><strong>Music can be in three places,</strong> and TRAX asks which the first time more than one of them has anything in it: <code>ux0:/music</code> on the console itself, <code>grw0:/MUSIC</code> on a card in the game card slot, or <code>uma0:/MUSIC</code>. Settings changes it afterwards.</p>
+  <p><strong>The touchscreen drags the progress bar.</strong> That is all it does for now &mdash; the list, the menus and everything else are buttons, exactly as on a PSP.</p>
+  <p><strong>Lyrics work over Wi-Fi,</strong> through mbedTLS. The Vita&#x27;s own TLS refused the handshake outright, so TRAX carries its own and opens the socket underneath it.</p></li>
+
+  <li><strong>ATRAC3plus plays on the Vita too,</strong> through <code>SceAudiocodec</code> &mdash; the firmware&#x27;s own codec module, which the public SDK loads but declares nothing of. Worth saying plainly: TRAX itself claimed for a while that this was impossible, and gave three good reasons in a comment. All three were true and none of them meant what they were taken to mean. What settled it was looking at what another Vita player actually calls, rather than reading the SDK&#x27;s headers again.</li>
+
+  <li><strong>Skins can be drawn for each machine.</strong> A <code>skin.json</code> names pixels, and a Vita&#x27;s are not a PSP&#x27;s, so the two now carry separate artwork and geometry. The hub is shared, being scaled to whatever hole it is drawn into. A Vita skin may be a full 960&times;544 and is kept at that size rather than squeezed down and stretched back.</li>
+</ul>
+  <h3>Fixed</h3>
+<ul>
+  <li><strong>A file whose name ran past 159 bytes could not be played.</strong> It appeared in the list, greyed out and impossible to select. This affected both machines and had been there from the start.
+  <p>It was reported as a problem with Japanese text, and it is not, quite: the limit counts bytes, and a Japanese character takes three of them, so a Japanese title reaches it at about fifty-three characters where an English one takes a hundred and fifty-nine. The name was cut as it came off the card, which took the <code>.mp3</code> off the end &mdash; so TRAX decided the file was not audio, and the shortened name would not have opened anything anyway.</p>
+  <p>Names are held whole now, in one block for the folder rather than in fixed-size fields. Fifty ordinary tracks use about two kilobytes for their names where thirty-two were reserved before, so this costs less memory than it replaced.</p></li>
+
+  <li><strong>mbedTLS was missing from the About page&#x27;s credits</strong> on both machines. It has been linked in for as long as lyrics have been fetched over TLS, and a list of what a program is built from is worse for quietly leaving one out than for being short. Each machine names its own now: vita2d, the VitaSDK and FreeType on one, intraFont and the PSPSDK on the other, and neither carries the other&#x27;s.</li>
+</ul>
+  <h3>Changed</h3>
+<ul>
+  <li><strong>Dragging the scrub no longer stacks up seeks.</strong> A new one used to go out every few frames whether or not the last had landed, which on a file the decoder has to search through meant each request threw away the one already running. It waits for the outstanding one now; letting go still sends wherever you left it.</li>
+  <li><strong>The About page lays itself out by measuring,</strong> rather than at heights written down for one screen and one font, and sizes itself to fit whatever it has to say. This rearranges the page on a PSP as well, where it should look much the same and is put together rather differently underneath.</li>
+</ul>
+</section>
 <section id="new-in-beta-3">
   <h2>New in beta 3</h2>
   <h3>Removed</h3>
@@ -557,7 +587,14 @@ main li strong { color: var(--ink); }
 <section id="known-limitations">
   <h2>Known limitations</h2>
 <ul>
-  <li><strong>Search (△)</strong> is labelled in the list&#x27;s bar but not implemented yet.</li>
+  <li><strong>Search (△)</strong> is labelled in the list&#x27;s bar but not implemented yet. On both machines.</li>
+  <li><strong>On a PS&nbsp;Vita,</strong> three things are worth knowing:
+    <ul>
+      <li><strong>The skin that ships is the PSP&#x27;s artwork,</strong> at half the resolution, standing in until a 960&times;544 one is drawn. Its text is placed for the larger screen, so it will look soft and sit oddly against the picture. Skins of your own go in <code>ux0:/data/trax/SKINS</code>.</li>
+      <li><strong><code>uma0:/MUSIC</code> has never been tested,</strong> for want of a card that mounts there. It costs nothing if you have none: a folder that is not there reads as empty and is never chosen on its own.</li>
+      <li><strong>The touchscreen only drags the progress bar.</strong> Scrolling the list by hand, tapping a row, and the rest of it are not done.</li>
+    </ul>
+  </li>
   <li><strong>On a PSP that was never modified</strong> &mdash; the <strong>TRAX OFW</strong> build &mdash; four things are missing, and none of them can be worked around in software:
     <ul>
       <li><strong>No Wi-Fi,</strong> so no fetching lyrics. The PSP&#x27;s WPA2 support comes from ARK-4&#x27;s plugin; official firmware manages only WEP, WPA, or a router left in mixed WPA/WPA2 mode. Everything else about Lyrics works, including <code>.lrc</code> files you copy into <code>LYRICS</code> yourself.</li>
@@ -568,6 +605,7 @@ main li strong { color: var(--ink); }
   </li>
   <li><strong>With custom firmware,</strong> those three need <code>trax_kernel.prx</code> beside the EBOOT. Without it TRAX still runs, and behaves as it does on official firmware.</li>
   <li><strong>Mono AAC</strong> has been fixed and fuzzed but not yet heard on a PSP.</li>
+  <li><strong>Plain ATRAC3 on the Vita</strong> is written and has not been heard: every sample to hand was ATRAC3plus, which has been. The two go through one code path.</li>
   <li><strong>Plain ATRAC3</strong> has not been heard on a PSP either. Every sample to hand was ATRAC3plus, and the two go through one code path, but that is an argument rather than a test.</li>
   <li><strong>Scrubbing an ATRAC track</strong> has been proven on the emulator and not yet on hardware. It is the part the second buffer exists for, so it is the part worth trying first.</li>
   <li><strong>A large progressive JPEG cover</strong> is still the tightest moment for memory: about 2.3 MB free at its peak, with the Japanese font loaded.</li>

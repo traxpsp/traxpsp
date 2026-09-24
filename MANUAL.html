@@ -346,12 +346,13 @@ html { scroll-behavior: smooth; }
 <header class="masthead">
   <div>
     <h1 class="wordmark">TRAX</h1>
-    <p>A music player for the PSP. This manual covers every screen and button.</p>
+    <p>A music player for the PSP and the PS Vita. This manual covers every screen and button.</p>
   </div>
   <div class="edition">
-    <strong>Version 1.0.0 beta 1</strong><br>
+    <strong>Version 1.0.0 beta 4</strong><br>
     For PSP-1000 and later<br>
-    Custom firmware recommended
+    Custom firmware recommended<br>
+    And for the PS Vita
   </div>
 </header>
 
@@ -360,6 +361,7 @@ html { scroll-behavior: smooth; }
     <h2>Contents</h2>
     <ol>
       <li><a href="#setup">Setting up</a></li>
+      <li><a href="#vita">On a PS Vita</a></li>
       <li><a href="#list">The list</a></li>
       <li><a href="#modes">Play modes</a></li>
       <li><a href="#player">The Player</a></li>
@@ -377,7 +379,7 @@ html { scroll-behavior: smooth; }
   <main>
     <section id="setup">
       <h2>Setting up</h2>
-      <p class="lede">TRAX plays the music on your memory stick, in the folders you already keep it in — either <code>PSP/MUSIC</code> or <code>MUSIC</code> at the root of the card.</p>
+      <p class="lede">TRAX plays the music already on your card, in the folders you keep it in — on a PSP, either <code>PSP/MUSIC</code> or <code>MUSIC</code> at the root. This section is the PSP; <a href="#vita">On a PS Vita</a> covers the other machine.</p>
 
       <h3>Install</h3>
       <p>Copy the <code>TRAX</code> folder into <code>PSP/GAME</code> on the memory stick. TRAX then appears in the XMB under Game › Memory Stick.</p>
@@ -401,6 +403,32 @@ html { scroll-behavior: smooth; }
 
       <h3>Quitting</h3>
       <p>Press <span class="key pill">HOME</span> as with any PSP app, or choose Quit on the Settings page.</p>
+    </section>
+
+    <section id="vita">
+      <h2>On a PS Vita</h2>
+      <p class="lede">TRAX has a native Vita build. It is the same player — the same list, cassette, equalizer and settings — drawn for the larger screen, and not the PSP version running under Adrenaline.</p>
+
+      <h3>Install</h3>
+      <p>Open <code>TRAX.vpk</code> with VitaShell and let it install. TRAX then appears on the home screen like any other application. Its own files live in <code>ux0:/data/trax</code>, which it makes itself: the settings, the log, lyrics it has fetched, and a <code>SKINS</code> folder for skins of your own.</p>
+
+      <h3>Where the music goes</h3>
+      <p>A Vita can have storage in three places at once, and TRAX reads any of them:</p>
+      <div class="tree-wrap"><pre class="tree">ux0:/music        <span class="c">the console's own storage</span>
+grw0:/MUSIC       <span class="c">a card in the game card slot — a microSD adapter</span>
+uma0:/MUSIC       <span class="c">the other card, where one is mounted</span></pre></div>
+      <p>The first time it runs, TRAX looks in all three. If only one has anything in it, that is the one it reads, without asking. If more than one does, it asks which — offering only the folders that actually have music in them — and remembers the answer. Settings has a <strong>Music folder</strong> row to change it later, and that one lists every place the machine has, empty ones included, so you can point at a card before you have put anything on it.</p>
+
+      <h3>The touchscreen</h3>
+      <p>The front panel drags the progress bar: touch the dot and slide it, and the time beside it follows your finger rather than the decoder, so it does not lurch along behind. Everything else — the list, the menus, the visualizations — is buttons, exactly as on a PSP.</p>
+
+      <h3>What differs from the PSP</h3>
+      <ul>
+        <li><strong>No helper module, and none needed.</strong> The volume keys and the screen are the Vita's own business, and this machine has no ♪ button.</li>
+        <li><strong>Lyrics work over Wi-Fi</strong> with nothing extra installed.</li>
+        <li><strong>Skins are drawn for this screen.</strong> A Vita skin is 960x544, and its <code>skin.json</code> names pixels on a screen that size. See <a href="#skins">Cassette skins</a>.</li>
+        <li><strong>ATRAC3plus plays here too,</strong> through the Vita's own codec module.</li>
+      </ul>
     </section>
 
     <section id="list">
@@ -564,7 +592,7 @@ html { scroll-behavior: smooth; }
 
     <section id="skins">
       <h2>Cassette skins</h2>
-      <p>The Tape deck's cassette is a picture from the <code>SKINS</code> folder beside the app. Add your own by giving each skin a folder:</p>
+      <p>The Tape deck's cassette is a picture from the <code>SKINS</code> folder &mdash; beside the app on a PSP, and in <code>ux0:/data/trax/SKINS</code> on a Vita. Add your own by giving each skin a folder:</p>
       <div class="tree-wrap"><pre class="tree">SKINS/
   hub.png                    <span class="c">the reel hub every skin uses</span>
   Maxell XLII 90/
@@ -572,6 +600,7 @@ html { scroll-behavior: smooth; }
     skin.json                <span class="c">optional: where to print the title, and colors</span>
     hub.png                  <span class="c">optional: this skin's own hub</span></pre></div>
       <p>Where the picture is transparent, the turning reels and tape show through. A skin without <code>skin.json</code> shows no text. In the Tape deck, <span class="key face"><svg><use href="#g-up"/></svg></span> <span class="key face"><svg><use href="#g-down"/></svg></span> step through the skins, and TRAX remembers the one you pick.</p>
+      <div class="note"><strong>A skin is drawn for one screen.</strong> The positions in <code>skin.json</code> are pixels, so a PSP&#x27;s skin is 480x272 and a Vita&#x27;s is 960x544, and one file cannot serve both. The skins that ship are made for the machine they ship with; <code>SKINS.html</code> has the format.</div>
     </section>
 
     <section id="formats">
@@ -583,7 +612,7 @@ html { scroll-behavior: smooth; }
         <dt>WAV</dt><dd>8, 16, 24 and 32-bit PCM, 32-bit float, A-law and µ-law, and multichannel.</dd>
         <dt>AAC</dt><dd>In <code>.m4a</code>, decoded by the PSP's own Media Engine.</dd>
         <dt>ALAC</dt><dd>Apple Lossless, in <code>.m4a</code>.</dd>
-        <dt>ATRAC</dt><dd>ATRAC3 and ATRAC3plus, in <code>.at3</code> &mdash; the PSP&#x27;s own format, decoded by its Media Engine. Tracks bought from Sony&#x27;s old Connect store are OpenMG-protected and will not play, on this or anything else.</dd>
+        <dt>ATRAC</dt><dd>ATRAC3 and ATRAC3plus, in <code>.at3</code> &mdash; the PSP&#x27;s own format, decoded by its Media Engine, and on a Vita by that machine&#x27;s own codec module. Tracks bought from Sony&#x27;s old Connect store are OpenMG-protected and will not play, on this or anything else.</dd>
         <dt>Cue sheets</dt><dd>A <code>.cue</code> beside a single-file album. See <a href="#cue">Cue albums</a>.</dd>
       </dl>
       <p>Names in accented Latin, Japanese and Korean display correctly. The fonts for Japanese and Korean load only when a name needs them.</p>
@@ -593,8 +622,11 @@ html { scroll-behavior: smooth; }
       <h2>In this beta</h2>
       <ul>
         <li>The list's bottom bar labels <span class="key face" aria-label="Triangle"><svg><use href="#g-tri"/></svg></span> as Search, which is not built yet. <span class="key face" aria-label="Circle"><svg><use href="#g-cir"/></svg></span> goes up a folder, and carries no label because a list does that everywhere.</li>
-        <li>The volume display, the ♪ button and Screen off need the helper and custom firmware.</li>
-        <li>A very large progressive JPEG cover can take around ten seconds to appear while hi-res music plays. The orb shows in the meantime.</li>
+        <li>The volume display, the ♪ button and Screen off need the helper and custom firmware. None of the three applies on a Vita: that machine handles its own volume and screen, and has no ♪ button.</li>
+        <li>A very large progressive JPEG cover can take around ten seconds to appear while hi-res music plays on a PSP. The orb shows in the meantime.</li>
+        <li>On a Vita the touchscreen drags the progress bar and does nothing else yet; the list is still scrolled with the buttons.</li>
+        <li>On a Vita the skin that ships is the PSP&#x27;s picture at half the size, standing in until one is drawn for the larger screen. Its text is placed for 960x544, so it sits oddly against the smaller picture.</li>
+        <li><code>uma0:/MUSIC</code> is read but has never been tested, for want of a card that mounts there.</li>
       </ul>
     </section>
   </main>

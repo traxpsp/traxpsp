@@ -397,8 +397,9 @@ figcaption { font-size: 0.88rem; color: var(--muted); margin-bottom: 16px; }
     <p>How to give a TRAX cassette skin its printed label and a moving background.</p>
   </div>
   <div class="edition">
-    <strong>TRAX 1.0.0 beta 1</strong><br>
+    <strong>TRAX 1.0.0 beta 4</strong><br>
     Tape deck visualization<br>
+    PSP and PS Vita<br>
     Companion to the TRAX Manual
   </div>
 </header>
@@ -423,16 +424,21 @@ figcaption { font-size: 0.88rem; color: var(--muted); margin-bottom: 16px; }
   <main>
     <section id="folder">
       <h2>The skin folder</h2>
-      <p class="lede">Each skin is a folder inside <code>SKINS</code>, beside the TRAX app. <code>skin.json</code> is optional: without it the skin works but prints no text, since nothing in a picture says where a title should go.</p>
-      <div class="tree-wrap"><pre class="tree">PSP/GAME/TRAX/SKINS/
+      <p class="lede">Each skin is a folder inside <code>SKINS</code>. <code>skin.json</code> is optional: without it the skin works but prints no text, since nothing in a picture says where a title should go.</p>
+      <p>Where <code>SKINS</code> is depends on the machine. On a PSP it sits beside the app; on a Vita it is in the folder TRAX keeps its own files in, so your skins survive reinstalling it.</p>
+      <div class="tree-wrap"><pre class="tree">PSP/GAME/TRAX/SKINS/       <span class="c">a PSP</span>
+ux0:/data/trax/SKINS/      <span class="c">a Vita</span>
+
   hub.png                    <span class="c">the reel hub every skin uses</span>
   Maxell XLII 90/
     Maxell XLII 90.png       <span class="c">the picture</span>
     skin.json                <span class="c">optional: the label and background</span>
     hub.png                  <span class="c">optional: this skin's own hub</span></pre></div>
-      <p>The picture is the PNG named after the folder. Failing that, TRAX uses <code>skin.png</code>, and failing that, the only other picture in the folder. Draw it at <strong>480 × 272</strong>, the PSP's screen size, so it's shown pixel for pixel. Any other size is stretched to fit.</p>
+      <p>The picture is the PNG named after the folder. Failing that, TRAX uses <code>skin.png</code>, and failing that, the only other picture in the folder.</p>
+      <p><strong>Draw it at the screen's own size,</strong> so it is shown pixel for pixel: <strong>480 × 272</strong> for a PSP, <strong>960 × 544</strong> for a Vita. Any other size is stretched to fit.</p>
+      <div class="note"><strong>A skin is drawn for one machine, not both.</strong> Every number in <code>skin.json</code> is a screen pixel, so the same file cannot serve two screens of different sizes — a PSP's label geometry lands in the top-left quarter of a Vita. Making a skin for both means two folders, with the Vita's picture at twice the size and every position in its <code>skin.json</code> doubled.</div>
       <p>The picture is drawn over the turning reels. Wherever it's transparent, the reels, the tape and the <a href="#background">background</a> show through.</p>
-      <p>All positions in <code>skin.json</code> are screen pixels, measured from the top-left corner of that 480 × 272 picture.</p>
+      <p>All positions in <code>skin.json</code> are screen pixels, measured from the top-left corner of the picture — so they are in that machine's pixels, whichever machine the skin is for.</p>
     </section>
 
     <section id="example">
