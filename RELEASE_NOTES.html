@@ -325,7 +325,7 @@ main li strong { color: var(--ink); }
     <p class="notes-lede">A music player for the PSP and the PS&nbsp;Vita. What it does, and the work behind this beta.</p>
   </div>
   <div class="edition">
-    <strong>1.0.0 beta 4</strong><br>
+    <strong>1.0.0 beta 5</strong><br>
     Release notes<br>
     For PSP-1000 and later,<br>
     and for the PS&nbsp;Vita
@@ -336,6 +336,7 @@ main li strong { color: var(--ink); }
   <nav class="toc" aria-label="Contents">
     <h2>Contents</h2>
     <ol>
+      <li><a href="#new-in-beta-5">New in beta 5</a></li>
       <li><a href="#new-in-beta-4">New in beta 4</a></li>
       <li><a href="#new-in-beta-3">New in beta 3</a></li>
       <li><a href="#new-in-beta-2">New in beta 2</a></li>
@@ -347,6 +348,42 @@ main li strong { color: var(--ink); }
 
   <main>
   <p>A music player for the PSP, and now for the PS&nbsp;Vita as well.</p>
+<section id="new-in-beta-5">
+  <h2>New in beta 5</h2>
+  <h3>Added</h3>
+<ul>
+  <li><strong>Global shuffle.</strong> A sixth play mode that plays any track under your music folder rather than the folder you are looking at. It was asked for, and it turned out to be mostly a question of what <em>not</em> to do.
+  <p>Reading a full card takes seconds, so it asks before it starts, and then shows a bar with a Cancel while it reads. The bar counts the folders at the top level of your music folder &mdash; the only total that can be known without reading the card twice &mdash; so it moves unevenly if your folders are very different sizes. Cancelling keeps nothing: part of a card is not a shuffle of it.</p>
+  <p>The list it plays from is not a queue. Five thousand tracks as queue entries would be seven megabytes, which a PSP has not got; instead each folder&#x27;s path is stored once with a sixteen-byte locator per track, and no file is opened at all &mdash; a name is enough to know a track exists. On a real card that is 1536 tracks in 2.1 seconds and 70&nbsp;KB on a PSP, 1430 tracks in 1.5 seconds on a Vita. It is let go of the moment playback stops, and says in the log what it released.</p>
+  <p>An album with a cue sheet contributes its tracks, not the one long file they live in. It plays your card through once and stops, and it is the one mode TRAX deliberately does not remember between launches &mdash; so that a press of Cross out of habit never starts a read of your whole card.</p></li>
+</ul>
+  <h3>Changed</h3>
+<ul>
+  <li><strong>Starting the app is about a hundred times quicker.</strong> With a folder of 133 tracks remembered from last time, a PSP took sixteen seconds of black screen to draw its first frame and now takes 125&nbsp;ms; a Vita took six or seven seconds and now takes about a hundred.
+  <p>None of that work needed doing before anything was drawn. Resuming used to reopen the folder <em>and</em> build a queue from it <em>and</em> open the track &mdash; which is to say it entered a folder and pressed Cross for you, and pressing Cross is the expensive half. It reads a directory listing now and nothing else.</p></li>
+
+  <li><strong>Resume puts the cursor on your track instead of opening it.</strong> TRAX comes up in the folder you were playing from, with the track highlighted and its position remembered; press Cross and it carries on from where you were. It no longer opens the file, or starts paused, at launch. Move the cursor or leave the folder and the remembered position is forgotten, because a position means nothing anywhere but where it was taken.</li>
+
+  <li><strong>Starting a track went from two to four seconds to about half a second,</strong> measured from the button to the first audible sample. Four separate things were in the way, and only one of them was where it looked:
+  <p>Queueing a folder opened <em>every file in it</em> to decide whether its long name or its 8.3 name was the one that worked &mdash; 128 opens for one track. An mp3&#x27;s length could only be had by scanning the whole file, because the header reader knew FLAC and WAV and had no third case. The folder&#x27;s cover art was looked for by reading the whole directory again on every track. And everything that read the card did so <em>after</em> the decoder had started filling its buffers, where the same work costs about five times as much.</p>
+  <p>Now the one track that plays is resolved at the moment it plays, mp3 lengths come from a Xing, Info or VBRI frame count &mdash; or from the bitrate, but only after a dozen frame headers agree about it &mdash; the folder&#x27;s cover answer is kept, and every read a track needs happens in the silence before the stream opens. What is left is the decoder finding its first frame, which belongs to the files rather than to TRAX.</p></li>
+
+  <li><strong>Album art stays on screen instead of being fetched again for every track.</strong> An album where each track carries its own copy of the same sleeve used to throw the sleeve away and decode it afresh on every skip, the panel visibly losing its art and getting it back. TRAX recognised a cover by the file it came from, and a cover living inside a track&#x27;s tags has no file; it has an identity of its own now.</li>
+
+  <li><strong>Track lengths are measured while the music plays, not while you browse.</strong> Walking into a folder of 133 files used to spend about four seconds of card work measuring every track in it, which held the list at fifteen frames a second and made everything feel slow &mdash; including the button press that starts a track. Nothing in the list ever showed a length; they are for the cassette&#x27;s tape, and the tape fills them in over the first minute of listening instead.</li>
+
+  <li><strong>Neither machine suspends itself under a playing track any more.</strong> Nothing in TRAX had ever told either console that something was happening, so a long album could be cut off part way by the console&#x27;s own idle timer. Only the suspension timer is cancelled, and only while the music actually plays: TRAX turns the backlight off itself when the screen-off setting asks, and an album paused and put down is a fair reason for a handheld to sleep. It needs no privilege, so an unmodified PSP keeps playing too.</li>
+
+  <li><strong>Browsing no longer opens every file it lists.</strong> The list opened each file to decide whether its row should be greyed out, which is what made opening a folder cost more than reading the whole card does. A file that will not open now looks like any other until you choose it, and then says so.</li>
+</ul>
+  <h3>Fixed</h3>
+<ul>
+  <li><strong>Global shuffle could not play some files on a PSP.</strong> A name with a typographic apostrophe in it &mdash; <code>Eric&#x2019;s</code> rather than <code>Eric&#x27;s</code> &mdash; is sometimes a name a PSP will hand back and then refuse to open again. Every other part of TRAX had always tried the old 8.3 name as a second chance; the new index had not, so an album that played perfectly from the list would stop a global shuffle dead.</li>
+  <li><strong>The player said &ldquo;repeat&rdquo; while global shuffle was playing.</strong> The mode indicator under the progress bar ended its list of cases with a catch-all that drew the repeat symbol, so a mode added later inherited it. Every mode names itself now, and one with no symbol of its own draws nothing &mdash; a missing icon being a smaller lie than a wrong one.</li>
+  <li><strong>One unplayable file no longer stops the rest of the group.</strong> Playback steps over it and carries on, and gives up only if nothing in the folder will open.</li>
+</ul>
+</section>
+
 <section id="new-in-beta-4">
   <h2>New in beta 4</h2>
   <h3>Added</h3>
@@ -587,6 +624,14 @@ main li strong { color: var(--ink); }
 <section id="known-limitations">
   <h2>Known limitations</h2>
 <ul>
+  <li><strong>Music stops while a PS&nbsp;Vita is in standby.</strong> Tapping the power button suspends TRAX along with the console; tapping again wakes it where it left off, in the same track at the same place. Playing on with the console asleep means handing the audio to the system&#x27;s own player, which would cost TRAX its decoders, its equalizer and the cassette&#x27;s place on the tape. Plugins exist that give any app background playback, installed into the console rather than into TRAX.</li>
+
+  <li><strong>Global shuffle&#x27;s progress bar moves unevenly</strong> when the folders at the top level of your music folder hold very different numbers of tracks. It counts folders because that is the only total available without reading the card twice, so ten big folders and eight small ones will crawl and then leap. It is honest about how much is left, not about how long it will take.</li>
+
+  <li><strong>An mp3 with no tag takes longer to start</strong> &mdash; about half a second rather than a third of one. Without an ID3 tag to say where the audio begins, the decoder has to hunt for the first frame, and some rips put several hundred bytes of nothing in front of it. Adding tags to such files fixes it, and so does nothing TRAX can do.</li>
+
+  <li><strong>A FLAC with a large padding block is slow to start,</strong> however small the music is. Some taggers leave megabytes of empty space in a file after editing it, and the decoder has to read through all of it to reach the audio. <code>metaflac --remove --block-type=PADDING --dont-use-padding</code> takes it out, and makes the files smaller into the bargain.</li>
+
   <li><strong>Search (△)</strong> is labelled in the list&#x27;s bar but not implemented yet. On both machines.</li>
   <li><strong>On a PS&nbsp;Vita,</strong> three things are worth knowing:
     <ul>

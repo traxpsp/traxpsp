@@ -349,7 +349,7 @@ html { scroll-behavior: smooth; }
     <p>A music player for the PSP and the PS Vita. This manual covers every screen and button.</p>
   </div>
   <div class="edition">
-    <strong>Version 1.0.0 beta 4</strong><br>
+    <strong>Version 1.0.0 beta 5</strong><br>
     For PSP-1000 and later<br>
     Custom firmware recommended<br>
     And for the PS Vita
@@ -364,6 +364,8 @@ html { scroll-behavior: smooth; }
       <li><a href="#vita">On a PS Vita</a></li>
       <li><a href="#list">The list</a></li>
       <li><a href="#modes">Play modes</a></li>
+      <li><a href="#global">Global shuffle</a></li>
+      <li><a href="#standby">Standby</a></li>
       <li><a href="#player">The Player</a></li>
       <li><a href="#vis">Visualizations</a></li>
       <li><a href="#eq">Equalizer</a></li>
@@ -461,9 +463,32 @@ uma0:/MUSIC       <span class="c">the other card, where one is mounted</span></p
         <li><b>Repeat one</b><span>Plays the same track again each time it ends.</span></li>
         <li><b>Shuffle</b><span>Plays every track once, in a random order.</span></li>
         <li><b>Shuffle and repeat</b><span>Shuffles again each time round, and never starts a round with the track that just finished.</span></li>
+        <li><b>Global shuffle</b><span>Plays any track under your music folder, not just the ones in the folder you are looking at. See <a href="#global">Global shuffle</a>.</span></li>
       </ul>
       <p>Whatever is playing keeps the mode it was started with. Changing the mode in the list affects only what you start next. The Player shows the queue's mode as a small icon beside the time. Play once has no icon.</p>
       <p>Shuffling changes the order tracks play in, not the list. The folder still reads in its own order.</p>
+
+      <h2 id="standby">Standby</h2>
+      <p>Tapping the power button puts the console into standby and TRAX with it. The music stops; tapping again wakes it and it carries on from where it was, in the same track at the same place.</p>
+      <p>TRAX cannot keep playing through standby, and this is worth being plain about rather than leaving you to wonder. An app playing with the console asleep has to hand its audio to the system&#x27;s own player, which would mean giving up TRAX&#x27;s decoders, its equalizer and the cassette&#x27;s sense of where it is on the tape. Plugins exist that enable background playback for any app, installed into the console rather than into TRAX; if that is what you want, that is where it lives.</p>
+      <p>What TRAX does do is keep the console awake while it plays, so it will not suspend itself out from under an album. With <b>Screen off while playing</b> on, that means a dark screen and forty minutes of music.</p>
+
+      <h2 id="global">Global shuffle</h2>
+      <p>Every other mode plays the folder you are in. Global shuffle plays your whole music folder: any track, in any folder, in a random order.</p>
+      <p>It has to read your music folder before it can do that, and on a full card that takes a few seconds, so it asks first. Press <span class="key face" aria-label="Cross"><svg><use href="#g-crs"/></svg></span> on any track to start it, and TRAX will tell you what it is about to do:</p>
+      <blockquote>Using global shuffle requires reading your entire music folder which may take time.</blockquote>
+      <p><span class="key face" aria-label="Cross"><svg><use href="#g-crs"/></svg></span> goes ahead. <span class="key face" aria-label="Circle"><svg><use href="#g-cir"/></svg></span> closes the dialog and nothing happens.</p>
+      <p>While it reads, a bar counts the folders at the top level of your music folder and says how many tracks it has found. <span class="key face" aria-label="Circle"><svg><use href="#g-cir"/></svg></span> cancels, and cancelling keeps nothing &mdash; part of a card is not a shuffle of it.</p>
+      <p>Things worth knowing:</p>
+      <ul>
+        <li>Which track you press <span class="key face" aria-label="Cross"><svg><use href="#g-crs"/></svg></span> on makes no difference. The shuffle picks where to begin.</li>
+        <li>An album with a cue sheet contributes its tracks, not the one long file they live in.</li>
+        <li>It plays your card through once and stops. It does not go round again.</li>
+        <li>Stopping playback ends it, and the list of tracks it built is let go of there and then.</li>
+        <li>It is the one mode TRAX does not remember between launches. Every other mode is where you left it; this one is asked for each time, so that a press of <span class="key face" aria-label="Cross"><svg><use href="#g-crs"/></svg></span> out of habit never starts a read of your whole card.</li>
+        <li>Folders and albums still open normally while it is the chosen mode. Only pressing <span class="key face" aria-label="Cross"><svg><use href="#g-crs"/></svg></span> on a track starts it.</li>
+      </ul>
+      <p>The bar counts top-level folders because that is the only total TRAX can know without reading your card twice. If your folders are very different sizes, expect it to move unevenly.</p>
     </section>
 
     <section id="player">
@@ -560,7 +585,8 @@ uma0:/MUSIC       <span class="c">the other card, where one is mounted</span></p
         <dt>Lyrics text size</dt><dd>Default, Medium or Large: how big the words are drawn in the Lyrics visualization. Larger is easier to read from further away and fits fewer lines on the screen at once.</dd>
         <dt>Sleep timer</dt><dd>Off, 15, 30, 60 or 90 minutes. The music fades out over the last half minute, then pauses. It's for one evening, so it's always Off when TRAX starts.</dd>
         <dt>Screen off while playing</dt><dd>Off, or after 30 seconds, 1, 2 or 5 minutes without a button press. The screen uses most of the battery. Any button wakes it without doing anything else, and it comes back on by itself when the music stops. Needs the helper.</dd>
-        <dt>Resume on launch</dt><dd>When on, TRAX reopens the last track when you start it, paused where you left it, in the same play mode.</dd>
+        <dd class="note"><strong>On a PS&nbsp;Vita</strong> this needs nothing extra, and TRAX now also keeps the machine from suspending itself while a track plays &mdash; so an album plays through with the screen dark rather than being cut off part way. Tapping the power button is different: that suspends TRAX, the music stops, and tapping again wakes it where it left off. See <a href="#standby">Standby</a>.</dd>
+        <dt>Resume on launch</dt><dd>When on, TRAX opens the folder you were last playing from and puts the cursor on that track, remembering how far into it you were. Press <span class="key face" aria-label="Cross"><svg><use href="#g-crs"/></svg></span> and it carries on from there. It does not start playing by itself, and it does not open the file until you ask &mdash; which is what makes starting the app quick. Move the cursor or leave the folder and the remembered position is forgotten.</dd>
         <dt>Quit</dt><dd>Press <span class="key face" aria-label="Cross"><svg><use href="#g-crs"/></svg></span> to leave TRAX.</dd>
       </dl>
       <h3>About</h3>
