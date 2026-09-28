@@ -325,7 +325,7 @@ main li strong { color: var(--ink); }
     <p class="notes-lede">A music player for the PSP and the PS&nbsp;Vita. What it does, and the work behind this beta.</p>
   </div>
   <div class="edition">
-    <strong>1.0.0 beta 5</strong><br>
+    <strong>1.0.0 beta 6</strong><br>
     Release notes<br>
     For PSP-1000 and later,<br>
     and for the PS&nbsp;Vita
@@ -336,6 +336,7 @@ main li strong { color: var(--ink); }
   <nav class="toc" aria-label="Contents">
     <h2>Contents</h2>
     <ol>
+      <li><a href="#new-in-beta-6">New in beta 6</a></li>
       <li><a href="#new-in-beta-5">New in beta 5</a></li>
       <li><a href="#new-in-beta-4">New in beta 4</a></li>
       <li><a href="#new-in-beta-3">New in beta 3</a></li>
@@ -348,6 +349,46 @@ main li strong { color: var(--ink); }
 
   <main>
   <p>A music player for the PSP, and now for the PS&nbsp;Vita as well.</p>
+<section id="new-in-beta-6">
+  <h2>New in beta 6</h2>
+  <h3>Added</h3>
+<ul>
+  <li><strong>A gallery of covers.</strong> Triangle from the list opens every album on your card by its cover, as a wall two across or as a carousel with the album you are on largest and its neighbors overlapping behind it. Select swaps the two, Circle goes back to the list, and whichever you were last in is where TRAX opens next time.
+  <p>Cross opens an album as choosing it in the list would. Held, it starts the album from its first track and goes straight to the Player &mdash; which is the point of standing in front of a wall of covers, since the one you are looking at is usually the one you want. In a shuffle mode the shuffle picks where to begin: you chose an album, not a track in it.</p>
+  <p>An album with no cover file gets an orb drawn for the purpose, so the wall stays a wall rather than a row of gaps. On a Vita you can tap an album to highlight it and tap again to open it, and swipe to move.</p>
+  <p>The albums are indexed once and the index is kept on the card, because reading 43 folders takes 2.2 seconds on a PSP and a gallery that opens by default should not pay that every launch. With the index in hand a gallery launch went from 2313&nbsp;ms to 163.</p></li>
+
+  <li><strong>A card taken out of a Vita <em>may</em> be noticed.</strong> When it is, the list and the gallery empty and say which folder has gone, instead of offering albums that are not there and answering &ldquo;cannot play that item&rdquo; one row at a time; put the card back and everything returns with nothing pressed.
+  <p>It is only fair to say this is unfinished. A Vita goes on answering for a card that has left the slot: the folder still exists, it still lists what it used to hold, <code>sceAppMgrGetDevInfo</code> will not discuss the game card at all, and the firmware will even hand over a file&#x27;s contents after the card has gone. The one signal that ever changes is the listing eventually going empty, and it does not always change &mdash; one pull was noticed within two seconds and the next was not noticed at all. So TRAX looks, and when it sees it says so. Navigating anywhere finds out for certain, which is the part that has always worked.</p></li>
+</ul>
+  <h3>Changed</h3>
+<ul>
+  <li><strong>Covers appear before the rows they belong to.</strong> A folder of albums used to arrive and then fill in, one cover a frame. The covers for the rows about to be shown are now read before the list is drawn, straight from the cache on this thread rather than asked of the background worker and waited for &mdash; the waiting was a spin with no sleep in it, and what it waited for was a thread that deliberately stands down while music plays. It logged &ldquo;0 of 1 ready in 250&nbsp;ms&rdquo;; it now reads 1 of 1 in 35.</li>
+
+  <li><strong>A cover is cached at the size it is drawn.</strong> The cache held two sizes, the Player&#x27;s and a list row&#x27;s, and the gallery draws something between them &mdash; so every gallery cover was decoded from the original every single time, and the gallery behaved as though it had no cache at all. At the size it actually draws, a cover is a 64&nbsp;KB read and no arithmetic.</li>
+
+  <li><strong>Changing the music folder rereads it once, when you stop choosing.</strong> Three places rotate in a ring and the folder was read on each keypress, so reaching the third read the first two on the way past. It now waits until the choice stands still, and rebuilds the album index too &mdash; which it never did, so the gallery went on showing the albums of the card you had just swapped out.</li>
+
+  <li><strong>An empty gallery says which of the two things it is.</strong> &ldquo;No albums found&rdquo; appeared the instant a folder changed, because the count was nought for the second before the walk had been anywhere &mdash; telling somebody who had just chosen a card that it was empty before anything had looked at it. It now says &ldquo;Reading grw0:/MUSIC&rdquo; while the walk runs, and names the folder in either message.</li>
+</ul>
+  <h3>Fixed</h3>
+<ul>
+  <li><strong>A folder&#x27;s cover was decoded again on every play.</strong> The Player had two paths: a cue album&#x27;s art went through the cache, and a picture found in a folder did not, on the grounds that a plain folder was not ours to write in. The list and the gallery had been writing there all along, so the Player was the only caller keeping a rule nobody else kept &mdash; and paid for it by decoding the whole original every time a track started. On a Vita that was 3851&nbsp;ms for a 1900-pixel cover, with a copy at exactly the size wanted lying unread beside the file.</li>
+
+  <li><strong>Waking a PSP in the carousel left it taking no notice of anything.</strong> It had not stopped &mdash; it was drawing sixty frames a second throughout &mdash; but a suspend loses the pad&#x27;s analog sampling mode, and sampling in digital mode reports the stick as 0. Zero is not the centre: it reads as a direction held down, so the carousel pulled back every step taken in it. There is a power callback now to set the pad up again, a read that did not happen reports the stick centred rather than whatever was on the stack, and the flag the Home menu sets is <code>volatile</code>, which it should always have been.</li>
+
+  <li><strong>The left-hand cover flickered between the orb and the artwork.</strong> A tile was handed out without being told which album it now held, so the picture arrived in a tile nobody was looking for, the album asked again, and being busy meant the orb was drawn instead &mdash; orb, artwork, orb, for as long as you looked at it, leaking the decoded texture on every turn.</li>
+
+  <li><strong>Album labels were unreadable on a PSP.</strong> Four things were wrong and only the last of them was the one being seen: a missing <code>text_begin()</code>, a font size multiplied by the layout scale, names fitted at one size and drawn at another &mdash; and then blending, without which a PGF glyph&#x27;s soft edges land as opaque squares.</li>
+
+  <li><strong>A use-after-free in the browser&#x27;s name pool.</strong> Adding a name that already lived in the pool could read from freed memory when the pool grew, which is the kind of fault that shows up as something else entirely, somewhere else entirely.</li>
+
+  <li><strong>Text that is not UTF-8 is Windows-1252, not Latin-1.</strong> Smart quotes, dashes and ellipses in tags and cue sheets came out as stray boxes because the bytes 0x80&ndash;0x9F were being widened as though they were Latin-1 control codes.</li>
+
+  <li><strong>A cue album&#x27;s audio file was indexed twice by global shuffle</strong> &mdash; once as the sheet&#x27;s tracks and again as the file itself.</li>
+</ul>
+</section>
+
 <section id="new-in-beta-5">
   <h2>New in beta 5</h2>
   <h3>Added</h3>
@@ -624,6 +665,7 @@ main li strong { color: var(--ink); }
 <section id="known-limitations">
   <h2>Known limitations</h2>
 <ul>
+  <li>Pulling the card a Vita&#x27;s music is on is only sometimes noticed while TRAX is sitting still; see the note above. Moving around the list or the gallery finds out reliably.</li>
   <li><strong>Music stops while a PS&nbsp;Vita is in standby.</strong> Tapping the power button suspends TRAX along with the console; tapping again wakes it where it left off, in the same track at the same place. Playing on with the console asleep means handing the audio to the system&#x27;s own player, which would cost TRAX its decoders, its equalizer and the cassette&#x27;s place on the tape. Plugins exist that give any app background playback, installed into the console rather than into TRAX.</li>
 
   <li><strong>Global shuffle&#x27;s progress bar moves unevenly</strong> when the folders at the top level of your music folder hold very different numbers of tracks. It counts folders because that is the only total available without reading the card twice, so ten big folders and eight small ones will crawl and then leap. It is honest about how much is left, not about how long it will take.</li>

@@ -349,7 +349,7 @@ html { scroll-behavior: smooth; }
     <p>A music player for the PSP and the PS Vita. This manual covers every screen and button.</p>
   </div>
   <div class="edition">
-    <strong>Version 1.0.0 beta 5</strong><br>
+    <strong>Version 1.0.0 beta 6</strong><br>
     For PSP-1000 and later<br>
     Custom firmware recommended<br>
     And for the PS Vita
@@ -363,6 +363,7 @@ html { scroll-behavior: smooth; }
       <li><a href="#setup">Setting up</a></li>
       <li><a href="#vita">On a PS Vita</a></li>
       <li><a href="#list">The list</a></li>
+      <li><a href="#gallery">The gallery</a></li>
       <li><a href="#modes">Play modes</a></li>
       <li><a href="#global">Global shuffle</a></li>
       <li><a href="#standby">Standby</a></li>
@@ -422,7 +423,8 @@ uma0:/MUSIC       <span class="c">the other card, where one is mounted</span></p
       <p>The first time it runs, TRAX looks in all three. If only one has anything in it, that is the one it reads, without asking. If more than one does, it asks which — offering only the folders that actually have music in them — and remembers the answer. Settings has a <strong>Music folder</strong> row to change it later, and that one lists every place the machine has, empty ones included, so you can point at a card before you have put anything on it.</p>
 
       <h3>The touchscreen</h3>
-      <p>The front panel drags the progress bar: touch the dot and slide it, and the time beside it follows your finger rather than the decoder, so it does not lurch along behind. Everything else — the list, the menus, the visualizations — is buttons, exactly as on a PSP.</p>
+      <p>The front panel drags the progress bar: touch the dot and slide it, and the time beside it follows your finger rather than the decoder, so it does not lurch along behind.</p>
+      <p>In <a href="#gallery">the gallery</a> it does more: tap an album to highlight it, tap it again to open it, and swipe to move — left and right along the carousel, up and down along the wall. Everything else — the list, the menus, the visualizations — is buttons, exactly as on a PSP.</p>
 
       <h3>What differs from the PSP</h3>
       <ul>
@@ -430,6 +432,7 @@ uma0:/MUSIC       <span class="c">the other card, where one is mounted</span></p
         <li><strong>Lyrics work over Wi-Fi</strong> with nothing extra installed.</li>
         <li><strong>Skins are drawn for this screen.</strong> A Vita skin is 960x544, and its <code>skin.json</code> names pixels on a screen that size. See <a href="#skins">Cassette skins</a>.</li>
         <li><strong>ATRAC3plus plays here too,</strong> through the Vita's own codec module.</li>
+        <li><strong>A card taken out may be noticed.</strong> When it is, TRAX empties the list and the gallery and says which folder has gone, and putting the card back brings everything back with nothing pressed. It is unfinished, and the reason is a Vita rather than TRAX: the console keeps answering for a card that has left the slot — the folder still exists, still lists what it used to hold, and will even hand over a file's contents. The only signal that ever changes is the listing going empty, and it does not always change. Moving around the list or the gallery finds out for certain.</li>
       </ul>
     </section>
 
@@ -448,10 +451,39 @@ uma0:/MUSIC       <span class="c">the other card, where one is mounted</span></p
           <tr><td><span class="key shoulder">L</span> <span class="key shoulder">R</span></td><td>Choose how the next thing you start will play. See <a href="#modes">Play modes</a>.</td></tr>
           <tr><td><span class="key face" aria-label="Square"><svg><use href="#g-sqr"/></svg></span></td><td>Return to the Player, when something is playing.</td></tr>
           <tr><td><span class="key face" aria-label="Music note"><svg><use href="#g-note"/></svg></span></td><td>Go to what's playing, with the equalizer open.</td></tr>
+          <tr><td><span class="key face" aria-label="Triangle"><svg><use href="#g-tri"/></svg></span></td><td>Open the gallery &mdash; every album on the card, by its cover. See <a href="#gallery">The gallery</a>.</td></tr>
           <tr><td><span class="key pill">START</span></td><td>Open Settings and About.</td></tr>
         </tbody>
       </table>
       <p>The bar along the bottom shows the play modes, with the chosen one in white, and the name of what's playing on the right.</p>
+    </section>
+
+
+    <section id="gallery">
+      <h2>The gallery</h2>
+      <p><span class="key face" aria-label="Triangle"><svg><use href="#g-tri"/></svg></span> from the list opens the gallery: every album on your card, shown by its cover rather than by its name. There are two views of the same thing, and <span class="key pill">SELECT</span> swaps between them.</p>
+      <ul class="modes">
+        <li><b>The wall</b><span>Covers two across, scrolling down as far as your card goes.</span></li>
+        <li><b>The carousel</b><span>One long row, the album in the middle largest, its neighbors overlapping behind it.</span></li>
+      </ul>
+      <p>An album with no cover file gets the orb &mdash; TRAX&#x27;s own stand-in &mdash; so the wall stays a wall rather than a row of gaps.</p>
+
+      <table class="controls">
+        <thead><tr><th scope="col">Press</th><th scope="col">To</th></tr></thead>
+        <tbody>
+          <tr><td><span class="key face"><svg><use href="#g-up"/></svg></span> <span class="key face"><svg><use href="#g-down"/></svg></span> <span class="key face"><svg><use href="#g-left"/></svg></span> <span class="key face"><svg><use href="#g-right"/></svg></span></td><td>Move through the albums.<span class="how">The analog stick works too. On the wall, up and down move a row at a time; on the carousel, left and right walk it.</span></td></tr>
+          <tr><td><span class="key face" aria-label="Cross"><svg><use href="#g-crs"/></svg></span></td><td>Open the album, the same as choosing it in the list.</td></tr>
+          <tr><td><span class="key face" aria-label="Cross"><svg><use href="#g-crs"/></svg></span><span class="held">held</span></td><td>Start the album from its first track, without opening it first.<span class="how">If you are in a shuffle mode, the shuffle chooses where to begin &mdash; you picked an album, not a track in it.</span></td></tr>
+          <tr><td><span class="key pill">SELECT</span></td><td>Swap between the wall and the carousel.</td></tr>
+          <tr><td><span class="key face" aria-label="Circle"><svg><use href="#g-cir"/></svg></span></td><td>Back to the list.</td></tr>
+        </tbody>
+      </table>
+
+      <p>On a Vita you can also tap an album to highlight it and tap it again to open it, and swipe to move: left and right along the carousel, up and down along the wall.</p>
+
+      <p>Whichever view you were last in is where TRAX opens next time, the list included. If you live in the gallery, that means the album index has to be read before anything can be drawn, and a card of any size takes a moment &mdash; so a progress dialog says what it is doing, with <span class="key face" aria-label="Circle"><svg><use href="#g-cir"/></svg></span> to give up and use the list instead. After the first time the index is kept on the card and a launch is back to a fraction of a second.</p>
+
+      <p>Covers arrive as you go. They are cached beside your pictures at the size the gallery draws them, so the first pass over a card is the slow one and afterwards they appear as fast as you can scroll. While you are moving, TRAX draws only the covers it already has and leaves the rest until you stop &mdash; a large cover takes long enough to decode that fetching it mid-sweep would cost you the smoothness instead.</p>
     </section>
 
     <section id="modes">
@@ -650,7 +682,7 @@ uma0:/MUSIC       <span class="c">the other card, where one is mounted</span></p
         <li>The list's bottom bar labels <span class="key face" aria-label="Triangle"><svg><use href="#g-tri"/></svg></span> as Search, which is not built yet. <span class="key face" aria-label="Circle"><svg><use href="#g-cir"/></svg></span> goes up a folder, and carries no label because a list does that everywhere.</li>
         <li>The volume display, the ♪ button and Screen off need the helper and custom firmware. None of the three applies on a Vita: that machine handles its own volume and screen, and has no ♪ button.</li>
         <li>A very large progressive JPEG cover can take around ten seconds to appear while hi-res music plays on a PSP. The orb shows in the meantime.</li>
-        <li>On a Vita the touchscreen drags the progress bar and does nothing else yet; the list is still scrolled with the buttons.</li>
+        <li>On a Vita the touchscreen works on the progress bar and in the gallery. The list is still scrolled with the buttons.</li>
         <li>On a Vita the skin that ships is the PSP&#x27;s picture at half the size, standing in until one is drawn for the larger screen. Its text is placed for 960x544, so it sits oddly against the smaller picture.</li>
         <li><code>uma0:/MUSIC</code> is read but has never been tested, for want of a card that mounts there.</li>
       </ul>
