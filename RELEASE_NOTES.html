@@ -325,7 +325,7 @@ main li strong { color: var(--ink); }
     <p class="notes-lede">A music player for the PSP and the PS&nbsp;Vita. What it does, and the work behind this beta.</p>
   </div>
   <div class="edition">
-    <strong>1.0.0 beta 6</strong><br>
+    <strong>1.0.0 beta 7</strong><br>
     Release notes<br>
     For PSP-1000 and later,<br>
     and for the PS&nbsp;Vita
@@ -336,6 +336,7 @@ main li strong { color: var(--ink); }
   <nav class="toc" aria-label="Contents">
     <h2>Contents</h2>
     <ol>
+      <li><a href="#new-in-beta-7">New in beta 7</a></li>
       <li><a href="#new-in-beta-6">New in beta 6</a></li>
       <li><a href="#new-in-beta-5">New in beta 5</a></li>
       <li><a href="#new-in-beta-4">New in beta 4</a></li>
@@ -349,6 +350,30 @@ main li strong { color: var(--ink); }
 
   <main>
   <p>A music player for the PSP, and now for the PS&nbsp;Vita as well.</p>
+<section id="new-in-beta-7">
+  <h2>New in beta 7</h2>
+  <p>Both of these came from listeners rather than from a plan.</p>
+  <h3>Changed</h3>
+<ul>
+  <li><strong>A folder holds a thousand tracks, where it held a hundred and twenty-eight.</strong> One listener wrote that the only thing keeping TRAX from being the best FLAC player he had was what looked like a limit of 128 files to a folder. He was right, and it was worse than it looked: the list showed 256 entries and the queue took 128 of them without a word, so a folder of two hundred tracks played the first 128 and stopped.
+  <p>Raising it meant shrinking what a track costs first. A queue entry was 1524 bytes, of which 672 were the same two strings written out again for every track &mdash; one cover belongs to the whole album and one album name comes off the cue sheet, so both live on the queue now rather than on each track. 852 bytes apiece, and a thousand of them is 852 KB where the old hundred and twenty-eight took 190. Measured on a PSP: 818 KB more at launch, 6.4 percent of the heap, leaving 12.1 MB free against a peak use of 2.9.</p>
+  <p>The listing sort had to go with it. It was an insertion sort that copies a whole entry per shift, which is fine at 256 and sixteen times the work at 1024 &mdash; seconds of it for a folder arriving in anything like reverse order. It is a qsort now, checked against the old one over twenty thousand random listings of folders and files: the same order every time. And when a group will not fit, the log says so, once, when it starts.</p></li>
+
+  <li><strong>Lyrics wrap instead of being cut off.</strong> Another listener: "text wrapping didn't occur for lyrics display ... especially evident when using large text size". A line too wide was cut with an ellipsis and the rest thrown away, and at the large size, where a line holds perhaps five words, that was most of the song.
+  <p>The reason it had never wrapped was real: the scroll was counted in lines, every line assumed one row tall, so two rows of one line would have put everything below it out of step. The scroll counts rows now and the row a line starts on is looked up rather than assumed. Breaks are worked out once per song and kept &mdash; wrapping asks the font about a word at a time, which is real work on a PSP &mdash; and measured at the largest size a line is ever drawn at, so that a line does not rewrap and shove the song about at the moment it is sung.</p></li>
+</ul>
+  <h3>Fixed</h3>
+<ul>
+  <li><strong>The lyric view was written in one machine's pixels.</strong> Row spacing was 22 flat: about right for a PSP's font and too little for a Vita's, so rows there sat closer together than the letters are tall and ran into each other. It asks the font now. The line being sung sat 140 pixels down &mdash; just past the middle of a PSP, the top quarter of a Vita &mdash; so that is a share of the screen, and the bars top and bottom take the screen's scale like everything else.</li>
+
+  <li><strong>A line of lyrics was cut to 160 bytes as the file was read,</strong> before anything that draws it ever saw the rest. 160 bytes is 160 letters of English and about 53 of Japanese, where each takes three. It is 320 now, and the parser says in the log when it has to cut one &mdash; a line that arrives short looks exactly like a line the wrapping mishandled, and telling those apart should not need a screenshot.</li>
+
+  <li><strong>One song's line breaks were drawn over the next song's words.</strong> The player keeps one set of lyrics inside what it knows about the current track and reads each track's words into it, so the address never changes and only the contents do. The layout cache watched the address, so it worked once per run and every song after the first was laid out for the first one.</li>
+
+  <li><strong>The list's bar said Search beside a button that opens the gallery.</strong> It had been drawn for a search that does not exist yet, then wired to the gallery a release ago, and nobody moved the label.</li>
+</ul>
+</section>
+
 <section id="new-in-beta-6">
   <h2>New in beta 6</h2>
   <h3>Added</h3>

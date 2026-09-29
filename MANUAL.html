@@ -349,7 +349,7 @@ html { scroll-behavior: smooth; }
     <p>A music player for the PSP and the PS Vita. This manual covers every screen and button.</p>
   </div>
   <div class="edition">
-    <strong>Version 1.0.0 beta 6</strong><br>
+    <strong>Version 1.0.0 beta 7</strong><br>
     For PSP-1000 and later<br>
     Custom firmware recommended<br>
     And for the PS Vita
@@ -588,7 +588,7 @@ uma0:/MUSIC       <span class="c">the other card, where one is mounted</span></p
       <p>The equalizer is the last entry in the same list, which is how to reach it on a PSP without the helper module.</p>
 
       <h3>Lyrics</h3>
-      <p>The words live in a <code>LYRICS</code> folder at the root of the card, with your music's own folders mirrored inside it: a track at <code>PSP/MUSIC/The Cars/Greatest Hits/album.flac</code> keeps its words at <code>LYRICS/The Cars/Greatest Hits/album.lrc</code>. One folder, so the words are not mixed in among the music, and both builds of TRAX share whatever either has fetched. An <code>.lrc</code> sitting beside the track still works, and is no longer listed in the browser. A file with timings lights each line as it is sung; one without drifts through the track and says so. <span class="key face"><svg><use href="#g-up"/></svg></span> <span class="key face"><svg><use href="#g-down"/></svg></span> read back over what has been sung, and let go after five seconds. If the words are small for you, Settings has a <strong>Lyrics text size</strong> row: Default, Medium or Large.</p>
+      <p>The words live in a <code>LYRICS</code> folder at the root of the card, with your music's own folders mirrored inside it: a track at <code>PSP/MUSIC/The Cars/Greatest Hits/album.flac</code> keeps its words at <code>LYRICS/The Cars/Greatest Hits/album.lrc</code>. One folder, so the words are not mixed in among the music, and both builds of TRAX share whatever either has fetched. An <code>.lrc</code> sitting beside the track still works, and is no longer listed in the browser. A file with timings lights each line as it is sung; one without drifts through the track and says so. <span class="key face"><svg><use href="#g-up"/></svg></span> <span class="key face"><svg><use href="#g-down"/></svg></span> read back over what has been sung, and let go after five seconds. If the words are small for you, Settings has a <strong>Lyrics text size</strong> row: Default, Medium or Large. A line too long for the screen wraps onto as many rows as it needs, and stays in time with the song either way — so the large size costs you no words.</p>
       <p><span class="key face" aria-label="Triangle"><svg><use href="#g-tri"/></svg></span> fetches the words from <a href="https://lrclib.net">lrclib.net</a> over Wi-Fi and saves them into that folder, creating it as it goes. TRAX asks for an exact match first and, failing that, searches by name and takes the version closest in length — preferring one somebody has timed. A track of a cue album keeps its own file, <code>album.03.lrc</code>, since the album's tracks share one audio file.</p>
       <div class="note"><strong>Fetching needs a network the PSP can join,</strong> which in practice means custom firmware: WPA2 support comes from ARK-4's plugin, and unmodified firmware manages only WEP, WPA, or a router left in mixed WPA/WPA2 mode. Everything else about Lyrics works either way — including <code>.lrc</code> files you copy into <code>LYRICS</code> yourself — TRAX makes that folder the first time it runs, so it is there waiting.</div>
     </section>
@@ -679,11 +679,12 @@ uma0:/MUSIC       <span class="c">the other card, where one is mounted</span></p
     <section id="limits">
       <h2>In this beta</h2>
       <ul>
-        <li>The list's bottom bar labels <span class="key face" aria-label="Triangle"><svg><use href="#g-tri"/></svg></span> as Search, which is not built yet. <span class="key face" aria-label="Circle"><svg><use href="#g-cir"/></svg></span> goes up a folder, and carries no label because a list does that everywhere.</li>
+        <li>Search is not built. <span class="key face" aria-label="Triangle"><svg><use href="#g-tri"/></svg></span> was drawn on the bar for it and opens <a href="#gallery">the gallery</a> instead, which is what the bar now says. <span class="key face" aria-label="Circle"><svg><use href="#g-cir"/></svg></span> goes up a folder, and carries no label because a list does that everywhere.</li>
         <li>The volume display, the ♪ button and Screen off need the helper and custom firmware. None of the three applies on a Vita: that machine handles its own volume and screen, and has no ♪ button.</li>
         <li>A very large progressive JPEG cover can take around ten seconds to appear while hi-res music plays on a PSP. The orb shows in the meantime.</li>
         <li>On a Vita the touchscreen works on the progress bar and in the gallery. The list is still scrolled with the buttons.</li>
         <li>On a Vita the skin that ships is the PSP&#x27;s picture at half the size, standing in until one is drawn for the larger screen. Its text is placed for 960x544, so it sits oddly against the smaller picture.</li>
+        <li>One folder shows and plays up to 1024 tracks, and a cue sheet up to the same. Past that the rest are left out, and the log says so when it happens. A line of lyrics holds 320 bytes — about 320 letters of English or 100 of Japanese — and wraps onto at most eight rows.</li>
         <li><code>uma0:/MUSIC</code> is read but has never been tested, for want of a card that mounts there.</li>
       </ul>
     </section>
