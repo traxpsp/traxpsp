@@ -325,7 +325,7 @@ main li strong { color: var(--ink); }
     <p class="notes-lede">A music player for the PSP and the PS&nbsp;Vita. What it does, and the work behind this beta.</p>
   </div>
   <div class="edition">
-    <strong>1.0.0 beta 7</strong><br>
+    <strong>1.0.0 beta 9</strong><br>
     Release notes<br>
     For PSP-1000 and later,<br>
     and for the PS&nbsp;Vita
@@ -336,6 +336,8 @@ main li strong { color: var(--ink); }
   <nav class="toc" aria-label="Contents">
     <h2>Contents</h2>
     <ol>
+      <li><a href="#new-in-beta-9">New in beta 9</a></li>
+      <li><a href="#new-in-beta-8">New in beta 8</a></li>
       <li><a href="#new-in-beta-7">New in beta 7</a></li>
       <li><a href="#new-in-beta-6">New in beta 6</a></li>
       <li><a href="#new-in-beta-5">New in beta 5</a></li>
@@ -350,6 +352,42 @@ main li strong { color: var(--ink); }
 
   <main>
   <p>A music player for the PSP, and now for the PS&nbsp;Vita as well.</p>
+<section id="new-in-beta-9">
+  <h2>New in beta 9</h2>
+  <p>One thing, on both machines: the player takes its colour from the record you are playing.</p>
+  <h3>New</h3>
+<ul>
+  <li><strong>A background drawn from the album&rsquo;s own cover.</strong> Up to six colours are taken from the sleeve as it loads, and the space around the artwork drifts between them &mdash; about eighteen seconds on each, and still while the music is. It is on to begin with, and <em>Dynamic background</em> in Settings turns it off.
+  <p>The colours are not the sleeve&rsquo;s own, and that is deliberate rather than a shortcut. The titles and times are printed over this, and a bright cover used as it is would leave them unreadable, so each colour keeps its hue and is brought down to a brightness the words can sit on. The background is tinted by the record; it is not a copy of it. A sleeve with nothing to take &mdash; one that is all black, or all grey &mdash; simply keeps the old flat colour, and how many colours come back depends on what is actually in the picture rather than always being six.</p></li>
+</ul>
+  <h3>Fixed</h3>
+<ul>
+  <li><strong>The progress bar no longer disappears against some covers.</strong> The bar&rsquo;s track was a fixed dark grey that happened to be almost exactly as bright as the new background, so on a coloured sleeve the two matched and only the dot was left. It is now drawn from whatever is behind it and stays clear of it, whichever colour the drift has reached.</li>
+  <li><strong>The Settings page fits again.</strong> Adding a row pushed its help text down through the footer. The rows sit a little closer now, and the page is measured when TRAX is built rather than when somebody notices.</li>
+</ul>
+</section>
+
+<section id="new-in-beta-8">
+  <h2>New in beta 8</h2>
+  <p>One album a reader could not play, and everything that turned out to be standing behind it. All of this is a PSP; a Vita was right all along and is left alone.</p>
+  <h3>Fixed</h3>
+<ul>
+  <li><strong>Filenames on a PSP were being read as the wrong alphabet.</strong> A PSP hands a filename back in Shift-JIS, and TRAX had been reading it as Windows-1252 &mdash; so an album ripped by iTunes, with a curly apostrophe in its name, drew as <code>Don?ft Look Back</code> rather than <code>Don&rsquo;t Look Back</code>. Three from one card:
+  <p><code>Boston - Don?ft Look Back</code>, <code>Yaz - Upstairs at Eric?fs</code>, <code>Star Wars - Main Title ?^ Rebel Blockade Runner</code>. Every one of them played perfectly; it was only ever what you were reading that was wrong, and a typographic apostrophe is in most filenames a ripper writes.</p>
+  <p>Decoded properly now, from a table generated out of cp932. Only on a PSP, and that restriction is the important part rather than caution: Windows-1252 high bytes followed by ASCII make perfectly valid Shift-JIS pairs, so trying it everywhere turned <code>Mot&ouml;rhead</code> into <code>Mothead</code> and <code>Bj&ouml;rk</code> into <code>Bjk</code> &mdash; names that were right before. It is not a guess about an encoding; it is a fact about one machine.</p></li>
+
+  <li><strong>An album whose name a PSP cannot say now opens anyway.</strong> A PSP converts a long filename to Shift-JIS and stops dead at the first character it has no version of. An album called <code>nano神社 (✪㉨✪) - c o o l e r c a t EP</code> arrived as ten bytes ending at the bracket, because a star is not in Shift-JIS &mdash; and ten bytes that are not a real name open nothing. Worse, cut that early the name has lost its <code>.mp3</code> too, so every track in the folder listed as a grey row nothing could select, all ten of them showing the same ten characters.
+  <p>TRAX reads the folder off the card itself now, finds the real name and the short 8.3 name beside it, and uses the short one to open and the real one to show. Characters the PSP has no letter for are left out of what is shown, so the name reads as far as it can rather than as a row of blanks.</p>
+  <p>This needs the helper and custom firmware. A signed build says the name cannot be read and suggests renaming the folder, which is the honest answer when there is nothing it can do.</p></li>
+
+  <li><strong>A folder that will not open says why.</strong> It used to answer &ldquo;cannot play that item&rdquo;, which is true and no use at all.</li>
+</ul>
+  <h3>Under the surface</h3>
+<ul>
+  <li>A Vita does none of the above and is not asked to. Its filenames come back whole and in UTF-8, so it says as much once per folder and skips the lot &mdash; where before this it was checking every name in every folder for a fault it cannot have.</li>
+</ul>
+</section>
+
 <section id="new-in-beta-7">
   <h2>New in beta 7</h2>
   <p>Both of these came from listeners rather than from a plan.</p>

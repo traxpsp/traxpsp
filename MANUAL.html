@@ -349,7 +349,7 @@ html { scroll-behavior: smooth; }
     <p>A music player for the PSP and the PS Vita. This manual covers every screen and button.</p>
   </div>
   <div class="edition">
-    <strong>Version 1.0.0 beta 7</strong><br>
+    <strong>Version 1.0.0 beta 9</strong><br>
     For PSP-1000 and later<br>
     Custom firmware recommended<br>
     And for the PS Vita
@@ -402,7 +402,7 @@ html { scroll-behavior: smooth; }
       <div class="note"><strong>Without the helper,</strong> TRAX still plays everything. You won't get the on-screen volume, the ♪ button or Screen off while playing. The equalizer is still there two ways: hold <span class="key face" aria-label="Triangle"><svg><use href="#g-tri"/></svg></span> for two thirds of a second, or hold <span class="key pill">SELECT</span> for the visualization list, where it is the last entry.</div>
 
       <h3>On an unmodified PSP</h3>
-      <p>A signed build of TRAX runs on firmware that has never been modified. It plays every format, draws every visualization and reads lyrics from the card. What it cannot do is anything needing the kernel — the volume display, the ♪ button and Screen off — or, usually, join a Wi-Fi network, since the PSP's WPA2 support comes from custom firmware.</p>
+      <p>A signed build of TRAX runs on firmware that has never been modified. It plays every format, draws every visualization and reads lyrics from the card. What it cannot do is anything needing the kernel — the volume display, the ♪ button, Screen off, and mending a folder name the PSP cannot read — or, usually, join a Wi-Fi network, since the PSP's WPA2 support comes from custom firmware.</p>
 
       <h3>Quitting</h3>
       <p>Press <span class="key pill">HOME</span> as with any PSP app, or choose Quit on the Settings page.</p>
@@ -615,6 +615,7 @@ uma0:/MUSIC       <span class="c">the other card, where one is mounted</span></p
       <dl class="formats">
         <dt>Music folder</dt><dd><code>PSP/MUSIC</code> or <code>MUSIC</code> at the root of the card. Changing it reads the other folder straight away; anything playing carries on.</dd>
         <dt>Lyrics text size</dt><dd>Default, Medium or Large: how big the words are drawn in the Lyrics visualization. Larger is easier to read from further away and fits fewer lines on the screen at once.</dd>
+        <dt>Dynamic background</dt><dd>On or Off. When on, TRAX takes up to six colours from the album's cover as it loads and drifts the space around the artwork between them, about eighteen seconds on each, holding still while the music is paused. The colours are dimmed rather than used as they are: a bright sleeve at full strength would leave the titles and times unreadable, so each one keeps its hue and is brought down to a brightness the words can sit on. A cover with nothing to take from it &mdash; one that is all black, or all grey &mdash; keeps the plain background instead, and a sleeve with two colours in it gives two rather than always six. The colours are taken when a cover loads, so turning this on shows itself on the next track rather than the one already playing.</dd>
         <dt>Sleep timer</dt><dd>Off, 15, 30, 60 or 90 minutes. The music fades out over the last half minute, then pauses. It's for one evening, so it's always Off when TRAX starts.</dd>
         <dt>Screen off while playing</dt><dd>Off, or after 30 seconds, 1, 2 or 5 minutes without a button press. The screen uses most of the battery. Any button wakes it without doing anything else, and it comes back on by itself when the music stops. Needs the helper.</dd>
         <dd class="note"><strong>On a PS&nbsp;Vita</strong> this needs nothing extra, and TRAX now also keeps the machine from suspending itself while a track plays &mdash; so an album plays through with the screen dark rather than being cut off part way. Tapping the power button is different: that suspends TRAX, the music stops, and tapping again wakes it where it left off. See <a href="#standby">Standby</a>.</dd>
@@ -684,6 +685,7 @@ uma0:/MUSIC       <span class="c">the other card, where one is mounted</span></p
         <li>A very large progressive JPEG cover can take around ten seconds to appear while hi-res music plays on a PSP. The orb shows in the meantime.</li>
         <li>On a Vita the touchscreen works on the progress bar and in the gallery. The list is still scrolled with the buttons.</li>
         <li>On a Vita the skin that ships is the PSP&#x27;s picture at half the size, standing in until one is drawn for the larger screen. Its text is placed for 960x544, so it sits oddly against the smaller picture.</li>
+        <li>A PSP can only say a filename in Shift-JIS, and stops at the first character it has no version of — a star or a heart in an album's name, say. TRAX reads the folder off the card itself to find the real name, which needs the helper and custom firmware. Without it such a folder cannot be opened at all, and TRAX says so and suggests renaming it. Characters the PSP has no letter for are left out of what is shown, so a name reads as much as it can rather than as a row of blanks.</li>
         <li>One folder shows and plays up to 1024 tracks, and a cue sheet up to the same. Past that the rest are left out, and the log says so when it happens. A line of lyrics holds 320 bytes — about 320 letters of English or 100 of Japanese — and wraps onto at most eight rows.</li>
         <li><code>uma0:/MUSIC</code> is read but has never been tested, for want of a card that mounts there.</li>
       </ul>
