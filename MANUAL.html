@@ -374,6 +374,7 @@ html { scroll-behavior: smooth; }
       <li><a href="#cue">Cue albums</a></li>
       <li><a href="#art">Cover art</a></li>
       <li><a href="#skins">Cassette skins</a></li>
+      <li><a href="#server">Music from a server</a></li>
       <li><a href="#formats">Supported files</a></li>
       <li><a href="#limits">In this beta</a></li>
     </ol>
@@ -662,6 +663,33 @@ uma0:/MUSIC       <span class="c">the other card, where one is mounted</span></p
       <div class="note"><strong>A skin is drawn for one screen.</strong> The positions in <code>skin.json</code> are pixels, so a PSP&#x27;s skin is 480x272 and a Vita&#x27;s is 960x544, and one file cannot serve both. The skins that ship are made for the machine they ship with; <code>SKINS.html</code> has the format.</div>
     </section>
 
+    <section id="server">
+      <h2>Music from a server</h2>
+      <p class="lede">Your music does not have to be on the card. TRAX plays from a Subsonic server &mdash; Navidrome, Airsonic, Gonic &mdash; or from a Jellyfin, over your own Wi-Fi.</p>
+
+      <h3>Setting one up</h3>
+      <p>Open <strong>Settings &rsaquo; Servers</strong> and fill in a name, the kind, the address, a username and a password. The address is typed with the machine&#x27;s own keyboard: the PSP&#x27;s on-screen one, the Vita&#x27;s IME. <code>192.168.0.10:4533</code> is enough &mdash; without a scheme it is read as <code>http://</code>, which is the right guess for a machine on your own network. If the server sits under a path, such as <code>/music</code>, put that in too.</p>
+      <p><strong>Test this server</strong> asks it to prove it is there and that the username and password work. <strong>Use this library</strong> points TRAX at it.</p>
+      <p>A server is then offered in <strong>Music folder</strong> alongside the memory cards, because &ldquo;where is my music&rdquo; is one question and a server is one of the answers.</p>
+
+      <h3>Original format</h3>
+      <p>Off by default, and set per server. Off, the server is asked for a 192 kbps MP3 of whatever the track is &mdash; about 24 KB a second, which any of these machines carries comfortably. On, the file arrives as it is.</p>
+      <p>That is the whole of the choice. A 96 kHz 24-bit FLAC is 3142 kbps, or 384 KB a second; a 192 kHz one is 5026 kbps, or 613 KB. A Vita streams either without a stumble. A PSP&#x27;s Wi-Fi does not: the same files broke up 29 and 377 times in testing. A PSP says so when the switch is turned on, and warns rather than refuses &mdash; a CD-rate FLAC is a third of the size and may well be fine.</p>
+      <p>Seeking differs too. A track the server is transcoding cannot be moved through by bytes, so the dot follows your finger and the sound catches up when you let go. A track sent as it is behaves like any file.</p>
+
+      <h3>When it will not connect</h3>
+      <p>TRAX says what to change rather than what failed. If the clock is wrong &mdash; which it is on a handheld whose battery has run flat &mdash; every certificate looks expired, and TRAX names the clock only there, where it can actually be the cause.</p>
+      <p>The commonest mistake is the <strong>Kind</strong> row. A Subsonic server has no Jellyfin login and a Jellyfin speaks no Subsonic, and testing one as the other says so plainly.</p>
+
+      <h3>What a server does not do yet</h3>
+      <ul>
+        <li><a href="#gallery">The gallery</a> is the card&#x27;s: it is built by walking folders for sleeves, and a server has none. With one chosen, <span class="key face" aria-label="Triangle"><svg><use href="#g-tri"/></svg></span> says so rather than showing another library&#x27;s covers.</li>
+        <li><a href="#global">Global shuffle</a> and resume are the card&#x27;s too.</li>
+        <li>Jellyfin makes one album per folder, so anything loose in your music folder belongs to no album. Those appear under <strong>Tracks not in an album</strong> at the end of the album list. Navidrome groups by tags instead, so the same files show as proper albums there.</li>
+        <li>Passwords are kept as they were typed, in <code>servers.cfg</code> on the card. A memory card has nowhere to keep a secret, so use an account that can only play music.</li>
+      </ul>
+    </section>
+
     <section id="formats">
       <h2>Supported files</h2>
       <dl class="formats">
@@ -674,6 +702,7 @@ uma0:/MUSIC       <span class="c">the other card, where one is mounted</span></p
         <dt>ATRAC</dt><dd>ATRAC3 and ATRAC3plus, in <code>.at3</code> &mdash; the PSP&#x27;s own format, decoded by its Media Engine, and on a Vita by that machine&#x27;s own codec module. Tracks bought from Sony&#x27;s old Connect store are OpenMG-protected and will not play, on this or anything else.</dd>
         <dt>Cue sheets</dt><dd>A <code>.cue</code> beside a single-file album. See <a href="#cue">Cue albums</a>.</dd>
       </dl>
+      <p>All but ATRAC play from a server as well. What a stream holds is read off its first bytes rather than assumed, so a file sent as it is plays as itself.</p>
       <p>Names in accented Latin, Japanese and Korean display correctly. The fonts for Japanese and Korean load only when a name needs them.</p>
     </section>
 
