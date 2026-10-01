@@ -325,7 +325,7 @@ main li strong { color: var(--ink); }
     <p class="notes-lede">A music player for the PSP and the PS&nbsp;Vita. What it does, and the work behind this beta.</p>
   </div>
   <div class="edition">
-    <strong>1.0.0 beta 10</strong><br>
+    <strong>1.0.0 beta 11</strong><br>
     Release notes<br>
     For PSP-1000 and later,<br>
     and for the PS&nbsp;Vita
@@ -336,6 +336,7 @@ main li strong { color: var(--ink); }
   <nav class="toc" aria-label="Contents">
     <h2>Contents</h2>
     <ol>
+      <li><a href="#new-in-beta-11">New in beta 11</a></li>
       <li><a href="#new-in-beta-10">New in beta 10</a></li>
       <li><a href="#new-in-beta-9">New in beta 9</a></li>
       <li><a href="#new-in-beta-8">New in beta 8</a></li>
@@ -353,6 +354,21 @@ main li strong { color: var(--ink); }
 
   <main>
   <p>A music player for the PSP, and now for the PS&nbsp;Vita as well.</p>
+<section id="new-in-beta-11">
+  <h2>New in beta 11</h2>
+  <p>Two faults in the gallery, both of which had been there a while and neither of which was noticed until somebody played music and went looking at covers at the same time.</p>
+  <h3>Fixed</h3>
+<ul>
+  <li><strong>The gallery stopped loading covers altogether.</strong> There is one picture being decoded at a time, by design &mdash; asking for a second replaces the first rather than queueing behind it. What that design never said is what becomes of whoever was waiting on the first, and the answer was: it waits for ever.
+  <p>So playing a track, opening the gallery, and letting the track change was enough. The player asked for its own sleeve, the gallery&rsquo;s tile was quietly displaced, and the tile stayed marked as still coming &mdash; which the gallery reads as a reason not to ask for anything else. One collision and the wall stayed empty until it was closed. It now notices a request that has been pushed out and asks again; the player, which had the same fault in the other direction, no longer leaves the orb up for the rest of a track.</p></li>
+  <li><strong>A card that was not in the machine put its albums on the wall.</strong> The list correctly said there was nothing; the gallery showed twenty-two albums from the last time that card was seen, none of which could be opened. The same fault was fixed once for a card removed while TRAX was running &mdash; this was the other way in, the card already gone before TRAX started, which that guard could not see. The remembered albums are dropped as soon as the folder will not read, and the walk is left running so they come back by themselves if the card turns up a moment later.</li>
+</ul>
+  <h3>Also</h3>
+<ul>
+  <li>The log now names the folder on every gallery line, and says when a missing card&rsquo;s albums were dropped. Neither changes what TRAX does; both were added because a fault that cannot be told from correct behaviour in a log is a fault that gets diagnosed by guesswork.</li>
+</ul>
+</section>
+
 <section id="new-in-beta-10">
   <h2>New in beta 10</h2>
   <p>Your music no longer has to be on the card.</p>
