@@ -508,7 +508,7 @@ uma0:/MUSIC       <span class="c">the other card, where one is mounted</span></p
 
       <h2 id="global">Global shuffle</h2>
       <p>Every other mode plays the folder you are in. Global shuffle plays your whole music folder: any track, in any folder, in a random order.</p>
-      <p>It has to read your music folder before it can do that, and on a full card that takes a few seconds, so it asks first. Press <span class="key face" aria-label="Cross"><svg><use href="#g-crs"/></svg></span> on any track to start it, and TRAX will tell you what it is about to do:</p>
+      <p>It has to read your music folder before it can do that &mdash; measured at about a second and a half for sixteen hundred tracks on a Vita, and two and a half on a PSP &mdash; so it asks first. Press <span class="key face" aria-label="Cross"><svg><use href="#g-crs"/></svg></span> on any track to start it, and TRAX will tell you what it is about to do:</p>
       <blockquote>Using global shuffle requires reading your entire music folder which may take time.</blockquote>
       <p><span class="key face" aria-label="Cross"><svg><use href="#g-crs"/></svg></span> goes ahead. <span class="key face" aria-label="Circle"><svg><use href="#g-cir"/></svg></span> closes the dialog and nothing happens.</p>
       <p>While it reads, a bar counts the folders at the top level of your music folder and says how many tracks it has found. <span class="key face" aria-label="Circle"><svg><use href="#g-cir"/></svg></span> cancels, and cancelling keeps nothing &mdash; part of a card is not a shuffle of it.</p>
@@ -584,6 +584,11 @@ uma0:/MUSIC       <span class="c">the other card, where one is mounted</span></p
         <dt>Sphere matrix</dt><dd>Sixteen columns of spheres, one per frequency band, lighting up with the music.</dd>
         <dt>VU meters</dt><dd>A pair of analog movements, one per channel, with needles that swing as a real meter does and a peak lamp.</dd>
         <dt>Lyrics</dt><dd>The words, in time with the music. See below.</dd>
+        <dt>LED bars</dt><dd>The segmented display off the front of a stereo: twenty bars, green through yellow to red, each with a cap that holds the highest it reached and sinks back slowly.</dd>
+        <dt>Spectrum rays</dt><dd>A rainbow spectrum standing on a lit floor, with a beam of light thrown off each peak.</dd>
+        <dt>Waveform</dt><dd>The whole audible range at once &mdash; 20 Hz at the left to 20 kHz at the right &mdash; drawn above and below a center line.</dd>
+        <dt>Circular</dt><dd>The same, stood on a ring and pointing outward: 50 Hz at the top and round counterclockwise to 16 kHz arriving back there, once. A narrower range than the flat one shows &mdash; on a ring every bar is equally in view, so the empty decade below 50 Hz would be a bald patch rather than a quiet edge.</dd>
+        <dt>Waterfall</dt><dd>The spectrum kept twenty times a second and drawn going away from you: about a second of music as a landscape, with a chorus arriving as a ridge.</dd>
       </dl>
       <p>The track's title fades in over a visualization when you arrive and at each new track. All the Player's other buttons still work.</p>
       <p>The equalizer is the last entry in the same list, which is how to reach it on a PSP without the helper module.</p>
@@ -596,7 +601,7 @@ uma0:/MUSIC       <span class="c">the other card, where one is mounted</span></p
 
     <section id="eq">
       <h2>Equalizer</h2>
-      <p>Five bands, from 60 Hz to 12 kHz, each ±12 dB. Open it with <span class="key face" aria-label="Music note"><svg><use href="#g-note"/></svg></span>, or by holding <span class="key pill">SELECT</span> if the helper isn't loaded. Changes are heard at once and saved.</p>
+      <p>Ten bands &mdash; 31 Hz, 62, 125, 250, 500 Hz, 1, 2, 4, 8 and 16 kHz &mdash; each ±12 dB. Open it with <span class="key face" aria-label="Music note"><svg><use href="#g-note"/></svg></span>, or by holding <span class="key pill">SELECT</span> if the helper isn't loaded. Changes are heard at once and saved.</p>
       <table class="controls">
         <thead><tr><th scope="col">Press</th><th scope="col">To</th></tr></thead>
         <tbody>
@@ -674,7 +679,15 @@ uma0:/MUSIC       <span class="c">the other card, where one is mounted</span></p
 
       <h3>Original format</h3>
       <p>Off by default, and set per server. Off, the server is asked for a 192 kbps MP3 of whatever the track is &mdash; about 24 KB a second, which any of these machines carries comfortably. On, the file arrives as it is.</p>
-      <p>That is the whole of the choice. A 96 kHz 24-bit FLAC is 3142 kbps, or 384 KB a second; a 192 kHz one is 5026 kbps, or 613 KB. A Vita streams either without a stumble. A PSP&#x27;s Wi-Fi does not: the same files broke up 29 and 377 times in testing. A PSP says so when the switch is turned on, and warns rather than refuses &mdash; a CD-rate FLAC is a third of the size and may well be fine.</p>
+      <p>That is the whole of the choice. A 96 kHz 24-bit FLAC is 3142 kbps, or 384 KB a second; a 192 kHz one is 5026 kbps, or 613 KB. A Vita streams any of them without a stumble. A PSP&#x27;s Wi-Fi has a limit, and it was found by playing the lot:</p>
+      <dl class="formats">
+        <dt>ALAC, 1139 kbps</dt><dd>Plays clean, and starts in 129 ms.</dd>
+        <dt>WAV, 1411 kbps</dt><dd>Plays clean, and starts in 174 ms.</dd>
+        <dt>FLAC 96 kHz, 3142 kbps</dt><dd>Breaks up, and unpredictably &mdash; the same track twice gave 16 interruptions and then 122. This is the edge rather than the far side of it.</dd>
+        <dt>FLAC 192 kHz, 5026 kbps</dt><dd>Breaks up reliably, about 150 times.</dd>
+      </dl>
+      <p>So lossless at CD rates goes over a PSP&#x27;s Wi-Fi comfortably and hi-res does not. A PSP says so when the switch is turned on, and warns rather than refuses.</p>
+      <p><strong>It also starts tracks sooner</strong> &mdash; four to six times sooner, for anything the Wi-Fi can carry. With the switch off, the server has to convert the track before it can send any of it, and that costs most of a second before the first note. So if your music is CD-rate lossless, turning this on gives you the original file <em>and</em> a quicker start. It is off by default because the setting has to be safe for the library that cannot take it.</p>
       <p>Seeking differs too. A track the server is transcoding cannot be moved through by bytes, so the dot follows your finger and the sound catches up when you let go. A track sent as it is behaves like any file.</p>
 
       <h3>When it will not connect</h3>
@@ -713,7 +726,6 @@ uma0:/MUSIC       <span class="c">the other card, where one is mounted</span></p
         <li>The volume display, the ♪ button and Screen off need the helper and custom firmware. None of the three applies on a Vita: that machine handles its own volume and screen, and has no ♪ button.</li>
         <li>A very large progressive JPEG cover can take around ten seconds to appear while hi-res music plays on a PSP. The orb shows in the meantime.</li>
         <li>On a Vita the touchscreen works on the progress bar and in the gallery. The list is still scrolled with the buttons.</li>
-        <li>On a Vita the skin that ships is the PSP&#x27;s picture at half the size, standing in until one is drawn for the larger screen. Its text is placed for 960x544, so it sits oddly against the smaller picture.</li>
         <li>A PSP can only say a filename in Shift-JIS, and stops at the first character it has no version of — a star or a heart in an album's name, say. TRAX reads the folder off the card itself to find the real name, which needs the helper and custom firmware. Without it such a folder cannot be opened at all, and TRAX says so and suggests renaming it. Characters the PSP has no letter for are left out of what is shown, so a name reads as much as it can rather than as a row of blanks.</li>
         <li>One folder shows and plays up to 1024 tracks, and a cue sheet up to the same. Past that the rest are left out, and the log says so when it happens. A line of lyrics holds 320 bytes — about 320 letters of English or 100 of Japanese — and wraps onto at most eight rows.</li>
         <li><code>uma0:/MUSIC</code> is read but has never been tested, for want of a card that mounts there.</li>

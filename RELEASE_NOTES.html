@@ -325,7 +325,7 @@ main li strong { color: var(--ink); }
     <p class="notes-lede">A music player for the PSP and the PS&nbsp;Vita. What it does, and the work behind this beta.</p>
   </div>
   <div class="edition">
-    <strong>1.0.0 beta 11</strong><br>
+    <strong>1.0.0 RC 1</strong><br>
     Release notes<br>
     For PSP-1000 and later,<br>
     and for the PS&nbsp;Vita
@@ -336,6 +336,7 @@ main li strong { color: var(--ink); }
   <nav class="toc" aria-label="Contents">
     <h2>Contents</h2>
     <ol>
+      <li><a href="#new-in-rc-1">New in RC 1</a></li>
       <li><a href="#new-in-beta-11">New in beta 11</a></li>
       <li><a href="#new-in-beta-10">New in beta 10</a></li>
       <li><a href="#new-in-beta-9">New in beta 9</a></li>
@@ -354,6 +355,39 @@ main li strong { color: var(--ink); }
 
   <main>
   <p>A music player for the PSP, and now for the PS&nbsp;Vita as well.</p>
+<section id="new-in-rc-1">
+  <h2>New in RC 1</h2>
+  <p>Five more visualizations, an equalizer with twice the bands, and a Vita that no longer draws PSP-sized type on a screen four times the size.</p>
+  <h3>New</h3>
+<ul>
+  <li><strong>Five visualizations, bringing it to thirteen.</strong>
+  <p><strong>LED bars</strong> is the segmented display off the front of a stereo &mdash; twenty bars, green through yellow to red, each with a cap that holds the highest it reached and sinks back slowly. The color comes from the segment&rsquo;s own height rather than the bar&rsquo;s, which is what makes it read as a scale the bars are measured against instead of bars that change color as they grow.</p>
+  <p><strong>Spectrum rays</strong> is a rainbow spectrum standing on a lit floor with a beam thrown off each peak. The floor&rsquo;s bounce is a soft smear of the color above it rather than the bars drawn again upside down &mdash; a mirrored copy costs what the bars cost and reads as a second row of them.</p>
+  <p><strong>Waveform</strong> is the whole audible range at once, 20 Hz at the left to 20 kHz at the right, drawn above and below a center line. The axis is frequency and it stands still: what moves is the height of the bars, so a shape stays where it is for as long as the sound making it does.</p>
+  <p><strong>Circular</strong> is the same scale stood on a ring and pointing outward &mdash; 50 Hz at the top and round counterclockwise to 16 kHz arriving back there, once around. Narrower than the flat one on purpose: on a ring every bar is equally in view, so the empty decade below 50 Hz reads as a bald patch rather than a quiet edge.</p>
+  <p><strong>Waterfall</strong> keeps the spectrum twenty times a second and draws the rows going away from you: about a second of music as a landscape, with a chorus arriving as a ridge running into the distance.</p></li>
+  <li><strong>The equalizer has ten bands instead of five.</strong> 31, 62, 125, 250 and 500 Hz, then 1, 2, 4, 8 and 16 kHz, each one octave wide and &plusmn;12 dB as before, and the panel is drawn as a graphic equalizer &mdash; a scale down the side, dashed lines across it, and the curve the bands add up to washed in behind them. Measured on the host, a band at +12 dB reads +12.00 dB at its own center, every one of the ten; all ten flat deviate by 0.000 dB.
+  <p>An <code>eq.cfg</code> written by an earlier version holds five numbers rather than ten and is ignored rather than half-read. The old centers were 60 Hz to 12 kHz, and the same figures against the new ones would not be the settings anybody chose, so the bands start flat once.</p></li>
+  <li><strong>The Vita&rsquo;s cassette is drawn for the Vita.</strong> A skin at a full 960&times;544, in place of the PSP&rsquo;s artwork shown at twice its size. Its reels, its hubs and its text are its own rather than a 480&times;272 picture stretched over a screen four times the area.</li>
+</ul>
+  <h3>Changed</h3>
+<ul>
+  <li><strong>The Vita&rsquo;s text and icons are sized for its own screen.</strong> They had been drawn at PSP sizes on a screen with four times the pixels, which left the Play view&rsquo;s type, its play and pause marks, the battery, the countdown and the action bar&rsquo;s labels all smaller than they should ever have been. The sizes now come from what the fonts actually measure on each machine rather than from a number written down once.</li>
+  <li><strong>The visualization list scrolls on a PSP.</strong> Thirteen of them and the equalizer want more panel than a PSP has screen. The rows are left the size they were and the list scrolls instead, with a mark to say there is more above or below; a Vita has room for every row and never scrolls.</li>
+  <li><strong>The toasts are legible.</strong> The strip naming the play mode was set a size below the bar directly beneath it, which is the wrong way round for something that is gone in two seconds and has to be read at a glance. Both it and the one-line note now match the action bar.</li>
+  <li><strong>Two messages say what they mean.</strong> &ldquo;grw0:/MUSIC is not there any more&rdquo; is now &ldquo;grw0:/MUSIC not found&rdquo;, and a server that has lost a track says &ldquo;Not found on the server.&rdquo;</li>
+  <li><strong>What Original format costs, measured on a PSP rather than guessed at.</strong> ALAC at 1139 kbps and WAV at 1411 play clean over 802.11b; 96 kHz FLAC at 3142 is the edge, breaking up 16 times in one run and 122 in the next; 192 kHz at 5026 breaks up every time. The surprise is that it also makes a track <em>start</em> four to six times sooner, because the server no longer has to transcode before it can send anything &mdash; so a library of CD-rate lossless is better off with it on. The manual says all of this now.</li>
+</ul>
+  <h3>Fixed</h3>
+<ul>
+  <li><strong>The caution about original-format playback vanished while it still applied.</strong> It is kept on screen for as long as it is true.</li>
+  <li><strong>The Vita&rsquo;s reels turned the wrong way.</strong> Clockwise, where a cassette winds the other way and where the PSP had it right all along. The two machines disagreed because the Vita&rsquo;s backend negated the angle a second time; nothing but the reels rotates, so there was nothing else to notice it by.</li>
+  <li><strong>Skipping through a cue album emptied the cover.</strong> It stayed empty until playback reached a different file. A cover was being filed under the track rather than the file it came from, and a cue album&rsquo;s tracks are slices of one file with one sleeve between them.</li>
+  <li><strong>A cue sheet written on a Japanese system could not be matched to its audio.</strong> The sheet names its file in Shift-JIS while the card&rsquo;s own names are UTF-8, so the two can never be equal and such an album lost every track title under global shuffle. The sheet is now matched to its audio by the two names the card gave, never by the one the sheet gave itself.</li>
+  <li><strong>A seek could be dropped.</strong> If a second seek arrived while one was still running, the first finished and cleared the request, taking the second with it. Reachable rather than reported, and more likely on an m4a, where a seek is real work.</li>
+</ul>
+</section>
+
 <section id="new-in-beta-11">
   <h2>New in beta 11</h2>
   <p>Two faults in the gallery, both of which had been there a while and neither of which was noticed until somebody played music and went looking at covers at the same time.</p>
@@ -781,7 +815,7 @@ main li strong { color: var(--ink); }
   <li><strong>Search (△)</strong> is labelled in the list&#x27;s bar but not implemented yet. On both machines.</li>
   <li><strong>On a PS&nbsp;Vita,</strong> three things are worth knowing:
     <ul>
-      <li><strong>The skin that ships is the PSP&#x27;s artwork,</strong> at half the resolution, standing in until a 960&times;544 one is drawn. Its text is placed for the larger screen, so it will look soft and sit oddly against the picture. Skins of your own go in <code>ux0:/data/trax/SKINS</code>.</li>
+      <li><strong>Skins of your own</strong> go in <code>ux0:/data/trax/SKINS</code>, and a Vita&#x27;s may be a full 960&times;544.</li>
       <li><strong><code>uma0:/MUSIC</code> has never been tested,</strong> for want of a card that mounts there. It costs nothing if you have none: a folder that is not there reads as empty and is never chosen on its own.</li>
       <li><strong>The touchscreen only drags the progress bar.</strong> Scrolling the list by hand, tapping a row, and the rest of it are not done.</li>
     </ul>
