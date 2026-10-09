@@ -322,10 +322,10 @@ main li strong { color: var(--ink); }
 <header class="masthead">
   <div>
     <h1 class="wordmark">TRAX</h1>
-    <p class="notes-lede">A music player for the PSP and the PS&nbsp;Vita. What it does, and the work behind this beta.</p>
+    <p class="notes-lede">A music player for the PSP and the PS&nbsp;Vita. What it does, and the work behind it.</p>
   </div>
   <div class="edition">
-    <strong>1.0.0 RC 1</strong><br>
+    <strong>1.0.0</strong><br>
     Release notes<br>
     For PSP-1000 and later,<br>
     and for the PS&nbsp;Vita
@@ -336,6 +336,7 @@ main li strong { color: var(--ink); }
   <nav class="toc" aria-label="Contents">
     <h2>Contents</h2>
     <ol>
+      <li><a href="#new-in-1-0-0">New in 1.0.0</a></li>
       <li><a href="#new-in-rc-1">New in RC 1</a></li>
       <li><a href="#new-in-beta-11">New in beta 11</a></li>
       <li><a href="#new-in-beta-10">New in beta 10</a></li>
@@ -355,6 +356,48 @@ main li strong { color: var(--ink); }
 
   <main>
   <p>A music player for the PSP, and now for the PS&nbsp;Vita as well.</p>
+<section id="new-in-1-0-0">
+  <h2>New in 1.0.0</h2>
+  <p>The list redrawn, and the constants behind it measured &mdash; a Vita that stops inheriting numbers that were never its own.</p>
+  <h3>New</h3>
+<ul>
+  <li><strong>The list redrawn.</strong> The selected row is filled rather than recoloured. Colour alone was carrying two meanings at once &mdash; what a row is, and which one is pointed at &mdash; and on a 272-pixel screen at arm&rsquo;s length the second has to win, so the pick takes the amber as ground, its text goes dark and everything else goes neutral. Alternating rows take a barely-there band so the eye can run along a long name without losing its line.</li>
+  <li><strong>A glyph says what each row is.</strong> A folder, a music note, and a page for the rows that neither open nor play &mdash; a booklet PDF, a sleeve scan, a <code>.url</code> &mdash; all of which had been drawing a music note, a glyph promising something that will not play. The folder&rsquo;s trailing slash goes with the colour, the glyph having said it already, which gives the name back the width. A row with a cover keeps its sleeve.</li>
+  <li><strong>Tracks say how long they play,</strong> in a second column. A cue sheet carries its times in its own text and always had them; everything else now comes from an idle pass measuring one visible track a frame &mdash; the pass the scan&rsquo;s own comment had been promising since it stopped opening the files it lists. A dozen-track album fills in in well under a second, where the first attempt took four.</li>
+  <li><strong>Folders say how many rows they open as.</strong> Not how many files they hold: a cue sheet collapses the audio it indexes and the cover beside it into one album row, so counting entries would have made a folder of a hundred discs read three hundred. The count settles it from the names alone, the way the scan&rsquo;s own first pass does, and a folder with no sheet in it &mdash; which is most of them, and all of a folder of folders &mdash; is answered there and never read twice.</li>
+  <li><strong>A control reference inside the app</strong>, as a fourth tab on the Settings page. Every control TRAX has, on one page &mdash; the list, the player, the gallery, the cassette, the equalizer, and HOME to quit &mdash; with each button drawn as its own shape rather than named in words. Thirty-six lines through a window of eleven: Up and Down scroll, and held, they repeat at the cadence the list and the equalizer already use. Where the second column starts is measured on the machine it is running on rather than set by eye, and the page is checked at compile time against the footer, as the settings rows already were.</li>
+</ul>
+  <h3>Changed</h3>
+<ul>
+  <li><strong>Constants that were one number for two machines are now two.</strong> <code>app.c</code> grew from a PSP app and had the Vita fitted afterwards. A sweep of every core file and all 47 platform files found the pattern confined entirely to it &mdash; <code>vgfx.h</code>, <code>cassette.h</code> and <code>playview.h</code> were written with two machines in mind and are clean. The PSP is unchanged in every case below; what ends is the Vita inheriting numbers that were never its own.
+  <ul>
+    <li><strong>Probe pacing.</strong> A PSP puts a probe at 46.0 ms a file, a Vita at 12.7. One number for both meant either a Vita waiting four seconds an album to fill in a column it reads in a fifth of a second, or a PSP holding the card 46% of the time &mdash; the two-readers problem the queue pass is written against. 20 frames apart on a PSP and 6 on a Vita come to the same 14% of the card.</li>
+    <li><strong>The launch hold.</strong> Press to first audio is 890&ndash;1023 ms on a PSP and 97&ndash;215 ms on a Vita, and both had been waiting 2000 ms before touching the card again. The Vita gets 500, which is the PSP&rsquo;s own ratio rather than a new number picked by eye.</li>
+    <li><strong>The scrollbar</strong> was three bare numbers &mdash; a 3 px bar, a 6 px gutter and a 12 px minimum thumb. Right on a PSP, a hairline on a Vita. The track line stays one pixel, because a rule is a rule at any size.</li>
+    <li><strong>The visualization menu and the music-folder picker</strong> were whole screens of PSP pixels with correctly sized type inside them.</li>
+  </ul></li>
+  <li><strong>A fourth sizing factor, <code>UI_ROWS()</code>.</strong> Neither <code>UI_SCALE</code> nor <code>UI_TEXT</code> was the ratio those panels wanted. The right one is the one the list had already picked by hand and never written down: <code>ROW_HEIGHT</code> goes 20 to 30, so a panel of text rows goes by halves. A macro over a whole dialog rather than a dozen paired constants, because every number in one of these panels moves together or the panel stops lining up.</li>
+  <li><strong>The music-folder picker hangs from the middle.</strong> A heading, a rule and <code>count</code> rows is a composition whose height depends on how many places the machine has, so where its top belongs is arithmetic and never was a number. It had been a PSP constant scaled, which on a Vita put the whole thing in the upper half with 180 px of nothing beneath it. The PSP moves about four pixels down, which is the one place this work does not leave it untouched.</li>
+  <li><strong>The app calls itself TRAX in its own About box.</strong> The one place the product was still TRAXPSP, and it was in the binary rather than on the website.</li>
+</ul>
+  <h3>Fixed</h3>
+<ul>
+  <li><strong>An <code>.m4a</code>&rsquo;s length took a whole decoder to read.</strong> Every one of them fell off the end of <code>sound_length_from_open()</code> and was measured by building a decoder instead &mdash; 32 ms a file on a Vita against an mp3&rsquo;s 14, and the only format doing it. <code>mvhd</code> holds the duration and the timescale it is counted in and is the first box inside <code>moov</code>, so the length now comes out of the first 4 KB of it and no more. Checked against <code>afinfo</code> on five of the files on the card, exact to the millisecond. A file keeping its <code>mvhd</code> further in, or giving no duration, answers 0 and gets the decoder exactly as before.</li>
+  <li><strong>The cover beside a <code>.cue</code> stopped showing.</strong> The sleeves were a pass of their own above the rows, which was right for as long as a row drew nothing but text; giving a row a background painted straight over them. The sleeve is drawn inside the row loop now, after the band. While it was invisible nobody could see that it sat at a hardcoded x of 22 &mdash; a PSP number &mdash; which on a Vita had been putting a folder&rsquo;s names in two different places depending on which covers had decoded.</li>
+  <li><strong>The scrollbar came out in pieces,</strong> one per unbanded row, for the same reason. The row fills stop two pixels short of it now.</li>
+  <li><strong>A row&rsquo;s time ran under the scrollbar on a Vita.</strong> The time and the width a name is allowed were both written <code>SCR_WIDTH - 10</code>: a right anchor with a PSP&rsquo;s margin on it, which cleared a 3 px bar in a 6 px gutter and stopped clearing anything the moment the bar was scaled. Re-running the sweep with its filter fixed found two more of the same shape &mdash; the header&rsquo;s item count, and the Vita&rsquo;s own one-line header, which had 8 px of left margin while the rows under it had 52.</li>
+  <li><strong>The Vita&rsquo;s visualization menu hid a row behind a scroll.</strong> <code>VIS_COUNT</code> is 13 and a Vita adds the equalizer, having no music-note button to open it with, so the menu is fourteen rows &mdash; and the change that made the panel read properly fitted only thirteen of them, on the one machine that never needed to scroll. Its row height is the list&rsquo;s own <code>ROW_HEIGHT</code> now, which is what fourteen rows and the panel&rsquo;s head and foot leave room for.</li>
+  <li><strong>Probe timings never reached the log.</strong> The counter batched at 32 files, which is eleven seconds of uninterrupted browsing, so the app closed long before a line was printed. The more useful half is that the expensive path &mdash; the fall-through that builds a decoder, and for a variable bitrate mp3 with no Xing frame walks the file to count its frames &mdash; was not inside the measured region at all, so the log reported the cheap answer and stayed silent about the dear one. Eight to a line now, which is one line an album, and the slow path says so per file with the name.</li>
+  <li><strong>Probing no longer drops frames while the list is moving.</strong> 14 ms does not fit in a 16.7 ms frame alongside everything else, so every probe costs a frame; at the new pacing that would have been ten a second, all of them while the rows are moving under the eye, which is the one moment a dropped frame shows. Probes wait 120 ms for the cursor and the scroll to stop first, so the cost moves out of the scroll and into the pause after it.</li>
+</ul>
+  <h3>Also</h3>
+<ul>
+  <li><strong>The manual&rsquo;s Settings and About section</strong> had six hundred pixels of nothing after each label, with the text that belonged there off the side of the page. One <code>dd</code> with no <code>dt</code> of its own landed in a two-column grid&rsquo;s label column and was measured as a label, taking that column to 2683 px and collapsing the other to 93.</li>
+  <li><strong>The documents that go on the site</strong> were brought up to date and republished. Both pages had been built once and never published again, so what was live was beta 1 of each &mdash; a manual that said &ldquo;A music player for the PSP&rdquo; with no mention of a Vita, against a home page saying the Vita build is native.</li>
+  <li><strong>The kernel helper compiled with a warning,</strong> and had been doing so for as long as it has existed. <code>NAME_MAX</code> is the toolchain&rsquo;s, out of a <code>limits.h</code> that arrives behind <code>pspkernel.h</code>, and the helper was redefining it. Only a cold build ever showed it, which is why the gate that refuses to release out of a build with anything to say had never caught it: a release built on top of an existing build tree recompiles nothing it already has.</li>
+</ul>
+</section>
+
 <section id="new-in-rc-1">
   <h2>New in RC 1</h2>
   <p>Five more visualizations, an equalizer with twice the bands, and a Vita that no longer draws PSP-sized type on a screen four times the size.</p>
